@@ -10,7 +10,7 @@ public class S87Powers extends JavaPlugin
 	@Override
     public void onEnable()
     {
-    	getServer().getPluginManager().registerEvents(new MyListener(), this);
+    	getServer().getPluginManager().registerEvents(new PowerListeners(), this);
     }
 	
     @Override
