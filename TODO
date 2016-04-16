@@ -2,6 +2,12 @@ Create helper function for printing commands, put this in /powers and /powers he
 Create helper function for removing reagents from player's inventory (like removeReagent(reagentType,amount))
 Create player database of powers
 
+Pending Parker's approval, create a /powers upgrade command that downloads the latest S87 Powers build from this repo, packages
+it as a jar, places it in the plugins folder, and reloads the server.  This command would require the s87powers.command.upgrade permission
+which only devs would have.  Because Github provides accountability in its versioning, there is little to no room for abuse, so 
+I think this would be a powerful feature as long as people tested their code before deploying it.
+
+Add permissions to add, lookup, and remove
 Modify add, lookup, and remove to properly access and modify player power database as appropriate
 
 Create separate .java files for each power?  (Unsure about this one)
