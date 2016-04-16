@@ -3,3 +3,5 @@ Create helper function for removing reagents from player's inventory (like remov
 Create player database of powers
 
 Modify add, lookup, and remove to properly access and modify player power database as appropriate
+
+Create seperate .java files for each power?  (Unsure about this one)
