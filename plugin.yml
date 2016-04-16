@@ -1,5 +1,5 @@
-name: Powers
-main: io.github.ramanujansghost.Powers
+name: S87 Powers
+main: io.github.ramanujansghost.S87Powers
 version: .01
 commands:
     powers:
