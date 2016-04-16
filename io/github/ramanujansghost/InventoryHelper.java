@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+// All InventoryHelper methods are to be implemented as static methods
 public class InventoryHelper
 {   
     public static boolean checkForReagents(Player p, ItemStack item, int amount)
