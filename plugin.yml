@@ -1,0 +1,11 @@
+ name: S87 Powers
+ version: .01
+ description: This plugin provides a variety of awesome powers for users to wield
+ author: RamanujansGhost
+ authors: [knightfallx66] 
+ website: https://github.com/RamanujansGhost/s87powers/wiki
+ 
+ main: io.github.ramanujansghost.S87Powers
+ 
+ commands:
+ #Add commands
