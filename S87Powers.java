@@ -5,7 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Powers extends JavaPlugin
+public class S87Powers extends JavaPlugin
 {
 	@Override
     public void onEnable()
@@ -28,7 +28,7 @@ public class Powers extends JavaPlugin
     			sender.sendMessage(ChatColor.DARK_AQUA + "Powers v.01");
     			sender.sendMessage(ChatColor.GOLD + "/powers - This command");
     			sender.sendMessage(ChatColor.GOLD + "/powers list - Lists the powers");
-    			sender.sendMessage(ChatColor.GOLD + "/powers lookup <playername> - Looks up <playername>'s");
+    			sender.sendMessage(ChatColor.GOLD + "/powers lookup <playername> - Looks up <playername>'s powers");
     			sender.sendMessage(ChatColor.GOLD + "/powers add <power> <playername> - Gives <power> to <playername>");
     			sender.sendMessage(ChatColor.GOLD + "/powers remove <power> <playername> - Removes <power> from <playername>");
     		}
@@ -56,7 +56,7 @@ public class Powers extends JavaPlugin
     			{
         			sender.sendMessage(ChatColor.GOLD + "/powers - Lists these help commands and the version number");
         			sender.sendMessage(ChatColor.GOLD + "/powers list - Lists the powers");
-        			sender.sendMessage(ChatColor.GOLD + "/powers lookup <playername> - Looks up <playername>'s");
+        			sender.sendMessage(ChatColor.GOLD + "/powers lookup <playername> - Looks up <playername>'s powers");
         			sender.sendMessage(ChatColor.GOLD + "/powers add <power> <playername> - Gives <power> to <playername>");
         			sender.sendMessage(ChatColor.GOLD + "/powers remove <power> <playername> - Removes <power> from <playername>");
     			}
