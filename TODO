@@ -1,0 +1,5 @@
+Create helper function for printing commands, put this in /powers and /powers help
+Create helper function for removing reagents from player's inventory (like removeReagent(reagentType,amount))
+Create player database of powers
+
+Modify add, lookup, and remove to properly access and modify player power database as appropriate
