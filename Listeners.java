@@ -10,13 +10,15 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.*;
 
 
-public class MyListner implements Listener{
+public class MyListener implements Listener
+{
     ItemStack mu = new ItemStack(Material.MUTTON,1);
     ItemStack rb = new ItemStack(Material.REDSTONE,1);
     
 	
 	@EventHandler
-	public void onPlayerUse(PlayerInteractEvent event){
+	public void onPlayerUse(PlayerInteractEvent event)
+	{
 	    Player p = event.getPlayer();	    
 	    
 		if(p.getInventory().getItemInMainHand().getType() == Material.STICK && p.getInventory().containsAtLeast(mu, 1) && p.getInventory().containsAtLeast(rb, 5)){
@@ -41,16 +43,12 @@ public class MyListner implements Listener{
 		        		have = want;
 		        	}
 		        	p.getInventory().setItem(p.getInventory().first(Material.REDSTONE), rg);
-		        }
-		        	
+	        	}
 	        	p.updateInventory();
 	        	World test = p.getWorld();
 	        	Set<Material> st = null;
 	        	test.spawnEntity(p.getTargetBlock(st ,6).getLocation(), EntityType.SHEEP);
 	        }
 	    }
-	
-}
-
-	
+	}
 }
