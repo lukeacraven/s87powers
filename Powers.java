@@ -10,7 +10,7 @@ public class Powers extends JavaPlugin
 	@Override
     public void onEnable()
     {
-
+    	getServer().getPluginManager().registerEvents(new MyListener(), this);
     }
 	
     @Override
