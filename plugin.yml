@@ -1,0 +1,8 @@
+name: Powers
+main: io.github.ramanujansghost.Powers
+version: .01
+commands:
+    powers:
+        description: This lists the powers
+    add:
+        description: This adds the first argument (power) to the second argument (player)
