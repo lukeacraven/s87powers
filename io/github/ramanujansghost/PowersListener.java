@@ -1,3 +1,5 @@
+package io.github.ramanujansghost;
+
 import org.bukkit.event.Listener;
 import java.util.Set;
 import org.bukkit.Bukkit;
