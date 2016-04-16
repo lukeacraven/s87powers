@@ -7,7 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class S87Powers extends JavaPlugin
 {
-    @Override
+	@Override
     public void onEnable()
     {
     	getServer().getPluginManager().registerEvents(new PowerListeners(), this);
