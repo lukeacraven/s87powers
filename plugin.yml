@@ -1,6 +1,6 @@
 name: S87 Powers
 main: io.github.ramanujansghost.S87Powers
-version: .01
+version: 1
 commands:
     powers:
         description: Shows help commands and the version number
