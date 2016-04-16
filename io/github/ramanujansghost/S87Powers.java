@@ -7,6 +7,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class S87Powers extends JavaPlugin
 {
+	private static final String version = ".01";
+	
 	@Override
     public void onEnable()
     {
@@ -25,12 +27,8 @@ public class S87Powers extends JavaPlugin
     	{
     		if(args.length == 0)
     		{
-    			sender.sendMessage(ChatColor.DARK_AQUA + "Powers v.01");
-    			sender.sendMessage(ChatColor.GOLD + "/powers - This command");
-    			sender.sendMessage(ChatColor.GOLD + "/powers list - Lists the powers");
-    			sender.sendMessage(ChatColor.GOLD + "/powers lookup <playername> - Looks up <playername>'s powers");
-    			sender.sendMessage(ChatColor.GOLD + "/powers add <power> <playername> - Gives <power> to <playername>");
-    			sender.sendMessage(ChatColor.GOLD + "/powers remove <power> <playername> - Removes <power> from <playername>");
+    			sender.sendMessage(ChatColor.DARK_AQUA + version);
+    			sender.sendMessage(ChatColor.GOLD + "Use the command '/powers help' to list S87 Power's commands.");
     		}
     		else if(args.length >= 1)
     		{
@@ -54,11 +52,12 @@ public class S87Powers extends JavaPlugin
     			}
     			if(args[0].equalsIgnoreCase("help"))
     			{
-        			sender.sendMessage(ChatColor.GOLD + "/powers - Lists these help commands and the version number");
-        			sender.sendMessage(ChatColor.GOLD + "/powers list - Lists the powers");
-        			sender.sendMessage(ChatColor.GOLD + "/powers lookup <playername> - Looks up <playername>'s powers");
-        			sender.sendMessage(ChatColor.GOLD + "/powers add <power> <playername> - Gives <power> to <playername>");
-        			sender.sendMessage(ChatColor.GOLD + "/powers remove <power> <playername> - Removes <power> from <playername>");
+    				sender.sendMessage(ChatColor.GOLD + "/powers - Lists commands and shows version number");
+    				sender.sendMessage(ChatColor.GOLD + "/powers help - Lists commands");
+    				sender.sendMessage(ChatColor.GOLD + "/powers list - Lists the powers");
+    				sender.sendMessage(ChatColor.GOLD + "/powers lookup <playername> - Looks up <playername>'s powers");
+    				sender.sendMessage(ChatColor.GOLD + "/powers add <power> <playername> - Gives <power> to <playername>");
+    				sender.sendMessage(ChatColor.GOLD + "/powers remove <power> <playername> - Removes <power> from <playername>");
     			}
     			if(args[0].equalsIgnoreCase("list"))
     			{
