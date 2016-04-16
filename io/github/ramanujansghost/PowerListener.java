@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.*;
 
 
-public class PowerListeners implements Listener
+public class PowerListener implements Listener
 {
     ItemStack mu = new ItemStack(Material.MUTTON,1);
     ItemStack rb = new ItemStack(Material.REDSTONE,1);
