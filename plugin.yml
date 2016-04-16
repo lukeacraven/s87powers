@@ -3,6 +3,15 @@ main: io.github.ramanujansghost.Powers
 version: .01
 commands:
     powers:
-        description: This lists the powers
+        description: Shows help commands and the version number
     add:
         description: This adds the first argument (power) to the second argument (player)
+    help:
+        description: Shows commands
+    list:
+        description: Lists the powers
+    lookup:
+        description: Looks up <playername>'s powers
+    remove:
+        description: Removes <power> from <playername>
+    
