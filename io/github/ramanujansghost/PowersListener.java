@@ -24,6 +24,13 @@ public class PowersListener implements Listener
 	    
 		if(p.getInventory().getItemInMainHand().getType() == Material.STICK && p.getInventory().containsAtLeast(mutton, 1) && p.getInventory().containsAtLeast(redstone, 5))
 		{
+			InventoryHelper.removeReagents(p, mutton, 1);
+			InventoryHelper.removeReagents(p, redstone, 1);
+			
+			World test = p.getWorld();
+        	Set<Material> st = null;
+        	test.spawnEntity(p.getTargetBlock(st ,6).getLocation(), EntityType.SHEEP);
+			/*
 	        {
 	        	int want = 5;
 	        	int have = 0;
@@ -47,10 +54,7 @@ public class PowersListener implements Listener
 		        	p.getInventory().setItem(p.getInventory().first(Material.REDSTONE), rg);
 	        	}
 	        	p.updateInventory();
-	        	World test = p.getWorld();
-	        	Set<Material> st = null;
-	        	test.spawnEntity(p.getTargetBlock(st ,6).getLocation(), EntityType.SHEEP);
-	        }
+	        	 */
 	    }
 	}
 }
