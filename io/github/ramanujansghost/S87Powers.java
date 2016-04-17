@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class S87Powers extends JavaPlugin
 {
 	private static final String version = ".01";
+	public static final boolean debug = true;
 	
 	@Override
     public void onEnable()
@@ -58,6 +59,8 @@ public class S87Powers extends JavaPlugin
     				sender.sendMessage(ChatColor.GOLD + "/powers lookup <playername> - Looks up <playername>'s powers");
     				sender.sendMessage(ChatColor.GOLD + "/powers add <power> <playername> - Gives <power> to <playername>");
     				sender.sendMessage(ChatColor.GOLD + "/powers remove <power> <playername> - Removes <power> from <playername>");
+    				sender.sendMessage(ChatColor.GOLD + "/powers desc <power> - Shows <power>'s description");
+    				
     			}
     			if(args[0].equalsIgnoreCase("list"))
     			{

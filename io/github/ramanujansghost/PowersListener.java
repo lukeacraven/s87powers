@@ -22,39 +22,33 @@ public class PowersListener implements Listener
 	{
 	    Player p = event.getPlayer();	    
 	    
-		if(p.getInventory().getItemInMainHand().getType() == Material.STICK && p.getInventory().containsAtLeast(mutton, 1) && p.getInventory().containsAtLeast(redstone, 5))
+	    if(p.getInventory().getItemInMainHand().getType() == Material.MUTTON)
+	    {
+	    	if(InventoryHelper.checkForReagents(p, mutton, 1) && InventoryHelper.checkForReagents(p, redstone, 5))
+	    	{
+	    		InventoryHelper.removeReagents(p, mutton, 1);
+				InventoryHelper.removeReagents(p, redstone, 5);
+				
+				World test = p.getWorld();
+	        	Set<Material> st = null;
+	        	//test.spawnEntity(p.getTargetBlock(st,3).getLocation(), EntityType.SHEEP);
+	        	test.spawnEntity(p.getLocation(), EntityType.SHEEP);
+	    	}
+        	else
+    		{
+    			p.sendMessage("You do not have the necessary reagents!");
+    		}
+	    }
+	    /*
+		if(p.getInventory().getItemInMainHand().getType() == Material.MUTTON && p.getInventory().containsAtLeast(mutton, 1) && p.getInventory().containsAtLeast(redstone, 5))
 		{
 			InventoryHelper.removeReagents(p, mutton, 1);
-			InventoryHelper.removeReagents(p, redstone, 1);
+			InventoryHelper.removeReagents(p, redstone, 5);
 			
 			World test = p.getWorld();
         	Set<Material> st = null;
-        	test.spawnEntity(p.getTargetBlock(st ,6).getLocation(), EntityType.SHEEP);
-			/*
-	        {
-	        	int want = 5;
-	        	int have = 0;
-	        	ItemStack ap = p.getInventory().getItem(p.getInventory().first(Material.MUTTON));
-	        	
-	        	ap.setAmount(ap.getAmount()-1);
-	        	p.getInventory().setItem(p.getInventory().first(Material.MUTTON), ap);
-	        	while(have < want)
-	        	{
-		        	ItemStack rg = p.getInventory().getItem(p.getInventory().first(Material.REDSTONE));
-		        	if(rg.getAmount() < (want-have))
-	        		{
-		        		have += rg.getAmount();
-	        			rg.setAmount(0);
-	        		}
-		        	else
-		        	{
-		        		rg.setAmount(rg.getAmount()-(want-have));
-		        		have = want;
-		        	}
-		        	p.getInventory().setItem(p.getInventory().first(Material.REDSTONE), rg);
-	        	}
-	        	p.updateInventory();
-	        	 */
+        	test.spawnEntity(p.getTargetBlock(st,3).getLocation(), EntityType.SHEEP);
 	    }
+	    */	
 	}
 }
