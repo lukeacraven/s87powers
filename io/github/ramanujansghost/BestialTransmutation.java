@@ -88,7 +88,7 @@ public class BestialTransmutation extends Power
 	    if(consumeResources(p,"CHICKEN"))
     		spawnEntity(p, EntityType.CHICKEN, event.getAction());
 	    else
-	    	p.sendMessage("You do not have the necessary reagents to summon a chicken!  Requires 1 raw chicken and 2 redstone");
+	    	p.sendMessage("You do not have the necessary reagents to summon a chicken!  Requires 1 raw chicken and 2 redstone.");
 	}
 	
 	public void onMuttonUse(PlayerInteractEvent event)
@@ -98,7 +98,7 @@ public class BestialTransmutation extends Power
 		if(consumeResources(p,"SHEEP"))
 			spawnEntity(p, EntityType.SHEEP, event.getAction());
 	    else
-	    	p.sendMessage("You do not have the necessary reagents to summon a sheep!  Requires 1 mutton and 3 redstone.");
+	    	p.sendMessage("You do not have the necessary reagents to summon a sheep!  Requires 1 raw mutton and 3 redstone.");
 	}
 	
 	public void onRawBeefUse(PlayerInteractEvent event)
