@@ -4,8 +4,13 @@ import org.bukkit.entity.Player;
 
 public class PlayerHelper
 {
-	public static void damagePlayer(Player p, int damageAmount)
+	public static void damagePlayer(Player p, String damageSource, int damageAmount)
 	{
-		p.damage(damageAmount);
+		if(p.getHealth() <= damageAmount)
+		{
+			// Do stuff here if player is killed by damage!!
+		}
+		else
+			p.damage(damageAmount);
 	}
 }

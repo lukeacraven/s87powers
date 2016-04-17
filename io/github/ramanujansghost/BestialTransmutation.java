@@ -46,7 +46,7 @@ public class BestialTransmutation extends Power
 			{
 				InventoryHelper.removeReagents(p, rawChicken, 1);
 	    		InventoryHelper.removeReagents(p, redstone, 2);
-	    		PlayerHelper.damagePlayer(p, 2);
+	    		PlayerHelper.damagePlayer(p, "Transmutation", 2);
 	    		return true;
 			}
 			else
@@ -59,7 +59,7 @@ public class BestialTransmutation extends Power
 			{
 				InventoryHelper.removeReagents(p, mutton, 1);
 	    		InventoryHelper.removeReagents(p, redstone, 3);
-	    		PlayerHelper.damagePlayer(p, 4);
+	    		PlayerHelper.damagePlayer(p, "Transmutation", 4);
 	    		return true;
 			}
 			else
@@ -72,7 +72,7 @@ public class BestialTransmutation extends Power
 			{
 				InventoryHelper.removeReagents(p, rawBeef, 1);
 	    		InventoryHelper.removeReagents(p, redstone, 5);
-	    		PlayerHelper.damagePlayer(p, 5);
+	    		PlayerHelper.damagePlayer(p, "Transmutation", 5);
 	    		return true;
 			}
 			else
