@@ -113,6 +113,14 @@ public class PowersListener implements Listener
 		    {
 		    	bt.onMuttonUse(event);
 		    }
+		    if(event.getItem().getType() == Material.PORK && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK))
+		    {
+		    	bt.onPorkUse(event);
+		    }
+		    if(event.getItem().getType() == Material.RABBIT && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK))
+		    {
+		    	bt.onRabbitUse(event);
+		    }
 		    if(event.getItem().getType() == Material.RAW_BEEF && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK))
 		    {
 		    	bt.onRawBeefUse(event);
