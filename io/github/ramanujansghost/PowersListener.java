@@ -13,6 +13,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class PowersListener implements Listener
 {
+	BestialTransmutation bt = new BestialTransmutation();
+	
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
     	if(cmd.getName().equalsIgnoreCase("powers"))
@@ -97,17 +99,24 @@ public class PowersListener implements Listener
     	}	
         return false;
     }
-	
+    
 	@EventHandler
 	public void onPlayerUse(PlayerInteractEvent event)
 	{
 	    if(event.getItem() != null)
 	    {
+		    if(event.getItem().getType() == Material.RAW_CHICKEN && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK))
+		    {
+		    	bt.onRawChickenUse(event);
+		    }
 		    if(event.getItem().getType() == Material.MUTTON && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK))
 		    {
-		    	BestialTransmutation bt = new BestialTransmutation();
 		    	bt.onMuttonUse(event);
-		    }	
+		    }
+		    if(event.getItem().getType() == Material.RAW_BEEF && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK))
+		    {
+		    	bt.onRawBeefUse(event);
+		    }
 		}
 	}
 }

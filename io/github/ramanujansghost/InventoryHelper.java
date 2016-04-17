@@ -20,7 +20,7 @@ public class InventoryHelper
     	ItemStack firstItemStack;
     	PlayerInventory inventory = p.getInventory();
     	
-    	if(S87Powers.debug)
+    	if(S87Powers.debugInventoryHelper)
     		System.out.println("[S87 Powers] Removing " + amountToConsume + 
     				" " + item.getType() + " from " + p.getDisplayName());
     	
@@ -31,9 +31,9 @@ public class InventoryHelper
     		ItemStack remove = new ItemStack(item.getType(),1);
     		p.getInventory().removeItem(remove);
         	
-    		if(S87Powers.debug)
+    		if(S87Powers.debugInventoryHelper)
         		System.out.println("[S87 Powers] Amount is now " + firstItemStack.getAmount());
-        	if(S87Powers.debug)
+        	if(S87Powers.debugInventoryHelper)
         		System.out.println("[S87 Powers] Index of first found is: " + inventory.first(item.getType()));
         	
         	//inventory.setItem(inventory.first(item.getType()), firstItemStack);
