@@ -1,0 +1,5 @@
+sample.rank:
+       description: Sample Rank
+       default: false
+       children:
+          sample.perm

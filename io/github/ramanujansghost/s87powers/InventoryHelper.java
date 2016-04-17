@@ -1,4 +1,4 @@
-package io.github.ramanujansghost;
+package io.github.ramanujansghost.s87powers;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

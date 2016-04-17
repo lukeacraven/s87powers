@@ -1,4 +1,4 @@
-package io.github.ramanujansghost;
+package io.github.ramanujansghost.s87powers;
 
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -13,6 +13,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class PowersListener implements Listener
 {
+	AdministrationHelper ah = new AdministrationHelper();
 	BestialTransmutation bt = new BestialTransmutation();
 	
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
