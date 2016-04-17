@@ -7,7 +7,6 @@ import org.bukkit.inventory.PlayerInventory;
 // All InventoryHelper methods are to be implemented as static methods
 public class InventoryHelper
 {   
-	
     public static boolean checkForReagents(Player p, ItemStack item, int amount)
     {
     	if(p.getInventory().containsAtLeast(item, amount))
@@ -27,16 +26,13 @@ public class InventoryHelper
     	for(int amountConsumed = 0; amountConsumed < amountToConsume; amountConsumed++)
     	{
     		firstItemStack = inventory.getItem(inventory.first(item.getType()));
-    		//firstItemStack.setAmount(firstItemStack.getAmount() - 1);
-    		ItemStack remove = new ItemStack(item.getType(),1);
-    		p.getInventory().removeItem(remove);
+    		firstItemStack.setAmount(firstItemStack.getAmount() - 1);
+    		p.getInventory().setItem(inventory.first(item.getType()), firstItemStack);
         	
     		if(S87Powers.debug)
         		System.out.println("[S87 Powers] Amount is now " + firstItemStack.getAmount());
         	if(S87Powers.debug)
         		System.out.println("[S87 Powers] Index of first found is: " + inventory.first(item.getType()));
-        	
-        	//inventory.setItem(inventory.first(item.getType()), firstItemStack);
     	}
     }			        	
 }
