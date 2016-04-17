@@ -9,6 +9,7 @@ public class PlayerHelper
 		if(p.getHealth() <= damageAmount)
 		{
 			// Do stuff here if player is killed by damage!!
+			p.damage(damageAmount);
 		}
 		else
 			p.damage(damageAmount);
