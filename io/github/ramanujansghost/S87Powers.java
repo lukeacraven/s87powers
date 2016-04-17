@@ -4,7 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class S87Powers extends JavaPlugin
 {
-	public static final String version = "Powers Version .01";
+	public static final String version = "Powers Version .02";
 	public static final boolean debug = true;
 	
 	@Override
