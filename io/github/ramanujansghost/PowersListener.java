@@ -22,33 +22,35 @@ public class PowersListener implements Listener
 	{
 	    Player p = event.getPlayer();	    
 	    
-	    if(p.getInventory().getItemInMainHand().getType() == Material.MUTTON)
-	    {
-	    	if(InventoryHelper.checkForReagents(p, mutton, 1) && InventoryHelper.checkForReagents(p, redstone, 5))
-	    	{
-	    		InventoryHelper.removeReagents(p, mutton, 1);
+	    if(event.getItem() != null){
+		    if(event.getItem().getType() == Material.MUTTON)
+		    {
+		    	if(InventoryHelper.checkForReagents(p, mutton, 1) && InventoryHelper.checkForReagents(p, redstone, 5))
+		    	{
+		    		InventoryHelper.removeReagents(p, mutton, 1);
+				InventoryHelper.removeReagents(p, redstone, 5);
+					
+				World tempWorld = p.getWorld();
+		        	Set<Material> st = null;
+		        	tempWorld.spawnEntity(p.getTargetBlock(st,3).getLocation().add(0,1,0), EntityType.SHEEP);
+		        	//tempWorld.spawnEntity(p.getLocation(), EntityType.SHEEP);
+		    	}
+	        	else
+	    		{
+	    			p.sendMessage("You do not have the necessary reagents!");
+	    		}
+		    }
+		    /*
+			if(p.getInventory().getItemInMainHand().getType() == Material.MUTTON && p.getInventory().containsAtLeast(mutton, 1) && p.getInventory().containsAtLeast(redstone, 5))
+			{
+				InventoryHelper.removeReagents(p, mutton, 1);
 				InventoryHelper.removeReagents(p, redstone, 5);
 				
 				World test = p.getWorld();
 	        	Set<Material> st = null;
-	        	//test.spawnEntity(p.getTargetBlock(st,3).getLocation(), EntityType.SHEEP);
-	        	test.spawnEntity(p.getLocation(), EntityType.SHEEP);
-	    	}
-        	else
-    		{
-    			p.sendMessage("You do not have the necessary reagents!");
-    		}
-	    }
-	    /*
-		if(p.getInventory().getItemInMainHand().getType() == Material.MUTTON && p.getInventory().containsAtLeast(mutton, 1) && p.getInventory().containsAtLeast(redstone, 5))
-		{
-			InventoryHelper.removeReagents(p, mutton, 1);
-			InventoryHelper.removeReagents(p, redstone, 5);
-			
-			World test = p.getWorld();
-        	Set<Material> st = null;
-        	test.spawnEntity(p.getTargetBlock(st,3).getLocation(), EntityType.SHEEP);
-	    }
-	    */	
+	        	test.spawnEntity(p.getTargetBlock(st,3).getLocation(), EntityType.SHEEP);
+		    }
+		    */	
+		}
 	}
 }
