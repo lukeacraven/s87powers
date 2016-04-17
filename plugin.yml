@@ -1,5 +1,5 @@
  name: S87Powers
- version: .01
+ version: .02
  description: This plugin provides a variety of awesome powers for users to wield
  author: RamanujansGhost
  authors: [knightfallx66] 
@@ -10,4 +10,4 @@
  commands:
      powers:
      
- #Add commands
+ #Add commands and further documentation
