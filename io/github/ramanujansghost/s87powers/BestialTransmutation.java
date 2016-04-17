@@ -1,6 +1,7 @@
 package io.github.ramanujansghost.s87powers;
 
 import java.util.Set;
+import java.util.logging.Level;
 
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -27,10 +28,12 @@ public class BestialTransmutation extends Power
 	
 	public void spawnEntity(Player p, EntityType entityType, Action action)
 	{
+		World tempWorld = p.getWorld();
+    	Set<Material> st = null;
+		S87Powers.log.log(Level.INFO, "Spawning " + entityType.toString() + " for " + p.getDisplayName() + " via power " + this.getName());
 		if(action == Action.LEFT_CLICK_AIR)
 		{
-			World tempWorld = p.getWorld();
-	    	Set<Material> st = null;
+			
 	    	/*
 	    	 * If player left clicks on air, we attempt to spawn the animal closer to the
 	    	 * ground, but refrain from putting them into the ground.  This still allows the
@@ -44,11 +47,7 @@ public class BestialTransmutation extends Power
 	    		tempWorld.spawnEntity(p.getTargetBlock(st,2).getLocation(), entityType);	
 		}
     	else
-    	{
-    		World tempWorld = p.getWorld();
-	    	Set<Material> st = null;
 	    	tempWorld.spawnEntity(p.getTargetBlock(st,4).getLocation().add(0,1,0), entityType);
-    	}
 	}
 	
 	public boolean consumeResources(Player p, EntityType type)

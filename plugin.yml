@@ -1,5 +1,5 @@
  name: S87Powers
- version: .03
+ version: .04
  depend: [PermissionsEx, Vault]
  description: This plugin provides a variety of awesome powers for users to wield
  author: RamanujansGhost

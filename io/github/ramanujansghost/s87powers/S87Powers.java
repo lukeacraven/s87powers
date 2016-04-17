@@ -15,11 +15,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class S87Powers extends JavaPlugin
 {
-	private static final Logger log = Logger.getLogger("Minecraft");
-	public static final String version = "Powers Version .03";
-	public static final boolean debugInventoryHelper = true;
+	public static final Logger log = Logger.getLogger("Minecraft");
+	public static final String version = "Powers Version .04";
+	public static final boolean debugInventoryHelper = false;
 	public static final boolean debugPowers = true;
-	public static final boolean debugPermissions = true;
 	
 	private static final String permStrings[] = { "bestialtransmutation" };
 	
