@@ -31,13 +31,23 @@ public class BestialTransmutation extends Power
 		{
 			World tempWorld = p.getWorld();
 	    	Set<Material> st = null;
-	    	tempWorld.spawnEntity(p.getTargetBlock(st,1).getLocation(), entityType);
+	    	/*
+	    	 * If player left clicks on air, we attempt to spawn the animal closer to the
+	    	 * ground, but refrain from putting them into the ground.  This still allows the
+	    	 * player to "drop" their spawned animal off a cliff etc if they are intentional about it.
+	    	 */
+	    	if(p.getTargetBlock(st,2).getLocation().subtract(0,2,0).getBlock().getType() == Material.AIR)
+	    		tempWorld.spawnEntity(p.getTargetBlock(st,2).getLocation().subtract(0,2,0), entityType);
+	    	else if(p.getTargetBlock(st,2).getLocation().subtract(0,1,0).getBlock().getType() == Material.AIR)
+	    		tempWorld.spawnEntity(p.getTargetBlock(st,2).getLocation().subtract(0,1,0), entityType);
+	    	else
+	    		tempWorld.spawnEntity(p.getTargetBlock(st,2).getLocation(), entityType);	
 		}
     	else
     	{
     		World tempWorld = p.getWorld();
 	    	Set<Material> st = null;
-	    	tempWorld.spawnEntity(p.getTargetBlock(st,3).getLocation().add(0,1,0), entityType);
+	    	tempWorld.spawnEntity(p.getTargetBlock(st,4).getLocation().add(0,1,0), entityType);
     	}
 	}
 	
