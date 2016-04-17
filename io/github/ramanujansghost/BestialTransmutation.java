@@ -71,10 +71,10 @@ public class BestialTransmutation extends Power
 		
 		else if(type == EntityType.SHEEP)
 		{
-			if(InventoryHelper.checkForReagents(p, mutton, 1) && InventoryHelper.checkForReagents(p, redstone, 3))
+			if(InventoryHelper.checkForReagents(p, mutton, 1) && InventoryHelper.checkForReagents(p, redstone, 5))
 			{
 				InventoryHelper.removeReagents(p, mutton, 1);
-	    		InventoryHelper.removeReagents(p, redstone, 3);
+	    		InventoryHelper.removeReagents(p, redstone, 5);
 	    		PlayerHelper.damagePlayer(p, "Transmutation", 4);
 	    		return true;
 			}
@@ -97,10 +97,10 @@ public class BestialTransmutation extends Power
 		
 		else if(type == EntityType.COW)
 		{
-			if(InventoryHelper.checkForReagents(p, rawBeef, 1) && InventoryHelper.checkForReagents(p, redstone, 5))
+			if(InventoryHelper.checkForReagents(p, rawBeef, 1) && InventoryHelper.checkForReagents(p, redstone, 6))
 			{
 				InventoryHelper.removeReagents(p, rawBeef, 1);
-	    		InventoryHelper.removeReagents(p, redstone, 5);
+	    		InventoryHelper.removeReagents(p, redstone, 6);
 	    		PlayerHelper.damagePlayer(p, "Transmutation", 5);
 	    		return true;
 			}
@@ -137,7 +137,7 @@ public class BestialTransmutation extends Power
 		if(consumeResources(p,EntityType.SHEEP))
 			spawnEntity(p, EntityType.SHEEP, event.getAction());
 	    else
-	    	p.sendMessage("You do not have the necessary reagents to summon a sheep!  Requires 1 raw mutton and 3 redstone.");
+	    	p.sendMessage("You do not have the necessary reagents to summon a sheep!  Requires 1 raw mutton and 5 redstone.");
 	}
 	
 	public void onPorkUse(PlayerInteractEvent event)
@@ -157,6 +157,6 @@ public class BestialTransmutation extends Power
 		if(consumeResources(p,EntityType.COW))
 			spawnEntity(p, EntityType.COW, event.getAction());
 	    else
-	    	p.sendMessage("You do not have the necessary reagents to summon a cow!  Requires 1 raw beef and 5 redstone.");
+	    	p.sendMessage("You do not have the necessary reagents to summon a cow!  Requires 1 raw beef and 6 redstone.");
 	}
 }
