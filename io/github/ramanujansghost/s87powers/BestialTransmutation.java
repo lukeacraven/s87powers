@@ -13,24 +13,29 @@ import org.bukkit.inventory.ItemStack;
 
 public class BestialTransmutation extends Power
 {
-	ItemStack rawChicken = new ItemStack(Material.RAW_CHICKEN,1);
-	ItemStack rabbit = new ItemStack(Material.RABBIT,1);
-	ItemStack mutton = new ItemStack(Material.MUTTON,1);
-	ItemStack pork = new ItemStack(Material.PORK,1);
-	ItemStack rawBeef = new ItemStack(Material.RAW_BEEF,1);
-	
-    ItemStack redstone = new ItemStack(Material.REDSTONE,1);
-    
-	public BestialTransmutation()
+	@Override
+	public String getName()
 	{
-		//super(name, description, reagents);
+	    return getPowerName();
 	}
-	
-	public void spawnEntity(Player p, EntityType entityType, Action action)
+	@Override
+	public String getDescription()
+	{
+	    return getPowerDescription();
+	}
+	public static String getPowerName()
+	{
+		return "Bestial Transmutation";
+	}
+	public static String getPowerDescription()
+	{
+		return "Allows player to use 1 meat from a chicken, rabbit, sheep, pig, or cow, a varying amount of redstone, and life to create an animal";
+	}
+	public static void spawnEntity(Player p, EntityType entityType, Action action)
 	{
 		World tempWorld = p.getWorld();
     	Set<Material> st = null;
-		S87Powers.log.log(Level.INFO, "Spawning " + entityType.toString() + " for " + p.getDisplayName() + " via power " + this.getName());
+		S87Powers.log.log(Level.INFO, "Spawning " + entityType.toString() + " for " + p.getDisplayName() + " via power " + getPowerName());
 		if(action == Action.LEFT_CLICK_AIR)
 		{
 			
@@ -50,8 +55,16 @@ public class BestialTransmutation extends Power
 	    	tempWorld.spawnEntity(p.getTargetBlock(st,4).getLocation().add(0,1,0), entityType);
 	}
 	
-	public boolean consumeResources(Player p, EntityType type)
+	public static boolean consumeResources(Player p, EntityType type)
 	{
+		ItemStack rawChicken = new ItemStack(Material.RAW_CHICKEN,1);
+		ItemStack rabbit = new ItemStack(Material.RABBIT,1);
+		ItemStack mutton = new ItemStack(Material.MUTTON,1);
+		ItemStack pork = new ItemStack(Material.PORK,1);
+		ItemStack rawBeef = new ItemStack(Material.RAW_BEEF,1);
+		
+	    ItemStack redstone = new ItemStack(Material.REDSTONE,1);
+	    
 		if(type == EntityType.CHICKEN)
 		{
 			if(InventoryHelper.checkForReagents(p, rawChicken, 1) && InventoryHelper.checkForReagents(p, redstone, 2))
@@ -119,7 +132,7 @@ public class BestialTransmutation extends Power
 		return false;
 	}
 	
-	public void onRawChickenUse(PlayerInteractEvent event)
+	public static void onRawChickenUse(PlayerInteractEvent event)
 	{
 		Player p = event.getPlayer();
 	    
@@ -129,7 +142,7 @@ public class BestialTransmutation extends Power
 	    	p.sendMessage("You do not have the necessary reagents to summon a chicken!  Requires 1 raw chicken and 2 redstone.");
 	}
 	
-	public void onRabbitUse(PlayerInteractEvent event)
+	public static void onRabbitUse(PlayerInteractEvent event)
 	{
 		Player p = event.getPlayer();
 	    
@@ -139,7 +152,7 @@ public class BestialTransmutation extends Power
 	    	p.sendMessage("You do not have the necessary reagents to summon a rabbit!  Requires 1 rabbit and 2 redstone.");
 	}
 	
-	public void onMuttonUse(PlayerInteractEvent event)
+	public static void onMuttonUse(PlayerInteractEvent event)
 	{
 		Player p = event.getPlayer();
 	    
@@ -149,7 +162,7 @@ public class BestialTransmutation extends Power
 	    	p.sendMessage("You do not have the necessary reagents to summon a sheep!  Requires 1 raw mutton and 5 redstone.");
 	}
 	
-	public void onPorkUse(PlayerInteractEvent event)
+	public static void onPorkUse(PlayerInteractEvent event)
 	{
 		Player p = event.getPlayer();
 	    
@@ -159,7 +172,7 @@ public class BestialTransmutation extends Power
 	    	p.sendMessage("You do not have the necessary reagents to summon a pig!  Requires 1 raw porkchop and 3 redstone.");
 	}
 	
-	public void onRawBeefUse(PlayerInteractEvent event)
+	public static void onRawBeefUse(PlayerInteractEvent event)
 	{
 		Player p = event.getPlayer();
 	    

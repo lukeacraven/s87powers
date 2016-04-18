@@ -1,50 +1,13 @@
 package io.github.ramanujansghost.s87powers;
 
-public class Power
+public abstract class Power
 {
-	public String name;
-	public String description;
-	public String reagents;
-	
-	public Power()	// Do not use this constructor -- use the constructor with a parameter list
-	{
-		name = "EMPTY";
-		description = "EMPTY";
-		reagents = "EMPTY";
-	}
-	
-	public Power(String name, String description, String reagents)
-	{
-		this.name = name;
-		this.description = description;
-		this.reagents = reagents;
-	}
-	
-	/*	These setters are commented out because they shouldn't be necessary
-	public void setName(String str)
-	{
-		name = str;
-	}
-	public void setDescription(String str)
-	{
-		description = str;
-	}
-	public void setReagents(String str)
-	{
-		reagents = str;
-	}
-	*/
-	
 	public String getName()
 	{
-		return name;
+	    throw new IllegalArgumentException ("Child class did not declare an overridden getName() method using a static getPowerName() method.  This must be done so the power's name can be found easily.");
 	}
 	public String getDescription()
 	{
-		return description;
-	}
-	public String getReagents()
-	{
-		return reagents;
+		throw new IllegalArgumentException ("Child class did not declare an overridden getName() method using a static getPowerName() method.  This must be done so the power's description can be found easily.");
 	}
 }

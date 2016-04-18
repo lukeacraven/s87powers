@@ -9,9 +9,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class PowersListener implements Listener
 {
-	BestialTransmutation bt = new BestialTransmutation();
-	
-    
 	@EventHandler
 	public void onPlayerUse(PlayerInteractEvent event)
 	{
@@ -21,23 +18,23 @@ public class PowersListener implements Listener
 	    	{
 	    		if(event.getItem().getType() == Material.RAW_CHICKEN && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK))
 			    {
-			    	bt.onRawChickenUse(event);
+	    			BestialTransmutation.onRawChickenUse(event);
 			    }
 			    if(event.getItem().getType() == Material.MUTTON && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK))
 			    {
-			    	bt.onMuttonUse(event);
+			    	BestialTransmutation.onMuttonUse(event);
 			    }
 			    if(event.getItem().getType() == Material.PORK && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK))
 			    {
-			    	bt.onPorkUse(event);
+			    	BestialTransmutation.onPorkUse(event);
 			    }
 			    if(event.getItem().getType() == Material.RABBIT && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK))
 			    {
-			    	bt.onRabbitUse(event);
+			    	BestialTransmutation.onRabbitUse(event);
 			    }
 			    if(event.getItem().getType() == Material.RAW_BEEF && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK))
 			    {
-			    	bt.onRawBeefUse(event);
+			    	BestialTransmutation.onRawBeefUse(event);
 			    }
 	    	}
 		}
