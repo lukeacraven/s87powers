@@ -19,6 +19,7 @@ public class S87Powers extends JavaPlugin
 	public static final String version = "Powers Version .04";
 	public static final boolean debugInventoryHelper = false;
 	public static final boolean debugPowers = true;
+	public static boolean isFactionsEnabled = false;
 	
 	private static final String permStrings[] = { "bestialtransmutation", "lumberjack" };
 	
@@ -31,10 +32,24 @@ public class S87Powers extends JavaPlugin
         return perms != null;
     }
 	
+	private boolean checkIfFactionsIsEnabled()
+	{
+		if(getServer().getPluginManager().getPlugin("Factions") != null)
+		{
+			if(getServer().getPluginManager().getPlugin("Factions").isEnabled())
+			{
+				log.log(Level.INFO, "Factions was successfully detected.");
+				isFactionsEnabled = true;
+			}
+		}
+		return false;
+	}
+	
 	@Override
     public void onEnable()
     {	
     	setUpPermissions();
+    	checkIfFactionsIsEnabled();
     	getServer().getPluginManager().registerEvents(new PowersListener(), this);
     }
 	
