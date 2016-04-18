@@ -2,6 +2,7 @@ package io.github.ramanujansghost.s87powers;
 
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -37,6 +38,20 @@ public class PowersListener implements Listener
 			    	BestialTransmutation.onRawBeefUse(event);
 			    }
 	    	}
+		}
+	}
+	
+	@EventHandler
+	public void onPlayerBlockBreak(BlockBreakEvent event)
+	{
+		if(!event.isCancelled())
+		{
+			if(event.getPlayer().hasPermission("s87powers.lumberjack"));
+			{
+				// Add check to see if player is wielding axe
+				if((event.getBlock().getType() == Material.LOG || event.getBlock().getType() == Material.LOG_2))
+					Lumberjack.onLogBreak(event);
+			}
 		}
 	}
 }

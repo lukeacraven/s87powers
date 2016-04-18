@@ -20,7 +20,7 @@ public class S87Powers extends JavaPlugin
 	public static final boolean debugInventoryHelper = false;
 	public static final boolean debugPowers = true;
 	
-	private static final String permStrings[] = { "bestialtransmutation" };
+	private static final String permStrings[] = { "bestialtransmutation", "lumberjack" };
 	
 	public static Permission perms = null;
 	
@@ -153,7 +153,7 @@ public class S87Powers extends JavaPlugin
     		if(powersCount > 0)
     			sender.sendMessage(p.getDisplayName() + " has " + powersCount + " powers");
     		else
-    			sender.sendMessage(p.getDisplayName() + " has no powers :( ");
+    			sender.sendMessage(p.getDisplayName() + " has no powers :(");
     		
     	}
     	else
