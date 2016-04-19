@@ -21,11 +21,12 @@ public class S87Powers extends JavaPlugin
 {
 	public static final Logger log = Logger.getLogger("Minecraft");
 	public static final String version = "Powers Version .05";
-	public static final boolean debugInventoryHelper = false;
-	public static final boolean debugPowers = true;
+	public static final boolean debugInventoryHelper = true;
+	public static final boolean debugLumberjack = false;
 	public static boolean isFactionsEnabled = false;
 	
 	private static final String permStrings[] = { "bestialtransmutation", "lumberjack" };
+	
 	
 	public static Permission perms = null;
 	
@@ -48,6 +49,7 @@ public class S87Powers extends JavaPlugin
 					{
 						log.log(Level.INFO, "Factions and MassiveCore were successfully detected.");
 						isFactionsEnabled = true;
+						return true;
 					}
 					else
 						log.log(Level.WARNING, "MassiveCore could not be detected");
