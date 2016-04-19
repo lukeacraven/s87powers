@@ -81,7 +81,7 @@ public class Lumberjack extends Power
 	public static void breakAdjacentBlocks(Player p, Block block)	//use a for loop here and check a 3x3 cube centered on the given block, but do not check center block.
 	{
 		if(S87Powers.debugPowers)
-			S87Powers.log.log(Level.INFO, "Received block" + block.getX() + ", " + block.getY() + ", " + block.getZ());
+			S87Powers.log.log(Level.INFO, "Received block " + block.getX() + ", " + block.getY() + ", " + block.getZ());
 			
 		//check +1y
 		if(block.getLocation().add(0,1,0).getBlock().getType() == Material.LOG 

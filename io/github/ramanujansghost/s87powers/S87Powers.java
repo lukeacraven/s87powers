@@ -20,7 +20,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class S87Powers extends JavaPlugin
 {
 	public static final Logger log = Logger.getLogger("Minecraft");
-	public static final String version = "Powers Version .04";
+	public static final String version = "Powers Version .05";
 	public static final boolean debugInventoryHelper = false;
 	public static final boolean debugPowers = true;
 	public static boolean isFactionsEnabled = false;

@@ -1,5 +1,5 @@
  name: S87Powers
- version: .04
+ version: .05
  depend: [PermissionsEx, Vault]
  softdepend: [Factions]
  description: This plugin provides a variety of awesome powers for users to wield
