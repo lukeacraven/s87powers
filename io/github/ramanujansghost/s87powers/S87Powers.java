@@ -1,12 +1,16 @@
 package io.github.ramanujansghost.s87powers;
 
 import net.milkbowl.vault.permission.Permission;
+import com.massivecraft.factions.engine.EngineMain;
+import com.massivecraft.massivecore.ps.PS;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -38,18 +42,42 @@ public class S87Powers extends JavaPlugin
 		{
 			if(getServer().getPluginManager().getPlugin("Factions").isEnabled())
 			{
-				log.log(Level.INFO, "Factions was successfully detected.");
-				isFactionsEnabled = true;
+				if(getServer().getPluginManager().getPlugin("MassiveCore") != null)
+				{
+					if(getServer().getPluginManager().getPlugin("MassiveCore").isEnabled())
+					{
+						log.log(Level.INFO, "Factions and MassiveCore were successfully detected.");
+						isFactionsEnabled = true;
+					}
+					else
+						log.log(Level.WARNING, "MassiveCore could not be detected");
+				}
+				else
+					log.log(Level.WARNING, "MassiveCore could not be detected");
 			}
+			else
+				log.log(Level.WARNING, "Factions could not be detected");
 		}
+		else
+			log.log(Level.WARNING, "Factions could not be detected");
 		return false;
+	}
+	
+	public static boolean canPlayerBuildAt(Player p, Location loc, Block block)
+	{
+		if(isFactionsEnabled)
+		{
+			PS testPS = PS.valueOf(loc.getChunk());
+			return EngineMain.canPlayerBuildAt(p, testPS, false);
+		}
+		return true;
 	}
 	
 	@Override
     public void onEnable()
     {	
     	setUpPermissions();
-    	checkIfFactionsIsEnabled();
+		checkIfFactionsIsEnabled();
     	getServer().getPluginManager().registerEvents(new PowersListener(), this);
     }
 	

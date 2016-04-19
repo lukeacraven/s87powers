@@ -3,6 +3,8 @@ package io.github.ramanujansghost.s87powers;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+
+
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -49,7 +51,13 @@ public class PowersListener implements Listener
 			if(event.getPlayer().hasPermission("s87powers.lumberjack"));
 			{
 				// Add check to see if player is wielding axe
-				if((event.getBlock().getType() == Material.LOG || event.getBlock().getType() == Material.LOG_2))
+				if((event.getPlayer().getEquipment().getItemInMainHand().getType() == Material.DIAMOND_AXE 
+						|| event.getPlayer().getEquipment().getItemInMainHand().getType() == Material.GOLD_AXE
+						|| event.getPlayer().getEquipment().getItemInMainHand().getType() == Material.IRON_AXE
+						|| event.getPlayer().getEquipment().getItemInMainHand().getType() == Material.STONE_AXE
+						|| event.getPlayer().getEquipment().getItemInMainHand().getType() == Material.WOOD_AXE)
+						&& ((event.getBlock().getType() == Material.LOG
+						|| event.getBlock().getType() == Material.LOG_2)))
 					Lumberjack.onLogBreak(event);
 			}
 		}
