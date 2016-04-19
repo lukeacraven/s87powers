@@ -2,7 +2,6 @@ package io.github.ramanujansghost.s87powers;
 
 import java.util.logging.Level;
 
-import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
