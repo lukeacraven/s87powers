@@ -2,6 +2,8 @@ package io.github.ramanujansghost.s87powers;
 
 import java.util.logging.Level;
 
+import org.bukkit.Effect;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -9,6 +11,13 @@ import org.bukkit.inventory.PlayerInventory;
 // All InventoryHelper methods are to be implemented as static methods
 public class InventoryHelper
 {   
+	public static void breakTool(Player p, ItemStack item)
+	{
+		if(S87Powers.debugInventoryHelper)
+			S87Powers.log.log(Level.INFO, "Trying to remove " + item.getType());
+		p.getInventory().removeItem(item);
+		p.playSound(p.getLocation(), Sound.ENTITY_ITEM_BREAK, 10, 0);
+	}
 	
     public static boolean checkForReagents(Player p, ItemStack item, int amount)
     {
