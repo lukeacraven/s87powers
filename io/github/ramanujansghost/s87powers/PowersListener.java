@@ -5,6 +5,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -15,23 +16,33 @@ public class PowersListener implements Listener
 	{
 	    if(event.getItem() != null)
 	    {
-	    	if(event.getPlayer().hasPermission("s87powers.bestialtransmutation"))
-	    	{
-	    		Material itemUsed = event.getItem().getType();
-	    		Action actionPerformed = event.getAction();
-	    		if((itemUsed == Material.RAW_CHICKEN
-	    				|| itemUsed == Material.RABBIT
-	    				|| itemUsed == Material.MUTTON
-	    				|| itemUsed == Material.PORK
-	    				|| itemUsed == Material.RAW_BEEF)
-	    				&&
-	    				(actionPerformed == Action.LEFT_CLICK_AIR
-	    				|| actionPerformed == Action.LEFT_CLICK_BLOCK))
-			    {
-	    			BestialTransmutation bestialtransmutation = new BestialTransmutation();
-	    			bestialtransmutation.onRawMeatUse(event);
-			    }
-	    	}
+	    	Material itemUsed = event.getItem().getType();
+    		Action actionPerformed = event.getAction();
+    		Player p = event.getPlayer();
+    		
+    		if((itemUsed == Material.RAW_CHICKEN
+    				|| itemUsed == Material.RABBIT
+    				|| itemUsed == Material.MUTTON
+    				|| itemUsed == Material.PORK
+    				|| itemUsed == Material.RAW_BEEF)
+    				&&
+    				(p.hasPermission("s87powers.bestialtransmutation"))
+    				&&
+    				(actionPerformed == Action.LEFT_CLICK_AIR
+    				|| actionPerformed == Action.LEFT_CLICK_BLOCK))
+		    {
+    			BestialTransmutation bestialTransmutation = new BestialTransmutation();
+    			bestialTransmutation.onRawMeatUse(event);
+		    }
+    		if((itemUsed == Material.BONE)
+    				&&
+    				(actionPerformed == Action.RIGHT_CLICK_AIR
+    				|| actionPerformed == Action.RIGHT_CLICK_BLOCK)
+    				&& (p.hasPermission("s87powers.wolfpack")))
+    		{
+    			WolfPack wolfPack = new WolfPack();
+    			wolfPack.onBoneRightClick(event);
+    		}	
 		}
 	}
 	

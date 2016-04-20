@@ -4,6 +4,8 @@ import net.milkbowl.vault.permission.Permission;
 import com.massivecraft.factions.engine.EngineMain;
 import com.massivecraft.massivecore.ps.PS;
 
+import java.util.HashMap;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +27,9 @@ public class S87Powers extends JavaPlugin
 	public static final boolean debugLumberjack = false;
 	public static boolean isFactionsEnabled = false;
 	
-	private static final String permStrings[] = { "bestialtransmutation", "lumberjack" };
+	public static HashMap<UUID, Long> timeSinceWolfSummon = new HashMap<UUID, Long>();
+	private static final String permStrings[] = { "bestialtransmutation", "lumberjack", "wolfpack" };
+	private static final String powerStrings[] = { "Bestial Transmutation", "Lumberjack", "Wolfpack" };
 	
 	
 	public static Permission perms = null;
@@ -68,10 +72,7 @@ public class S87Powers extends JavaPlugin
 	public static boolean canPlayerBuildAt(Player p, Location loc, Block block)
 	{
 		if(isFactionsEnabled)
-		{
-			PS testPS = PS.valueOf(loc.getChunk());
-			return EngineMain.canPlayerBuildAt(p, testPS, false);
-		}
+			return EngineMain.canPlayerBuildAt(p, PS.valueOf(loc.getChunk()), false);
 		return true;
 	}
 	
@@ -115,7 +116,7 @@ public class S87Powers extends JavaPlugin
     			}
     			if(args[0].equalsIgnoreCase("help"))
     			{
-    				sender.sendMessage(ChatColor.GOLD + "/powers - Lists commands and shows version number");
+    				sender.sendMessage(ChatColor.GOLD + "/powers - Shows version number");
     				sender.sendMessage(ChatColor.GOLD + "/powers help - Lists commands");
     				sender.sendMessage(ChatColor.GOLD + "/powers list - Lists the powers");
     				sender.sendMessage(ChatColor.GOLD + "/powers lookup <playername> - Looks up <playername>'s powers");
@@ -127,9 +128,9 @@ public class S87Powers extends JavaPlugin
     			if(args[0].equalsIgnoreCase("list"))
     			{
     				sender.sendMessage("The powers are as follows: ");
-    				for(int i = 0; i < permStrings.length; i++)
+    				for(int i = 0; i < powerStrings.length; i++)
     				{
-    					sender.sendMessage(permStrings[i]);
+    					sender.sendMessage(powerStrings[i]);
     				}
     			}
     			if(args[0].equalsIgnoreCase("lookup"))
@@ -210,8 +211,8 @@ public class S87Powers extends JavaPlugin
 	public static boolean addPower(CommandSender sender, String permissionString, String playerString)
 	{
 		Player p = Bukkit.getServer().getPlayer(playerString);
-		boolean isValidPerm = false;
 		
+		boolean isValidPerm = false;
 		if(p != null)
 		{
 			for(int i = 0; i < permStrings.length; i++)
