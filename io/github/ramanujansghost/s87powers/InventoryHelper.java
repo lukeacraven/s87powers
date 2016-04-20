@@ -25,7 +25,7 @@ public class InventoryHelper
     	else
     		return false;
     }
-    public static void removeReagents(Player p, ItemStack item, int amountToConsume)
+    public void removeReagents(Player p, ItemStack item, int amountToConsume)
     {
     	ItemStack firstItemStack;
     	PlayerInventory inventory = p.getInventory();
@@ -38,7 +38,7 @@ public class InventoryHelper
     	{
     		firstItemStack = inventory.getItem(inventory.first(item.getType()));
     		ItemStack remove = new ItemStack(item.getType(),1);
-    		p.getInventory().removeItem(remove);
+    		inventory.removeItem(remove);
         	
     		if(S87Powers.debugInventoryHelper)
     			S87Powers.log.log(Level.INFO,  "Amount is now " + firstItemStack.getAmount());

@@ -13,3 +13,7 @@ s87powers.lookup:
 s87powers.bestialtransmutation:
        description: Allows player to spawn animals using life, meat, and redstone
        default: false
+       
+s87powers.lumberjack:
+       description: Allows player to rapidly cut down trees
+       default: false

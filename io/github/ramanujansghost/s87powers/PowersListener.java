@@ -4,11 +4,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 
-
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
-
 
 public class PowersListener implements Listener
 {
@@ -19,25 +17,19 @@ public class PowersListener implements Listener
 	    {
 	    	if(event.getPlayer().hasPermission("s87powers.bestialtransmutation"))
 	    	{
-	    		if(event.getItem().getType() == Material.RAW_CHICKEN && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK))
+	    		Material itemUsed = event.getItem().getType();
+	    		Action actionPerformed = event.getAction();
+	    		if((itemUsed == Material.RAW_CHICKEN
+	    				|| itemUsed == Material.RABBIT
+	    				|| itemUsed == Material.MUTTON
+	    				|| itemUsed == Material.PORK
+	    				|| itemUsed == Material.RAW_BEEF)
+	    				&&
+	    				(actionPerformed == Action.LEFT_CLICK_AIR
+	    				|| actionPerformed == Action.LEFT_CLICK_BLOCK))
 			    {
-	    			BestialTransmutation.onRawChickenUse(event);
-			    }
-			    if(event.getItem().getType() == Material.MUTTON && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK))
-			    {
-			    	BestialTransmutation.onMuttonUse(event);
-			    }
-			    if(event.getItem().getType() == Material.PORK && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK))
-			    {
-			    	BestialTransmutation.onPorkUse(event);
-			    }
-			    if(event.getItem().getType() == Material.RABBIT && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK))
-			    {
-			    	BestialTransmutation.onRabbitUse(event);
-			    }
-			    if(event.getItem().getType() == Material.RAW_BEEF && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK))
-			    {
-			    	BestialTransmutation.onRawBeefUse(event);
+	    			BestialTransmutation bestialtransmutation = new BestialTransmutation();
+	    			bestialtransmutation.onRawMeatUse(event);
 			    }
 	    	}
 		}
@@ -46,20 +38,23 @@ public class PowersListener implements Listener
 	@EventHandler
 	public void onPlayerBlockBreak(BlockBreakEvent event)
 	{
-		if(!event.isCancelled())
-		{
-			if(event.getPlayer().hasPermission("s87powers.lumberjack"));
+			if(event.getPlayer().hasPermission("s87powers.lumberjack"))
 			{
+				Material itemUsed = event.getPlayer().getEquipment().getItemInMainHand().getType();
+				Material blockBroken = event.getBlock().getType();
 				// Add check to see if player is wielding axe
-				if((event.getPlayer().getEquipment().getItemInMainHand().getType() == Material.DIAMOND_AXE 
-						|| event.getPlayer().getEquipment().getItemInMainHand().getType() == Material.GOLD_AXE
-						|| event.getPlayer().getEquipment().getItemInMainHand().getType() == Material.IRON_AXE
-						|| event.getPlayer().getEquipment().getItemInMainHand().getType() == Material.STONE_AXE
-						|| event.getPlayer().getEquipment().getItemInMainHand().getType() == Material.WOOD_AXE)
-						&& ((event.getBlock().getType() == Material.LOG
-						|| event.getBlock().getType() == Material.LOG_2)))
-					Lumberjack.onLogBreak(event);
+				if((itemUsed == Material.DIAMOND_AXE 
+					|| itemUsed == Material.GOLD_AXE
+					|| itemUsed == Material.IRON_AXE
+					|| itemUsed == Material.STONE_AXE
+					|| itemUsed == Material.WOOD_AXE)
+					&&
+					((blockBroken == Material.LOG
+					|| blockBroken == Material.LOG_2)))
+				{
+					Lumberjack lumberjack = new Lumberjack();
+					lumberjack.onLogBreak(event);
+				}		
 			}
-		}
 	}
 }

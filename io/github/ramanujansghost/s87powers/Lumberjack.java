@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class Lumberjack extends Power
 {
-	private static short blocksBroken = 0;
+	private short blocksBroken = 0;
 	private static final int goldAxeDurability = 33;
 	private static final int woodAxeDurability = 60;
 	private static final int stoneAxeDurability = 132;
@@ -36,7 +36,7 @@ public class Lumberjack extends Power
 	{
 		return "Allows player to rapidly cut down trees";
 	}
-	public static void onLogBreak(BlockBreakEvent event)
+	public void onLogBreak(BlockBreakEvent event)
 	{
 		short initialDurability = 0;
 		short damageCaused = 0;
@@ -99,7 +99,7 @@ public class Lumberjack extends Power
 	}
 	
 	//make breakAdjacentBlocks method damage player's axe
-	public static void breakAdjacentBlocks(Player p, Block block)	//use a for loop here and check a 3x3 cube centered on the given block, but do not check center block.
+	public void breakAdjacentBlocks(Player p, Block block)	//use a for loop here and check a 3x3 cube centered on the given block, but do not check center block.
 	{
 		if(S87Powers.debugLumberjack)
 			S87Powers.log.log(Level.INFO, "Received block at " + block.getX() + ", " + block.getY() + ", " + block.getZ() + " checking around block.");
