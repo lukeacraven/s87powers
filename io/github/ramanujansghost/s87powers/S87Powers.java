@@ -24,13 +24,12 @@ public class S87Powers extends JavaPlugin
 	public static final Logger log = Logger.getLogger("Minecraft");
 	public static final String version = "Powers Version .06";
 	public static final boolean debugInventoryHelper = true;
-	public static final boolean debugLumberjack = false;
+	public static final boolean debugLumberjack = true;
 	public static boolean isFactionsEnabled = false;
 	
 	public static HashMap<UUID, Long> timeSinceWolfSummon = new HashMap<UUID, Long>();
 	private static final String permStrings[] = { "bestialtransmutation", "lumberjack", "wolfpack" };
 	private static final String powerStrings[] = { "Bestial Transmutation", "Lumberjack", "Wolfpack" };
-	
 	
 	public static Permission perms = null;
 	

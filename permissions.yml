@@ -21,3 +21,7 @@ s87powers.lumberjack:
 s87powers.wolfpack:
        description: Allows player to spawn up to 3 wolves every 5 minutes
        default: false
+       
+s87powers.reflexes:
+       description: Allows player to catch incoming arrows
+       default: false

@@ -15,13 +15,24 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class WolfPack
+public class WolfPack implements Power
 {
 	ItemStack bone = new ItemStack(Material.BONE,1);
-	
+	public String getName()
+	{
+		return "WolfPack";
+	}
+	public String getType()
+	{
+		return "Combat";
+	}
+	public String getDescription()
+	{
+		return "When a player with this power right clicks, they will summon some wolves.";
+	}
 	private int checkForWolves(Player p)
 	{
-		S87Powers.log.log(Level.INFO, "checkWolves");
+		//S87Powers.log.log(Level.INFO, "checkWolves");
 		int amountOfWolves = 0;
 		World tempWorld = p.getWorld();
 		List<Entity> entities = tempWorld.getEntities();
@@ -38,7 +49,7 @@ public class WolfPack
 		        }
 		    }
 		}
-		S87Powers.log.log(Level.INFO, String.valueOf(amountOfWolves));
+		//S87Powers.log.log(Level.INFO, String.valueOf(amountOfWolves));
 		return amountOfWolves;
 	}
 	
@@ -71,7 +82,7 @@ public class WolfPack
 	
 	private void spawnWolf(Player p)
 	{
-		S87Powers.log.log(Level.INFO, "Spawning wolf");
+		//S87Powers.log.log(Level.INFO, "Spawning wolf");
 		Random r = new Random();
 		World tempWorld = p.getWorld();
 		int close = 2; //minimum blocks AWAY from the player it has to spawn
@@ -93,13 +104,13 @@ public class WolfPack
 		Entity spawnedWolf = tempWorld.spawnEntity(p.getLocation(), EntityType.WOLF);
 		
 		((Tameable)spawnedWolf).setOwner(p);
-		S87Powers.log.log(Level.INFO, "Spawning wolf2");
+		//S87Powers.log.log(Level.INFO, "Spawning wolf2");
 	}
 	
 	public void onBoneRightClick(PlayerInteractEvent event)
 	{
 		Player p = event.getPlayer();
-		S87Powers.log.log(Level.INFO, "rightclick");
+		//S87Powers.log.log(Level.INFO, "rightclick");
 		
 		if(canPlayerSpawnWolves(p))
 		{
@@ -118,7 +129,14 @@ public class WolfPack
 					spawnWolf(p);
 					spawnedWolves++;
 				}
-				p.sendMessage("The wolves heard you howling for help. " + spawnedWolves + " wolves have joined your side.");
+				if(spawnedWolves == 1)
+				{
+					p.sendMessage("The wolves heard you howling for help.  " + spawnedWolves + " wolf has joined your side.");
+				}
+				else
+				{
+					p.sendMessage("The wolves heard you howling for help.  " + spawnedWolves + " wolves have joined your side.");
+				}
 				S87Powers.timeSinceWolfSummon.put(p.getUniqueId(), System.currentTimeMillis());
 			}	
 		}

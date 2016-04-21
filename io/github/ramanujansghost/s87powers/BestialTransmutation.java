@@ -11,7 +11,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class BestialTransmutation extends Power
+public class BestialTransmutation implements Power
 {
 	private static final ItemStack rawChicken = new ItemStack(Material.RAW_CHICKEN,1);
 	private static final ItemStack rabbit = new ItemStack(Material.RABBIT,1);
@@ -21,21 +21,15 @@ public class BestialTransmutation extends Power
 	
 	private static final ItemStack redstone = new ItemStack(Material.REDSTONE,1);
 	
-	@Override
 	public String getName()
-	{
-	    return getPowerName();
-	}
-	@Override
-	public String getDescription()
-	{
-	    return getPowerDescription();
-	}
-	public static String getPowerName()
 	{
 		return "Bestial Transmutation";
 	}
-	public static String getPowerDescription()
+	public String getType()
+	{
+		return "Utility";
+	}
+	public String getDescription()
 	{
 		return "Allows player to use 1 meat from a chicken, rabbit, sheep, pig, or cow, a varying amount of redstone, and life to create an animal";
 	}
@@ -43,7 +37,7 @@ public class BestialTransmutation extends Power
 	{
 		World tempWorld = p.getWorld();
     	Set<Material> st = null;
-		S87Powers.log.log(Level.INFO, "Spawning " + entityType.toString() + " for " + p.getDisplayName() + " via power " + getPowerName());
+		S87Powers.log.log(Level.INFO, "Spawning " + entityType.toString() + " for " + p.getDisplayName() + " via power " + getName());
 		if(action == Action.LEFT_CLICK_AIR)
 		{
 			
