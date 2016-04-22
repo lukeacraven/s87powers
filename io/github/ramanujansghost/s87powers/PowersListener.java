@@ -3,8 +3,12 @@ package io.github.ramanujansghost.s87powers;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
+
+import java.util.logging.Level;
 
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -67,5 +71,20 @@ public class PowersListener implements Listener
 					lumberjack.onLogBreak(event);
 				}		
 			}
+	}
+	@EventHandler
+	public void onBowShootEvent(EntityShootBowEvent event)
+	{
+		//S87Powers.log.log(Level.INFO, "EntityShootBowEvent");
+		if(event.getEntity().getType() == EntityType.PLAYER)
+		{
+			//S87Powers.log.log(Level.INFO, "EntityShootBowEvent player detected");
+			if(event.getEntity().hasPermission("s87powers.chargebowtoggled"))
+			{
+				//S87Powers.log.log(Level.INFO, "EntityShootBowEvent perms detected");
+				ChargeBow chargeBow = new ChargeBow();
+				chargeBow.onBowShootEvent(event);
+			}
+		}
 	}
 }

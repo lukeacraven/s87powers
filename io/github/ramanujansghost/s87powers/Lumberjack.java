@@ -1,5 +1,8 @@
 package io.github.ramanujansghost.s87powers;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.logging.Level;
 
 import org.bukkit.Material;
@@ -9,32 +12,28 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class Lumberjack extends Power
+public class Lumberjack implements Power
 {
 	private short blocksBroken = 0;
+	private int maxBlocksToBreak = 0;
+	Queue<Block> destroyQueue = new LinkedList<Block>();
 	private static final int goldAxeDurability = 33;
 	private static final int woodAxeDurability = 60;
 	private static final int stoneAxeDurability = 132;
 	private static final int ironAxeDurability = 251;
 	private static final int diamondAxeDurability = 1562;
 	
-	@Override
 	public String getName()
 	{
-	    return getPowerName();
+	    return "Lumberjack";
 	}
-	@Override
+	public String getType()
+	{
+		return "Utility";
+	}
 	public String getDescription()
 	{
-	    return getPowerDescription();
-	}
-	public static String getPowerName()
-	{
-		return "Lumberjack";
-	}
-	public static String getPowerDescription()
-	{
-		return "Allows player to rapidly cut down trees";
+	    return "Allows player to rapidly cut down trees.";
 	}
 	public void onLogBreak(BlockBreakEvent event)
 	{
@@ -47,8 +46,18 @@ public class Lumberjack extends Power
 		
 		initialDurability = axeItem.getDurability();
 		blocksBroken = 0;
+		maxBlocksToBreak = findMaxBlocksToBreak(axeItem);
 		
 		breakAdjacentBlocks(p, event.getBlock());
+		Iterator<Block> iterator = destroyQueue.iterator();
+		Block currentBlock;
+		while(iterator.hasNext())
+		{
+			currentBlock = iterator.next();
+			currentBlock.breakNaturally();
+			iterator.remove();
+			
+		}
 		
 		int levelOfDurabilityEnchantment = axeItem.getEnchantmentLevel(Enchantment.DURABILITY);
 		//damageCaused uses the official minecraft formula to calculate damage based on durability enchant
@@ -67,35 +76,99 @@ public class Lumberjack extends Power
 		short axeDurability = axeItem.getDurability();
 		axeItem = p.getEquipment().getItemInMainHand();		//update axeItem because we changed it by modifying durability
 			
-		if(axeType  == Material.GOLD_AXE)
+		if(axeType == Material.GOLD_AXE)
 		{
-			if(axeDurability > goldAxeDurability)
+			if(axeDurability >= goldAxeDurability)
 				InventoryHelper.breakTool(p, axeItem);
 		}
 					
-		else if(axeType  == Material.WOOD_AXE)
+		else if(axeType == Material.WOOD_AXE)
 		{
-			if(axeDurability > woodAxeDurability)
+			if(axeDurability >= woodAxeDurability)
 				InventoryHelper.breakTool(p, axeItem);
 		}
 
-		else if(axeType  == Material.STONE_AXE)
+		else if(axeType == Material.STONE_AXE)
 		{
-			if(axeDurability > stoneAxeDurability)
+			if(axeDurability >= stoneAxeDurability)
 				InventoryHelper.breakTool(p, axeItem);
 		}
 			
-		else if(axeType  == Material.IRON_AXE)
+		else if(axeType == Material.IRON_AXE)
 		{
-			if(axeDurability > ironAxeDurability)
+			if(axeDurability >= ironAxeDurability)
 				InventoryHelper.breakTool(p, axeItem);
 		}
 			
-		else if(axeType  == Material.DIAMOND_AXE)
+		else if(axeType == Material.DIAMOND_AXE)
 		{
-			if(axeDurability > diamondAxeDurability)
+			if(axeDurability >= diamondAxeDurability)
 				InventoryHelper.breakTool(p, axeItem);
 		}	
+	}
+
+	public int findMaxBlocksToBreak(ItemStack axe)
+	{
+		Material axeType = axe.getType();
+		int axeDurability = axe.getDurability();
+		int levelOfDurabilityEnchantment = axe.getEnchantmentLevel(Enchantment.DURABILITY);
+		//damageCaused uses the official minecraft formula to calculate damage based on durability enchant
+		if(levelOfDurabilityEnchantment != 0)
+		{
+			if(axeType == Material.GOLD_AXE)
+			{
+				return (goldAxeDurability - axeDurability)*((levelOfDurabilityEnchantment + 1)/1) + 1;
+			}
+						
+			else if(axeType == Material.WOOD_AXE)
+			{
+				return (woodAxeDurability - axeDurability)*((levelOfDurabilityEnchantment + 1)/1) + 1;
+			}
+
+			else if(axeType == Material.STONE_AXE)
+			{
+				return (stoneAxeDurability - axeDurability)*((levelOfDurabilityEnchantment + 1)/1) + 1;
+			}
+				
+			else if(axeType == Material.IRON_AXE)
+			{
+				return (ironAxeDurability - axeDurability)*((levelOfDurabilityEnchantment + 1)/1) + 1;
+			}
+				
+			else if(axeType == Material.DIAMOND_AXE)
+			{
+				return (diamondAxeDurability - axeDurability)*((levelOfDurabilityEnchantment + 1)/1) + 1;
+			}
+		}
+		else
+		{
+			if(axeType == Material.GOLD_AXE)
+			{
+				return goldAxeDurability - axeDurability + 1;
+			}
+						
+			else if(axeType == Material.WOOD_AXE)
+			{
+				return woodAxeDurability - axeDurability + 1;
+			}
+
+			else if(axeType == Material.STONE_AXE)
+			{
+				return stoneAxeDurability - axeDurability + 1;
+			}
+				
+			else if(axeType == Material.IRON_AXE)
+			{
+				return ironAxeDurability - axeDurability + 1;
+			}
+				
+			else if(axeType == Material.DIAMOND_AXE)
+			{
+				return diamondAxeDurability - axeDurability + 1;
+			}
+		}
+		
+		return -1;
 	}
 	
 	//make breakAdjacentBlocks method damage player's axe
@@ -104,9 +177,9 @@ public class Lumberjack extends Power
 		if(S87Powers.debugLumberjack)
 			S87Powers.log.log(Level.INFO, "Received block at " + block.getX() + ", " + block.getY() + ", " + block.getZ() + " checking around block.");
 		
-		for(int x = -1; x < 2; x++)
+		for(int y = -1; y < 2; y++)
 		{
-			for(int y = -1; y < 2; y++)
+			for(int x = -1; x < 2; x++)
 			{
 				for(int z = -1; z < 2; z++)
 				{
@@ -116,17 +189,22 @@ public class Lumberjack extends Power
 								|| block.getLocation().add(x,y,z).getBlock().getType() == Material.LOG_2 
 								|| block.getLocation().add(x,y,z).getBlock().getType() == Material.LEAVES
 								|| block.getLocation().add(x,y,z).getBlock().getType() == Material.LEAVES_2)
-						if(S87Powers.canPlayerBuildAt(p, block.getLocation().add(x,y,z), block.getLocation().add(x,y,z).getBlock()))
 						{
-							block.getLocation().add(x,y,z).getBlock().breakNaturally();
-							blocksBroken++;
-							breakAdjacentBlocks(p,block.getLocation().add(x,y,z).getBlock());
+							if(S87Powers.canPlayerBuildAt(p, block.getLocation().add(x,y,z), block.getLocation().add(x,y,z).getBlock())
+									&& blocksBroken <= maxBlocksToBreak && (!destroyQueue.contains(block.getLocation().add(x,y,z).getBlock())))
+							{
+								//block.getLocation().add(x,y,z).getBlock().breakNaturally();
+								destroyQueue.add(block.getLocation().add(x,y,z).getBlock());
+								blocksBroken++;
+								breakAdjacentBlocks(p,block.getLocation().add(x,y,z).getBlock());
+							}
 						}
 					}
 				}
 			}
 		}
-		//failed to find additional blocks to destroy, return
+		//failed to find additional blocks to destroy, destroy then return
+		
 		return;
 	}
 }

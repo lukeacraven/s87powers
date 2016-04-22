@@ -28,8 +28,9 @@ public class S87Powers extends JavaPlugin
 	public static boolean isFactionsEnabled = false;
 	
 	public static HashMap<UUID, Long> timeSinceWolfSummon = new HashMap<UUID, Long>();
-	private static final String permStrings[] = { "bestialtransmutation", "lumberjack", "wolfpack" };
-	private static final String powerStrings[] = { "Bestial Transmutation", "Lumberjack", "Wolfpack" };
+	public static HashMap<UUID, Long> timeSinceChargeBowUse = new HashMap<UUID, Long>();
+	private static final String permStrings[] = { "bestialtransmutation", "lumberjack", "wolfpack", "chargebow", "chargebowtoggled" };
+	private static final String powerStrings[] = { "Bestial Transmutation", "Lumberjack", "Wolfpack", "Charge Bow" };
 	
 	public static Permission perms = null;
 	
@@ -113,6 +114,33 @@ public class S87Powers extends JavaPlugin
     					sender.sendMessage("Error while performing command!  Syntax is /powers add <power> <playername>");
     				}
     			}
+    			if(args[0].equalsIgnoreCase("toggle"))
+    			{
+    				if(args.length == 2)
+    				{
+    					if(sender.hasPermission("s87powers.chargebow"))
+    					{
+    						if(sender.hasPermission("s87powers.chargebowtoggled"))
+    						{
+    							sender.sendMessage("Chargebow: off");
+    							S87Powers.removePower(sender, args[1] + "toggled", sender.getName());
+    						}
+    						else
+    						{
+    							sender.sendMessage("Chargebow: on");
+    							S87Powers.addPower(sender, args[1] + "toggled", sender.getName());
+    						}	
+    					}
+    					else
+    					{
+    						sender.sendMessage(ChatColor.RED + "Error while performing command!  User does not have permission.");
+    					}
+    				}
+    				else
+    				{
+    					sender.sendMessage("Error while performing command!  Syntax is /powers toggle <power>");
+    				}
+    			}
     			if(args[0].equalsIgnoreCase("help"))
     			{
     				sender.sendMessage(ChatColor.GOLD + "/powers - Shows version number");
@@ -136,7 +164,7 @@ public class S87Powers extends JavaPlugin
     			{
     				if(args.length == 2)
     				{
-    					if(sender.hasPermission("s87powers.lookup"))
+    					if(sender.hasPermission("s87powers.lookup") || sender.getName().equalsIgnoreCase(args[1]))
     					{
     						sender.sendMessage("Attempting to look up " + args[1] + "'s powers");
     						S87Powers.lookupPlayer(sender, args[1]);
