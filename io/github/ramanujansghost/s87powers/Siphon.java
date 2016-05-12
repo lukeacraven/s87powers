@@ -6,20 +6,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class Siphon extends Power{
 
-	public String getName()
+	
+	public Siphon()
 	{
-		return "Siphon";
-	}
-
-	public String getType()
-	{
-		return "Utility";
-	}
-
-	public String getDescription()
-	{
-		//meh
-		return "When a player right clicks a mob with a gem, they drain its life into the gem.";
+		name = "Siphon";
+		type = "Lifeforce";
+		description = "Drain the lifeforce of a being."; //meh
 	}
 	
 	public void extract(Entity target, ItemStack gem)

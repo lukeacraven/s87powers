@@ -11,20 +11,12 @@ public class ChargeBow extends Power
 {
 	ItemStack charge = new ItemStack(Material.FIREBALL, 1);
 	ItemStack arrow = new ItemStack(Material.ARROW, 1);
-
-	public String getName()
+	
+	public ChargeBow()
 	{
-		return "Charge Bow";
-	}
-
-	public String getType()
-	{
-		return "Combat";
-	}
-
-	public String getDescription()
-	{
-		return "This power allows the player to shoot powerful fireballs from their bow at a cost of 1 fire charge per shot.";
+		name = "Charge Bow";
+		type = "Combat";
+		description = "This power allows the player to shoot powerful fireballs from their bow at a cost of 1 fire charge per shot.";
 	}
 
 	private boolean canPlayerUseChargeBow(Player p)

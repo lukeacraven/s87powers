@@ -6,21 +6,13 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class Reflexes extends Power
 {
-
-	public String getName()
+	public Reflexes()
 	{
-		return "Reflexes";
+		name = "Reflexes";
+		type = "Combat";
+		description = "Because of your incredible reflexes, you can catch or deflect incoming arrows while your main hand is empty.";
 	}
 
-	public String getType()
-	{
-		return "Combat";
-	}
-
-	public String getDescription()
-	{
-		return "Because of your incredible reflexes, you can catch or deflect incoming arrows while your main hand is empty.";
-	}
 	
 	public void reflexOnHit(EntityDamageByEntityEvent event, Entity damagedEntity)
 	{

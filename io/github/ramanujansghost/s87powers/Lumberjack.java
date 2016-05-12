@@ -23,19 +23,11 @@ public class Lumberjack extends Power
 	private static final int ironAxeDurability = 251;
 	private static final int diamondAxeDurability = 1562;
 
-	public String getName()
+	public Lumberjack()
 	{
-		return "Lumberjack";
-	}
-
-	public String getType()
-	{
-		return "Utility";
-	}
-
-	public String getDescription()
-	{
-		return "Allows player to rapidly cut down trees.";
+		name = "Lumberjack";
+		type = "Utility";
+		description = "Allows one to rapidly cut down trees.";
 	}
 
 	public void onLogBreak(BlockBreakEvent event)

@@ -21,20 +21,12 @@ import org.bukkit.inventory.ItemStack;
 public class WolfPack extends Power
 {
 	ItemStack bone = new ItemStack(Material.BONE, 1);
-
-	public String getName()
+	
+	public WolfPack()
 	{
-		return "WolfPack";
-	}
-
-	public String getType()
-	{
-		return "Combat";
-	}
-
-	public String getDescription()
-	{
-		return "When a player with this power right clicks, they will summon some wolves.";
+		name = "WolfPack";
+		type = "Combat";
+		description = "When a player with this power right clicks, they will summon some wolves.";
 	}
 
 	private int checkForWolves(Player p)

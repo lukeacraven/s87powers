@@ -17,22 +17,16 @@ public class BestialTransmutation extends Power
 	private static final ItemStack rabbit = new ItemStack(Material.RABBIT,1);
 	private static final ItemStack mutton = new ItemStack(Material.MUTTON,1);
 	private static final ItemStack pork = new ItemStack(Material.PORK,1);
-	private static final ItemStack rawBeef = new ItemStack(Material.RAW_BEEF,1);
-	
+	private static final ItemStack rawBeef = new ItemStack(Material.RAW_BEEF,1);	
 	private static final ItemStack redstone = new ItemStack(Material.REDSTONE,1);
 	
-	public String getName()
+	public BestialTransmutation()
 	{
-		return "Bestial Transmutation";
+		name = "BestialTransmutation";
+		type = "Alchemy";
+		description = "Allows player to use 1 meat from a chicken, rabbit, sheep, pig, or cow, a varying amount of redstone, and life to create an animal";		
 	}
-	public String getType()
-	{
-		return "Utility";
-	}
-	public String getDescription()
-	{
-		return "Allows player to use 1 meat from a chicken, rabbit, sheep, pig, or cow, a varying amount of redstone, and life to create an animal";
-	}
+	
 	public void spawnEntity(Player p, EntityType entityType, Action action)
 	{
 		World tempWorld = p.getWorld();
