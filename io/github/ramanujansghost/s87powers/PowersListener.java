@@ -148,9 +148,5 @@ public class PowersListener implements Listener
 				}
 			}
 		}
-		else
-		{
-
-		}
 	}
 }

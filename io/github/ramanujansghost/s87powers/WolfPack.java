@@ -18,7 +18,7 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class WolfPack implements Power
+public class WolfPack extends Power
 {
 	ItemStack bone = new ItemStack(Material.BONE, 1);
 

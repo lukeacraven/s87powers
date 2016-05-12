@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class Lumberjack implements Power
+public class Lumberjack extends Power
 {
 	private short blocksBroken = 0;
 	private int maxBlocksToBreak = 0;

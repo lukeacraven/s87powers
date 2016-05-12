@@ -7,7 +7,7 @@ import org.bukkit.entity.SmallFireball;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class ChargeBow implements Power
+public class ChargeBow extends Power
 {
 	ItemStack charge = new ItemStack(Material.FIREBALL, 1);
 	ItemStack arrow = new ItemStack(Material.ARROW, 1);

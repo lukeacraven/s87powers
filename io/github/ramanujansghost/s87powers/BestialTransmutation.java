@@ -11,7 +11,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class BestialTransmutation implements Power
+public class BestialTransmutation extends Power
 {
 	private static final ItemStack rawChicken = new ItemStack(Material.RAW_CHICKEN,1);
 	private static final ItemStack rabbit = new ItemStack(Material.RABBIT,1);
