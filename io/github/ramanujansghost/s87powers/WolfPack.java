@@ -42,8 +42,6 @@ public class WolfPack extends Power
 		int amountOfWolves = 0;
 		World tempWorld = p.getWorld();
 		UUID playerUUID = p.getUniqueId();
-		if (p != null)
-		{
 			if (playerUUID != null)
 			{
 				if (tempWorld != null)
@@ -104,11 +102,6 @@ public class WolfPack extends Power
 			{
 				S87Powers.log.log(Level.WARNING, "Got a null playerUUID in checkForWolves");
 			}
-		}
-		else
-		{
-			S87Powers.log.log(Level.WARNING, "Got a null player in checkForWolves");
-		}
 		return amountOfWolves;
 	}
 
@@ -139,18 +132,12 @@ public class WolfPack extends Power
 	private boolean consumeBones(Player p, int amountOfBones)
 	{
 		InventoryHelper inventoryHelper = new InventoryHelper();
-		if (inventoryHelper != null)
+		if (InventoryHelper.checkForReagents(p, bone, amountOfBones))
 		{
-			if (InventoryHelper.checkForReagents(p, bone, amountOfBones))
-			{
-				inventoryHelper.removeReagents(p, bone, amountOfBones);
-				return true;
-			}
+			inventoryHelper.removeReagents(p, bone, amountOfBones);
+			return true;
 		}
-		else
-		{
-			S87Powers.log.log(Level.WARNING, "Got a null inventoryHelper in consumeBones");
-		}
+		
 		return false;
 	}
 
@@ -158,8 +145,6 @@ public class WolfPack extends Power
 	{
 		// S87Powers.log.log(Level.INFO, "Spawning wolf");
 		Random r = new Random();
-		if (r != null)
-		{
 			int close = 1; // minimum blocks AWAY from the player it has to spawn
 			int far = 5; // max blocks away from player it can spawn
 			int x = r.nextInt(far - close) + close;
@@ -208,10 +193,6 @@ public class WolfPack extends Power
 							S87Powers.log.log(Level.WARNING, "Got a null spawnedWolf in SpawnWolf");
 						}
 					}
-					else
-					{
-						S87Powers.log.log(Level.WARNING, "Got a null location in SpawnWolf");
-					}
 				}
 				else
 				{
@@ -222,11 +203,6 @@ public class WolfPack extends Power
 			{
 				S87Powers.log.log(Level.WARNING, "Got a null player in SpawnWolf");
 			}
-		}
-		else
-		{
-			S87Powers.log.log(Level.WARNING, "Got a null random in SpawnWolf");
-		}
 	}
 
 	public void onBoneRightClick(PlayerInteractEvent event)
