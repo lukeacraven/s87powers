@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 public class PowersListener implements Listener
@@ -145,6 +146,18 @@ public class PowersListener implements Listener
 					}
 				}
 			}
+		}
+	}
+	
+	@EventHandler
+	public void PlayerInteractEntityEvent(Player p, Entity clickedEntity, EquipmentSlot hand)
+	{
+		Material itemUsed = p.getEquipment().getItemInMainHand().getType();
+		if ((itemUsed == Material.DIAMOND || itemUsed == Material.EMERALD || itemUsed == Material.QUARTZ)
+				&& (p.hasPermission("s87powers.siphon.toggledon")))
+		{
+			Siphon siphon = new Siphon();
+			siphon.;
 		}
 	}
 }
