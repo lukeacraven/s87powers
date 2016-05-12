@@ -137,8 +137,12 @@ public class PowersListener implements Listener
 						|| event.getDamager().getType() == EntityType.SPECTRAL_ARROW
 						|| event.getDamager().getType() == EntityType.TIPPED_ARROW)
 				{
-					Reflexes r = new Reflexes();
-					r.reflexOnHit(event, damagedEntity);
+					if(damagedEntity.hasPermission("s87powers.reflexes.toggledon"))
+					{
+						//New
+						Reflexes r = new Reflexes();
+						r.reflexOnHit(event, damagedEntity);
+					}
 				}
 			}
 		}
