@@ -137,14 +137,8 @@ public class PowersListener implements Listener
 						|| event.getDamager().getType() == EntityType.SPECTRAL_ARROW
 						|| event.getDamager().getType() == EntityType.TIPPED_ARROW)
 				{
-					if(damagedEntity.hasPermission("s87powers.reflexes.toggledon"))
-					{
-						event.setCancelled(true);
-						event.getDamager().remove();
-						Projectile projectile = (Projectile) event.getDamager();
-						projectile.setBounce(true);
-						damagedEntity.sendMessage("Your swift reflexes let you evade the arrow!");
-					}
+					Reflexes r = new Reflexes();
+					r.reflexOnHit(event, damagedEntity);
 				}
 			}
 		}
