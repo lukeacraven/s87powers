@@ -157,7 +157,7 @@ public class PowersListener implements Listener
 				&& (p.hasPermission("s87powers.siphon.toggledon")))
 		{
 			Siphon siphon = new Siphon();
-			siphon.;
+			//do siphon
 		}
 	}
 }

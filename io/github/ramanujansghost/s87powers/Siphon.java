@@ -1,6 +1,7 @@
 package io.github.ramanujansghost.s87powers;
 
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Damageable;
 import org.bukkit.inventory.ItemStack;
 
 public class Siphon extends Power{
@@ -24,6 +25,7 @@ public class Siphon extends Power{
 	public void extract(Entity target, ItemStack gem)
 	{
 		GemHelper.setGemPower(gem, 13);
-		
+		target.setGlowing(true);
+		//damage entity
 	}
 }
