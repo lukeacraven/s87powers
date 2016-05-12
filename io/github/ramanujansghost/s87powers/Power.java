@@ -1,10 +1,8 @@
 package io.github.ramanujansghost.s87powers;
 
-public interface Power
+public abstract class Power
 {
-	public String getName();
-
-	public String getType();
-
-	public String getDescription();
+	public abstract String getName();
+	public abstract String getType();
+	public abstract String getDescription();
 }

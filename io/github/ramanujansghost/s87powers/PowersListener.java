@@ -13,6 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -125,7 +126,7 @@ public class PowersListener implements Listener
 	}
 
 	@EventHandler
-	public void onProjectileHitEvent(EntityDamageByEntityEvent event)
+	public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event)
 	{
 		if (event != null)
 		{
@@ -139,6 +140,9 @@ public class PowersListener implements Listener
 					if(damagedEntity.hasPermission("s87powers.reflexes.toggledon"))
 					{
 						event.setCancelled(true);
+						event.getDamager().remove();
+						Projectile projectile = (Projectile) event.getDamager();
+						projectile.setBounce(true);
 						damagedEntity.sendMessage("Your swift reflexes let you evade the arrow!");
 					}
 				}

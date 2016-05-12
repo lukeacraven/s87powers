@@ -1,6 +1,6 @@
 package io.github.ramanujansghost.s87powers;
 
-public class Reflexes implements Power
+public class Reflexes extends Power
 {
 
 	public String getName()
@@ -17,4 +17,6 @@ public class Reflexes implements Power
 	{
 		return "Because of your incredible reflexes, you can catch or deflect incoming arrows while your main hand is empty.";
 	}
+	
+	//public
 }
