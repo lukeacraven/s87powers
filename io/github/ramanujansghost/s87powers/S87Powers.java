@@ -5,6 +5,7 @@ import com.massivecraft.factions.engine.EngineMain;
 import com.massivecraft.massivecore.ps.PS;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,8 +34,18 @@ public class S87Powers extends JavaPlugin
 	{ "bestialtransmutation", "bestialtransmutation.toggledon", "lumberjack", "lumberjack.toggledon"
 			, "wolfpack" , "wolfpack.toggledon", "chargebow", "chargebow.toggledon"
 			, "reflexes", "reflexes.toggledon" };
-	private static final String powerStrings[] =
-	{ "Bestial Transmutation", "Lumberjack", "Wolfpack", "Charge Bow", "Reflexes" };
+	
+	private Map<String, Power> powerList = new HashMap<String, Power>();
+	public S87Powers()
+	{		
+		powerList.put("Bestial Transmutation", new BestialTransmutation());
+		powerList.put("Charge Bow", new ChargeBow());
+		powerList.put("Ensnare", new Ensnare());
+		powerList.put("Lumberjack", new Lumberjack());
+		powerList.put("Reflexes", new Reflexes());
+		powerList.put("Siphon", new Siphon());
+		powerList.put("Wolfpack", new WolfPack());
+	}
 
 	public static Permission perms = null;
 
@@ -182,10 +193,9 @@ public class S87Powers extends JavaPlugin
 				if (args[0].equalsIgnoreCase("list"))
 				{
 					sender.sendMessage("The powers are as follows: ");
-					for (int i = 0; i < powerStrings.length; i++)
-					{
-						sender.sendMessage(powerStrings[i]);
-					}
+					for (Map.Entry<String, Power> entry : powerList.entrySet()) {
+						sender.sendMessage(entry.getKey());
+					}			
 				}
 				if (args[0].equalsIgnoreCase("lookup"))
 				{
