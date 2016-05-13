@@ -26,13 +26,14 @@ public class GemHelper {
 		}
 		gem.getItemMeta().setLore(data);
 	}
-	
+	//Return the current power value of a gem
 	public static int getGemPower(ItemStack gem)
 	{
 		List<String> data = gem.getItemMeta().getLore();
 		return Integer.parseInt(data.get(0));
 	}
 	
+	//Return the maximum power of a gem
 	public static int getGemMaxPower(ItemStack gem)
 	{
 		List<String> data = gem.getItemMeta().getLore();

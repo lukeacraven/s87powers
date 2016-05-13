@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class Siphon extends Power{
 
-	
+	//Constructor
 	public Siphon()
 	{
 		name = "Siphon";
@@ -14,6 +14,7 @@ public class Siphon extends Power{
 		description = "Drain the lifeforce of a being."; //meh
 	}
 	
+	//Damage entity over time, add value to soulgem
 	public void extract(Entity target, ItemStack gem)
 	{
 		GemHelper.setGemPower(gem, 13);

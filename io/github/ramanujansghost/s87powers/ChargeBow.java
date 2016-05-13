@@ -12,13 +12,15 @@ public class ChargeBow extends Power
 	ItemStack charge = new ItemStack(Material.FIREBALL, 1);
 	ItemStack arrow = new ItemStack(Material.ARROW, 1);
 	
+	//Constructor
 	public ChargeBow()
 	{
 		name = "Charge Bow";
 		type = "Combat";
 		description = "This power allows the player to shoot powerful fireballs from their bow at a cost of 1 fire charge per shot.";
 	}
-
+	
+	//Check if cooldown has elapsed
 	private boolean canPlayerUseChargeBow(Player p)
 	{
 		if (S87Powers.timeSinceChargeBowUse.containsKey(p.getUniqueId()))
@@ -38,7 +40,8 @@ public class ChargeBow extends Power
 		}
 		return true; // in this case, player has never shot a charge
 	}
-
+	
+	//When firing a bow, if the player has the reagents, launch two fireballs
 	public void onBowShootEvent(EntityShootBowEvent event)
 	{
 		Player p = (Player) event.getEntity();

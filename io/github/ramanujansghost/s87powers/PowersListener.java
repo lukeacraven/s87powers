@@ -21,6 +21,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class PowersListener implements Listener
 {
+	//Checks for player use of an item.
+	//Used for Bestial Transmutation and Wolfpack
 	@EventHandler
 	public void onPlayerUse(PlayerInteractEvent event)
 	{
@@ -71,7 +73,9 @@ public class PowersListener implements Listener
 			}
 		}
 	}
-
+	
+	//Check for breaking block
+	//Used for lumberjack
 	@EventHandler
 	public void onPlayerBlockBreak(BlockBreakEvent event)
 	{
@@ -112,7 +116,9 @@ public class PowersListener implements Listener
 			S87Powers.log.log(Level.WARNING, "Got a null player in onPlayerBlockBreak");
 		}
 	}
-
+	
+	//Check for shooting bow
+	//Used for ChargeBow
 	@EventHandler
 	public void onBowShootEvent(EntityShootBowEvent event)
 	{
@@ -125,7 +131,9 @@ public class PowersListener implements Listener
 			}
 		}
 	}
-
+	
+	//Check for entity being damaged by entity
+	//Used for Reflexes
 	@EventHandler
 	public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event)
 	{
@@ -149,6 +157,8 @@ public class PowersListener implements Listener
 		}
 	}
 	
+	//Check if an entity is (right?)clicked by a player
+	//Used for Siphon
 	@EventHandler
 	public void PlayerInteractEntityEvent(Player p, Entity clickedEntity, EquipmentSlot hand)
 	{

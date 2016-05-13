@@ -10,6 +10,7 @@ import org.bukkit.inventory.PlayerInventory;
 // All InventoryHelper methods are to be implemented as static methods
 public class InventoryHelper
 {
+	//If an tool has been used up, break the tool
 	public static void breakTool(Player p, ItemStack item)
 	{
 		if (S87Powers.debugInventoryHelper)
@@ -17,7 +18,8 @@ public class InventoryHelper
 		p.getInventory().removeItem(item);
 		p.playSound(p.getLocation(), Sound.ENTITY_ITEM_BREAK, 10, 0);
 	}
-
+	
+	//Check if an inventory has an amount of an item
 	public static boolean checkForReagents(Player p, ItemStack item, int amount)
 	{
 		if (p.getInventory().containsAtLeast(item, amount))
@@ -25,7 +27,8 @@ public class InventoryHelper
 		else
 			return false;
 	}
-
+	
+	//Remove an amount of a reagent from a player's invetory 
 	public void removeReagents(Player p, ItemStack item, int amountToConsume)
 	{
 		ItemStack firstItemStack;

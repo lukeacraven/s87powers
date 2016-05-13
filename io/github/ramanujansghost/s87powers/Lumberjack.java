@@ -23,13 +23,16 @@ public class Lumberjack extends Power
 	private static final int ironAxeDurability = 251;
 	private static final int diamondAxeDurability = 1562;
 
+	//Constructor
 	public Lumberjack()
 	{
 		name = "Lumberjack";
 		type = "Utility";
 		description = "Allows one to rapidly cut down trees.";
 	}
-
+	
+	//When a log is broken, check and see if player has an axe
+	//Call helper functions to break blocks and remove axe durability
 	public void onLogBreak(BlockBreakEvent event)
 	{
 		short initialDurability = 0;
@@ -127,7 +130,8 @@ public class Lumberjack extends Power
 			}
 		}
 	}
-
+	
+	//Check how many blocks can be broken with axe durability
 	public int findMaxBlocksToBreak(ItemStack axe)
 	{
 		if (axe != null)
@@ -199,7 +203,8 @@ public class Lumberjack extends Power
 		}
 		return -1;
 	}
-
+	
+	//Break connected log blocks 
 	public void breakAdjacentBlocks(Player p, Block block) // use a for loop
 															// here and check a
 															// 3x3 cube centered

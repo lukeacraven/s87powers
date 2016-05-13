@@ -2,9 +2,11 @@ package io.github.ramanujansghost.s87powers;
 
 public class Power
 {
-	
+	//All powers should contain these values
 	protected String name, type, description;
-
+	
+	//Default getters and setters
+	
 	public String getName() {
 		return name;
 	}

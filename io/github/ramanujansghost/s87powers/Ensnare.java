@@ -1,7 +1,8 @@
 package io.github.ramanujansghost.s87powers;
 
 public class Ensnare extends Power{
-
+	
+	//Constructor
 	public Ensnare()
 	{
 		name = "Ensnare";

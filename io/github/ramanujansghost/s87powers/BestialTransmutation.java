@@ -20,6 +20,7 @@ public class BestialTransmutation extends Power
 	private static final ItemStack rawBeef = new ItemStack(Material.RAW_BEEF,1);	
 	private static final ItemStack redstone = new ItemStack(Material.REDSTONE,1);
 	
+	//Constructor
 	public BestialTransmutation()
 	{
 		name = "BestialTransmutation";
@@ -27,6 +28,7 @@ public class BestialTransmutation extends Power
 		description = "Allows player to use 1 meat from a chicken, rabbit, sheep, pig, or cow, a varying amount of redstone, and life to create an animal";		
 	}
 	
+	//Create a mob where player is looking
 	public void spawnEntity(Player p, EntityType entityType, Action action)
 	{
 		World tempWorld = p.getWorld();
@@ -52,6 +54,7 @@ public class BestialTransmutation extends Power
 	    	tempWorld.spawnEntity(p.getTargetBlock(st,4).getLocation().add(0,1,0), entityType);
 	}
 	
+	//Take resources from player based on which mob was spawned
 	public boolean consumeResources(Player p, EntityType type)
 	{
 		if(type == EntityType.CHICKEN)
@@ -122,6 +125,8 @@ public class BestialTransmutation extends Power
 		return false;
 	}
 	
+	//Check if a player is using raw meat and which type it is
+	//Then spawns the mob and consumes the necessary reagents
 	public void onRawMeatUse(PlayerInteractEvent event)
 	{
 		Player p = event.getPlayer();

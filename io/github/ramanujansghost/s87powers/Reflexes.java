@@ -6,6 +6,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class Reflexes extends Power
 {
+	//Constructor
 	public Reflexes()
 	{
 		name = "Reflexes";
@@ -13,7 +14,7 @@ public class Reflexes extends Power
 		description = "Because of your incredible reflexes, you can catch or deflect incoming arrows while your main hand is empty.";
 	}
 
-	
+	//When hit, ignore damage, disappear arrow
 	public void reflexOnHit(EntityDamageByEntityEvent event, Entity damagedEntity)
 	{
 		//Pushed
@@ -24,5 +25,4 @@ public class Reflexes extends Power
 		damagedEntity.sendMessage("Your swift reflexes let you evade the arrow!");		
 	}
 	
-	//public
 }

@@ -27,6 +27,8 @@ public class S87Powers extends JavaPlugin
 	public static final boolean debugInventoryHelper = true;
 	public static final boolean debugLumberjack = true;
 	public static boolean isFactionsEnabled = false;
+	
+	public static Permission perms = null;
 
 	public static HashMap<UUID, Long> timeSinceWolfSummon = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeSinceChargeBowUse = new HashMap<UUID, Long>();
@@ -35,7 +37,10 @@ public class S87Powers extends JavaPlugin
 			, "wolfpack" , "wolfpack.toggledon", "chargebow", "chargebow.toggledon"
 			, "reflexes", "reflexes.toggledon" };
 	
+	//Match power names to power objects
 	private Map<String, Power> powerList = new HashMap<String, Power>();
+	
+	//Constructor, declares current power list 
 	public S87Powers()
 	{		
 		powerList.put("Bestial Transmutation", new BestialTransmutation());
@@ -47,8 +52,7 @@ public class S87Powers extends JavaPlugin
 		powerList.put("Wolfpack", new WolfPack());
 	}
 
-	public static Permission perms = null;
-
+	//Begin permissions
 	private boolean setUpPermissions()
 	{
 		RegisteredServiceProvider<Permission> rsp = getServer()
@@ -56,7 +60,8 @@ public class S87Powers extends JavaPlugin
 		perms = rsp.getProvider();
 		return perms != null;
 	}
-
+	
+	//Attempt to establish factions, indicate error if massivecore/factions are missing
 	private boolean checkIfFactionsIsEnabled()
 	{
 		if (getServer().getPluginManager().getPlugin("Factions") != null)
@@ -89,14 +94,16 @@ public class S87Powers extends JavaPlugin
 			log.log(Level.WARNING, "Factions could not be detected");
 		return false;
 	}
-
+	
+	//Check factions for permission to build at a location
 	public static boolean canPlayerBuildAt(Player p, Location loc, Block block)
 	{
 		if (isFactionsEnabled) return EngineMain.canPlayerBuildAt(p,
 				PS.valueOf(loc.getChunk()), false);
 		return true;
 	}
-
+	
+	//On plugin activation, run default setup
 	@Override
 	public void onEnable()
 	{
@@ -105,7 +112,8 @@ public class S87Powers extends JavaPlugin
 		getServer().getPluginManager().registerEvents(new PowersListener(),
 				this);
 	}
-
+	
+	//Handle commands (consider moving)
 	public boolean onCommand(CommandSender sender, Command cmd, String label,
 			String[] args)
 	{
@@ -246,13 +254,15 @@ public class S87Powers extends JavaPlugin
 		}
 		return true;
 	}
-
+	
+	//On plugin disable, note
 	@Override
 	public void onDisable()
 	{
 		getLogger().info("Powers has been disabled!");
 	}
-
+	
+	//Identify if a player has powers and list those powers
 	public static void lookupPlayer(CommandSender sender, String playerString)
 	{
 		Player p = Bukkit.getServer().getPlayer(playerString);
@@ -282,7 +292,8 @@ public class S87Powers extends JavaPlugin
 					+ " attempted to find an invalid player " + playerString);
 		}
 	}
-
+	
+	//Give a player permission to use a power
 	public static boolean addPower(CommandSender sender,
 			String permissionString, String playerString)
 	{
@@ -330,6 +341,7 @@ public class S87Powers extends JavaPlugin
 		}
 	}
 
+	//Remove player permission to use a power
 	public static boolean removePower(CommandSender sender,
 			String permissionString, String playerString)
 	{

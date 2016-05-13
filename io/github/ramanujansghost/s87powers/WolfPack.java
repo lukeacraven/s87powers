@@ -22,13 +22,15 @@ public class WolfPack extends Power
 {
 	ItemStack bone = new ItemStack(Material.BONE, 1);
 	
+	//Constructor
 	public WolfPack()
 	{
 		name = "WolfPack";
 		type = "Combat";
 		description = "When a player with this power right clicks, they will summon some wolves.";
 	}
-
+	
+	//Check if a player has wolves
 	private int checkForWolves(Player p)
 	{
 		int amountOfWolves = 0;
@@ -96,7 +98,8 @@ public class WolfPack extends Power
 			}
 		return amountOfWolves;
 	}
-
+	
+	//Check cooldown to spawn wolves
 	private boolean canPlayerSpawnWolves(Player p)
 	{
 		if (p != null)
@@ -121,6 +124,7 @@ public class WolfPack extends Power
 		return true; // in this case, player has never spawned wolves
 	}
 
+	//Consume bone reagent
 	private boolean consumeBones(Player p, int amountOfBones)
 	{
 		InventoryHelper inventoryHelper = new InventoryHelper();
@@ -132,7 +136,8 @@ public class WolfPack extends Power
 		
 		return false;
 	}
-
+	
+	//Find a valid location and spawn wolf
 	private void spawnWolf(Player p)
 	{
 		// S87Powers.log.log(Level.INFO, "Spawning wolf");
@@ -196,7 +201,8 @@ public class WolfPack extends Power
 				S87Powers.log.log(Level.WARNING, "Got a null player in SpawnWolf");
 			}
 	}
-
+	
+	//When using a bone, make sure the player has less than max wolves, then use helper functions to spawn wolf
 	public void onBoneRightClick(PlayerInteractEvent event)
 	{
 		Player p = event.getPlayer();
