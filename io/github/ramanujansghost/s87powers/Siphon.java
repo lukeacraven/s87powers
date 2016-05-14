@@ -3,6 +3,7 @@ package io.github.ramanujansghost.s87powers;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Damageable;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 public class Siphon extends Power{
 
@@ -15,9 +16,9 @@ public class Siphon extends Power{
 	}
 	
 	//Damage entity over time, add value to soulgem
-	public void extract(Entity target, ItemStack gem)
-	{
-		GemHelper.setGemPower(gem, 13);
+	public void extract(Entity target, PlayerInventory inv)
+	{		
+		GemHelper.setGemPower(inv, inv.getHeldItemSlot(), 13);
 		target.setGlowing(true);
 		//damage entity
 	}

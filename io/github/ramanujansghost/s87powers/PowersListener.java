@@ -22,7 +22,7 @@ import org.bukkit.inventory.ItemStack;
 public class PowersListener implements Listener
 {
 	//Checks for player use of an item.
-	//Used for Bestial Transmutation and Wolfpack
+	//Used for Bestial Transmutation, Ensnare, and Wolfpack
 	@EventHandler
 	public void onPlayerUse(PlayerInteractEvent event)
 	{
@@ -55,6 +55,21 @@ public class PowersListener implements Listener
 						{
 							WolfPack wolfPack = new WolfPack();
 							wolfPack.onBoneRightClick(event);
+						}
+						//Also not ready
+						if ((itemUsed == Material.STRING) 
+								&& (actionPerformed == Action.RIGHT_CLICK_AIR
+								|| actionPerformed == Action.RIGHT_CLICK_BLOCK))
+						{
+							Ensnare ensnare = new Ensnare();
+							ensnare.deployWebbing(p);
+							
+						}
+						if ((itemUsed == Material.DIAMOND) && (actionPerformed == Action.RIGHT_CLICK_AIR) && !item.getItemMeta().hasDisplayName())
+						{
+							GemHelper g = new GemHelper();
+							g.onRightClick(event);
+							System.out.println("Gem Formed");
 						}
 					}
 					else
@@ -162,11 +177,13 @@ public class PowersListener implements Listener
 	@EventHandler
 	public void PlayerInteractEntityEvent(Player p, Entity clickedEntity, EquipmentSlot hand)
 	{
-		Material itemUsed = p.getEquipment().getItemInMainHand().getType();
-		if ((itemUsed == Material.DIAMOND || itemUsed == Material.EMERALD || itemUsed == Material.QUARTZ)
-				&& (p.hasPermission("s87powers.siphon.toggledon")))
+		Material itemUsed = p.getInventory().getItemInMainHand().getType();
+		System.out.println(p.toString() + " " + clickedEntity.toString());
+		if ((itemUsed == Material.DIAMOND || itemUsed == Material.EMERALD || itemUsed == Material.QUARTZ)) //&& (p.hasPermission("s87powers.siphon.toggledon")
 		{
 			Siphon siphon = new Siphon();
+			siphon.extract(clickedEntity, p.getInventory());
+			System.out.println("Siphoned");
 			//do siphon
 		}
 	}
