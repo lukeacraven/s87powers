@@ -71,7 +71,7 @@ public class PowersListener implements Listener
 							if(item.getItemMeta().hasDisplayName())
 							{
 								Siphon siphon = new Siphon();
-								siphon.extract(p, p);
+								siphon.onRightClick(p, p, 1);
 							}
 							else
 							{
@@ -194,7 +194,7 @@ public class PowersListener implements Listener
 			if ((itemUsed == Material.DIAMOND || itemUsed == Material.EMERALD || itemUsed == Material.QUARTZ)) //&& (p.hasPermission("s87powers.siphon.toggledon")
 			{
 				Siphon siphon = new Siphon();
-				siphon.extract(clickedEntity, p);
+				siphon.onRightClick(clickedEntity, p, 1);
 				System.out.println("Siphoned");
 				//do siphon
 			}

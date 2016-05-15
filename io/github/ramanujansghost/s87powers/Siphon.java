@@ -1,6 +1,7 @@
 package io.github.ramanujansghost.s87powers;
 
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Damageable;
@@ -19,13 +20,39 @@ public class Siphon extends Power{
 	}
 	
 	//Damage entity over time, add value to soulgem
-	public void extract(Entity target, Player p)
+	//Scale damage and power gained by amount (in hearts/foods)
+	public int extract(Entity target, Player p, int amount)
 	{		
-		PlayerInventory inv = p.getInventory();
-		GemHelper.setGemPower(inv, inv.getHeldItemSlot(), 13+ GemHelper.getGemPower(inv, inv.getHeldItemSlot()));
 		target.setGlowing(true);
 		LivingEntity le = (LivingEntity)target;
-		le.damage(2,p);
+		
+		//If player, take food first, then life (2 food/health = 13 power)
+		if(le.getType() == EntityType.PLAYER)
+		{
+			p = (Player)le;
+			int food = p.getFoodLevel();
+			if(food-2*amount < 0)
+			{
+				p.setFoodLevel(0);	
+				p.damage((2*amount)-food);
+			}
+			else
+			{
+				p.setFoodLevel(food-(2*amount));
+			}
+		}
+		else
+		{
+			le.damage(2 * amount);
+		}			
+		return 13*amount;
+	}
+	
+	//Empower the gem in the hand a of a player
+	public void onRightClick(Entity target, Player p, int amount)
+	{		
+		PlayerInventory inv = p.getInventory();
+		GemHelper.addPower(inv, inv.getHeldItemSlot(), extract(target, p, amount));		
 	}
 
 }
