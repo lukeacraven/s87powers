@@ -54,13 +54,15 @@ public class Ensnare extends Power{
 				InventoryHelper.removeReagents(p, string, 2);
 				InventoryHelper.removeReagents(p, redstone, 2);
 				ArrayList<Block> line = new ArrayList<Block>();
+				//Not sure this is best, but seems to work alright
 				line.add(p.getTargetBlock(st,1));
 				line.add(p.getTargetBlock(st,2));
 				line.add(p.getTargetBlock(st,3));
+				line.add(p.getTargetBlock(st,4));
 				
 				System.out.println("Player facing:" + PlayerHelper.getPlayerFacing(p));
-				System.out.println("Player facing:" + PlayerHelper.getPlayerFacing(p));
-				BlockHelper.placeInEmpty(BlockHelper.getLine(tempWorld, p.getEyeLocation(), 4, PlayerHelper.getPlayerFacing(p)), Material.WEB);
+				//BlockHelper.placeInEmpty(BlockHelper.getLine(tempWorld, p.getEyeLocation(), 4, PlayerHelper.getPlayerFacing(p)), Material.WEB);
+				BlockHelper.placeInEmpty(line, Material.WEB);
 				
 			}
 			else
