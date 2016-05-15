@@ -10,7 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class GemHelper {
 	
-	public void formGem(PlayerInventory inv)
+	public static void formGem(PlayerInventory inv)
 	{
 		ItemStack gem = inv.getItemInMainHand();
 		ItemMeta meta = gem.getItemMeta();
@@ -49,7 +49,7 @@ public class GemHelper {
 		inv.setItem(itemLocation, gem);
 	}
 	
-	public void setGemMax(PlayerInventory inv, int itemLocation, int max)
+	public static void setGemMax(PlayerInventory inv, int itemLocation, int max)
 	{
 		ItemStack gem = inv.getItem(itemLocation);
 		ItemMeta meta = gem.getItemMeta();
@@ -80,15 +80,10 @@ public class GemHelper {
 		int max = Integer.parseInt(oldData.substring(oldData.indexOf('/')+1,oldData.length()));	
 		return max;
 	}
-	public void onRightClick(PlayerInteractEvent event)
+	public static void onRightClick(PlayerInteractEvent event)
 	{
 		formGem(event.getPlayer().getInventory());			
 	}
 	
-	//Overload
-	public static void setGemPower(ItemStack itemInMainHand, int i) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

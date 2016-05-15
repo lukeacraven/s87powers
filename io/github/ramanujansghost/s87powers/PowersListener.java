@@ -68,7 +68,6 @@ public class PowersListener implements Listener
 						}
 						if ((itemUsed == Material.DIAMOND) && (actionPerformed == Action.RIGHT_CLICK_AIR))
 						{
-							GemHelper g = new GemHelper();
 							if(item.getItemMeta().hasDisplayName())
 							{
 								Siphon siphon = new Siphon();
@@ -76,7 +75,7 @@ public class PowersListener implements Listener
 							}
 							else
 							{
-								g.onRightClick(event);
+								GemHelper.onRightClick(event);
 								System.out.println("Gem Formed");
 							}
 						}
