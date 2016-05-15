@@ -43,7 +43,7 @@ public class Ensnare extends Power{
 				inventoryHelper.removeReagents(p, string, 1);
 				inventoryHelper.removeReagents(p, redstone, 1);
 				
-				ArrayList<Block> open = findAir(target);
+				ArrayList<Block> open = BlockHelper.findAir(target);
 				//if(target.getY() < shooter.getBlockY() && target.getRelative(BlockFace.UP).getType() == Material.AIR)
 				//{
 					
@@ -59,36 +59,5 @@ public class Ensnare extends Power{
 
 	}
 	
-
-	public ArrayList<Block> findAir(Block b)
-	{
-		ArrayList<Block> airs = new ArrayList<Block>();
-		if(b.getRelative(BlockFace.UP).getType() != Material.AIR)
-		{
-			airs.add(b.getRelative(BlockFace.UP));
-		}
-		if(b.getRelative(BlockFace.DOWN).getType() != Material.AIR)
-		{
-			airs.add(b.getRelative(BlockFace.DOWN));
-		}
-		if(b.getRelative(BlockFace.NORTH).getType() != Material.AIR)
-		{
-			airs.add(b.getRelative(BlockFace.NORTH));
-		}
-		if(b.getRelative(BlockFace.SOUTH).getType() != Material.AIR)
-		{
-			airs.add(b.getRelative(BlockFace.SOUTH));
-		}
-		if(b.getRelative(BlockFace.EAST).getType() != Material.AIR)
-		{
-			airs.add(b.getRelative(BlockFace.EAST));
-		}
-		if(b.getRelative(BlockFace.WEST).getType() != Material.AIR)
-		{
-			airs.add(b.getRelative(BlockFace.WEST);
-		}
-		
-		return airs;
-	}
 
 }
