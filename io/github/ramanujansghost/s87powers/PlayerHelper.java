@@ -19,8 +19,7 @@ public class PlayerHelper
 	}
 	
 	//Borrowed/Modified code. Rotation is tedious :P
-	//Returns the direction a player is facing in a BlockFace
-	//I think it is currently off by 90 degrees for some reason.
+	//Returns the direction a player is facing in a BlockFace (not up and down)
 	public static BlockFace getPlayerFacing(Player player) {
 	    double rot = (player.getLocation().getYaw()+180) % 360;
 	        if (rot < 0) {

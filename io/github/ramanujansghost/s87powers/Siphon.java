@@ -34,21 +34,21 @@ public class Siphon extends Power{
 			{
 				p = (Player)le;
 				int food = p.getFoodLevel();
-				if(food-2*amount < 0)
+				if(food-4*amount < 0)
 				{
 					p.setFoodLevel(0);	
-					p.damage((2*amount)-food);
+					p.damage(((4*amount)-food)/2);
 				}
 				else
 				{
-					p.setFoodLevel(food-(2*amount));
+					p.setFoodLevel(food-(4*amount));
 				}
 			}
 			else
 			{
-				le.damage(2 * amount);
+				le.damage(2 * amount, p);
 			}			
-			return 13*amount;
+			return 7*amount;
 			}
 	}
 	
