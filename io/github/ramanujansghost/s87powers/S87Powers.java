@@ -32,6 +32,7 @@ public class S87Powers extends JavaPlugin
 
 	public static HashMap<UUID, Long> timeSinceWolfSummon = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeSinceChargeBowUse = new HashMap<UUID, Long>();
+	public static HashMap<UUID, Long> timeTillSiphonAgain = new HashMap<UUID, Long>();
 	private static final String permStrings[] =
 	{ "bestialtransmutation", "bestialtransmutation.toggledon", "lumberjack", "lumberjack.toggledon"
 			, "wolfpack" , "wolfpack.toggledon", "chargebow", "chargebow.toggledon"
