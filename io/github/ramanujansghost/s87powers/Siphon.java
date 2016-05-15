@@ -26,7 +26,6 @@ public class Siphon extends Power{
 		target.setGlowing(true);
 		LivingEntity le = (LivingEntity)target;
 		le.damage(2,p);
-		//damage entity
 	}
 
 }
