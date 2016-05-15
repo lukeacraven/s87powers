@@ -25,51 +25,62 @@ public class Siphon extends Power{
 	public static int extract(Entity target, Player p, int amount)
 	{		
 		target.setGlowing(true);
-		LivingEntity le = (LivingEntity)target;
 		
-		//If player, take food first, then life (2 food/health = 13 power)
-		if(le.getType() == EntityType.PLAYER)
 		{
-			p = (Player)le;
-			int food = p.getFoodLevel();
-			if(food-2*amount < 0)
+			LivingEntity le = (LivingEntity)target;
+			
+			//If player, take food first, then life (2 food/health = 13 power)
+			if(le.getType() == EntityType.PLAYER)
 			{
-				p.setFoodLevel(0);	
-				p.damage((2*amount)-food);
+				p = (Player)le;
+				int food = p.getFoodLevel();
+				if(food-2*amount < 0)
+				{
+					p.setFoodLevel(0);	
+					p.damage((2*amount)-food);
+				}
+				else
+				{
+					p.setFoodLevel(food-(2*amount));
+				}
 			}
 			else
 			{
-				p.setFoodLevel(food-(2*amount));
+				le.damage(2 * amount);
+			}			
+			return 13*amount;
 			}
-		}
-		else
-		{
-			le.damage(2 * amount);
-		}			
-		return 13*amount;
 	}
 	
 	//Empower the gem in the hand a of a player
 	public static void onRightClick(Entity target, Player p, int amount)
-	{		
-		if(canSiphon(p))
+	{	
+		EntityType type = target.getType();
+		if(type == EntityType.SHEEP || type == EntityType.COW || type == EntityType.WOLF || type == EntityType.PIG || type == EntityType.PLAYER || type == EntityType.RABBIT || type == EntityType.VILLAGER || type == EntityType.SQUID || type == EntityType.HORSE || type == EntityType.CHICKEN)
 		{
-			System.out.println("Can Siphon");
-			PlayerInventory inv = p.getInventory();
-			GemHelper.addPower(inv, inv.getHeldItemSlot(), extract(target, p, amount));
-			Material gem = inv.getItemInMainHand().getType(); 
-			if(gem == Material.DIAMOND)
+			if(canSiphon(p))
 			{
-				S87Powers.timeTillSiphonAgain.put(p.getUniqueId(), System.currentTimeMillis()+ 8000);
+				System.out.println("Can Siphon");
+				PlayerInventory inv = p.getInventory();
+				GemHelper.addPower(inv, inv.getHeldItemSlot(), extract(target, p, amount));
+				Material gem = inv.getItemInMainHand().getType(); 
+				if(gem == Material.DIAMOND)
+				{
+					S87Powers.timeTillSiphonAgain.put(p.getUniqueId(), System.currentTimeMillis()+ 8000);
+				}
+				else if(gem == Material.EMERALD)
+				{
+					S87Powers.timeTillSiphonAgain.put(p.getUniqueId(), System.currentTimeMillis()+ 4000);
+				}
+				else if(gem == Material.QUARTZ)
+				{
+					S87Powers.timeTillSiphonAgain.put(p.getUniqueId(), System.currentTimeMillis()+ 2000);
+				}
 			}
-			else if(gem == Material.EMERALD)
-			{
-				S87Powers.timeTillSiphonAgain.put(p.getUniqueId(), System.currentTimeMillis()+ 4000);
-			}
-			else if(gem == Material.QUARTZ)
-			{
-				S87Powers.timeTillSiphonAgain.put(p.getUniqueId(), System.currentTimeMillis()+ 2000);
-			}
+		}
+		else
+		{
+			p.sendMessage("You can't siphon from that!");
 		}
 	}
 	
@@ -91,6 +102,7 @@ public class Siphon extends Power{
 					return false;
 				}
 			}
+			return true;
 		}
 		return false;
 	}

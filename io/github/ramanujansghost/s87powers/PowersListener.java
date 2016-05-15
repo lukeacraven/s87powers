@@ -7,6 +7,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityShootBowEvent;
+
+import java.util.HashMap;
+import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bukkit.Material;
@@ -191,17 +194,21 @@ public class PowersListener implements Listener
 	@EventHandler
 	 public void onEntityInteract(PlayerInteractEntityEvent event) 
 	{
-		Material itemUsed = event.getPlayer().getInventory().getItemInMainHand().getType();
-		if(event.getRightClicked() != null && event.getPlayer() != null)
-		{
-			Entity clickedEntity = event.getRightClicked();
-			Player p = event.getPlayer();
-			System.out.println(p.toString() + " " + clickedEntity.toString());
-			if ((itemUsed == Material.DIAMOND || itemUsed == Material.EMERALD || itemUsed == Material.QUARTZ)) //&& (p.hasPermission("s87powers.siphon.toggledon")
+		if((!S87Powers.timeSinceInteract.containsKey(event.getPlayer().getUniqueId()) || System.currentTimeMillis() - S87Powers.timeSinceInteract.get(event.getPlayer().getUniqueId()) > 500))
+		{	
+			Material itemUsed = event.getPlayer().getInventory().getItemInMainHand().getType();
+			if(event.getRightClicked() != null && event.getPlayer() != null)
 			{
-				Siphon.onRightClick(clickedEntity, p, 1);
-				System.out.println("Siphoned");
+				Entity clickedEntity = event.getRightClicked();
+				Player p = event.getPlayer();
+				System.out.println(p.toString() + " " + clickedEntity.toString());
+				if ((itemUsed == Material.DIAMOND || itemUsed == Material.EMERALD || itemUsed == Material.QUARTZ)) //&& (p.hasPermission("s87powers.siphon.toggledon")
+				{
+					Siphon.onRightClick(clickedEntity, p, 1);
+					System.out.println("Siphoned");
+				}
 			}
+			S87Powers.timeSinceInteract.put(event.getPlayer().getUniqueId(), System.currentTimeMillis());
 		}
 
 	}

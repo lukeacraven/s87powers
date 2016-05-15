@@ -120,6 +120,7 @@ public class GemHelper {
 		if(rmvValue > value)
 		{
 			setGemPower(inv, itemLocation, 0);
+			//Take power from elsewhere.
 			
 		}
 		else
