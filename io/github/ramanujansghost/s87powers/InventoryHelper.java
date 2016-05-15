@@ -29,7 +29,7 @@ public class InventoryHelper
 	}
 	
 	//Remove an amount of a reagent from a player's invetory 
-	public void removeReagents(Player p, ItemStack item, int amountToConsume)
+	public static void removeReagents(Player p, ItemStack item, int amountToConsume)
 	{
 		ItemStack firstItemStack;
 		PlayerInventory inventory = p.getInventory();

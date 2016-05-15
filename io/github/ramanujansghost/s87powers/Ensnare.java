@@ -32,29 +32,40 @@ public class Ensnare extends Power{
 	{
 		World tempWorld = p.getWorld();
     	Set<Material> st = null;
-    	Location shooter = p.getLocation();
-    	Block target = p.getTargetBlock(st, 6);
-		if(!target.getType().equals(Material.AIR))
-		{			
+    	Block target = p.getTargetBlock(st, 8);
+
+		if(target.getType() != Material.AIR){			
     	
 			if(InventoryHelper.checkForReagents(p, string, 1) && InventoryHelper.checkForReagents(p, redstone, 1))
 			{
-				InventoryHelper inventoryHelper = new InventoryHelper();
-				inventoryHelper.removeReagents(p, string, 1);
-				inventoryHelper.removeReagents(p, redstone, 1);
-				
-				ArrayList<Block> open = BlockHelper.findAir(target);
-				//if(target.getY() < shooter.getBlockY() && target.getRelative(BlockFace.UP).getType() == Material.AIR)
-				//{
-					
-				//}
-				target = target.getRelative(target.getFace(shooter.getBlock()));
-				target.setType(Material.WEB);
-				//p.get
+				InventoryHelper.removeReagents(p, string, 2);
+				InventoryHelper.removeReagents(p, redstone, 2);
+								
+				BlockHelper.placeInEmpty(BlockHelper.getCrossOnFace(BlockHelper.closestToPlayer(BlockHelper.findAir(target), p), target.getFace(BlockHelper.closestToPlayer(BlockHelper.findAir(target), p))), Material.WEB);
 				
 			}
 			else
 		    	p.sendMessage("You do not have the necessary reagents generate web!  Requires 1 string and 1 redstone.");
+		}
+		else
+		{
+			if(InventoryHelper.checkForReagents(p, string, 1) && InventoryHelper.checkForReagents(p, redstone, 1))
+			{
+				InventoryHelper.removeReagents(p, string, 2);
+				InventoryHelper.removeReagents(p, redstone, 2);
+				ArrayList<Block> line = new ArrayList<Block>();
+				line.add(p.getTargetBlock(st,1));
+				line.add(p.getTargetBlock(st,2));
+				line.add(p.getTargetBlock(st,3));
+				
+				System.out.println("Player facing:" + PlayerHelper.getPlayerFacing(p));
+				System.out.println("Player facing:" + PlayerHelper.getPlayerFacing(p));
+				BlockHelper.placeInEmpty(BlockHelper.getLine(tempWorld, p.getEyeLocation(), 4, PlayerHelper.getPlayerFacing(p)), Material.WEB);
+				
+			}
+			else
+		    	p.sendMessage("You do not have the necessary reagents generate web!  Requires 1 string and 1 redstone.");
+			
 		}
 
 	}
