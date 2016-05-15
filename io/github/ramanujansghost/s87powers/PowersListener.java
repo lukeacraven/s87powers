@@ -15,6 +15,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -65,11 +66,19 @@ public class PowersListener implements Listener
 							ensnare.deployWebbing(p);
 							
 						}
-						if ((itemUsed == Material.DIAMOND) && (actionPerformed == Action.RIGHT_CLICK_AIR) && !item.getItemMeta().hasDisplayName())
+						if ((itemUsed == Material.DIAMOND) && (actionPerformed == Action.RIGHT_CLICK_AIR))
 						{
 							GemHelper g = new GemHelper();
-							g.onRightClick(event);
-							System.out.println("Gem Formed");
+							if(item.getItemMeta().hasDisplayName())
+							{
+								Siphon siphon = new Siphon();
+								siphon.extract(p, p);
+							}
+							else
+							{
+								g.onRightClick(event);
+								System.out.println("Gem Formed");
+							}
 						}
 					}
 					else
@@ -175,16 +184,22 @@ public class PowersListener implements Listener
 	//Check if an entity is (right?)clicked by a player
 	//Used for Siphon
 	@EventHandler
-	public void PlayerInteractEntityEvent(Player p, Entity clickedEntity, EquipmentSlot hand)
+	 public void RightClick(PlayerInteractEntityEvent event) 
 	{
-		Material itemUsed = p.getInventory().getItemInMainHand().getType();
-		System.out.println(p.toString() + " " + clickedEntity.toString());
-		if ((itemUsed == Material.DIAMOND || itemUsed == Material.EMERALD || itemUsed == Material.QUARTZ)) //&& (p.hasPermission("s87powers.siphon.toggledon")
+		if(event.getRightClicked() != null)
 		{
-			Siphon siphon = new Siphon();
-			siphon.extract(clickedEntity, p.getInventory());
-			System.out.println("Siphoned");
-			//do siphon
+			Entity clickedEntity = event.getRightClicked();
+			Player p = event.getPlayer();
+			Material itemUsed = p.getInventory().getItemInMainHand().getType();
+			System.out.println(p.toString() + " " + clickedEntity.toString());
+			if ((itemUsed == Material.DIAMOND || itemUsed == Material.EMERALD || itemUsed == Material.QUARTZ)) //&& (p.hasPermission("s87powers.siphon.toggledon")
+			{
+				Siphon siphon = new Siphon();
+				siphon.extract(clickedEntity, p);
+				System.out.println("Siphoned");
+				//do siphon
+			}
 		}
+
 	}
 }

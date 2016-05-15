@@ -77,7 +77,7 @@ public class GemHelper {
 	{
 		ItemStack gem = inv.getItem(itemLocation);
 		String oldData = gem.getItemMeta().getLore().get(0);		
-		int max = Integer.parseInt(oldData.substring(oldData.indexOf('/'),oldData.length()-1));	
+		int max = Integer.parseInt(oldData.substring(oldData.indexOf('/')+1,oldData.length()));	
 		return max;
 	}
 	public void onRightClick(PlayerInteractEvent event)
