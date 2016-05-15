@@ -127,10 +127,9 @@ public class WolfPack extends Power
 	//Consume bone reagent
 	private boolean consumeBones(Player p, int amountOfBones)
 	{
-		InventoryHelper inventoryHelper = new InventoryHelper();
 		if (InventoryHelper.checkForReagents(p, bone, amountOfBones))
 		{
-			inventoryHelper.removeReagents(p, bone, amountOfBones);
+			InventoryHelper.removeReagents(p, bone, amountOfBones);
 			return true;
 		}
 		

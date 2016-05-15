@@ -5,9 +5,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.Material;
-import org.bukkit.entity.Damageable;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
+
 import org.bukkit.inventory.PlayerInventory;
 
 public class Siphon extends Power{

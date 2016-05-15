@@ -54,9 +54,8 @@ public class ChargeBow extends Power
 					event.setCancelled(true);
 					S87Powers.timeSinceChargeBowUse.put(p.getUniqueId(),
 							System.currentTimeMillis());
-					InventoryHelper inventoryHelper = new InventoryHelper();
-					inventoryHelper.removeReagents(p, charge, 1);
-					inventoryHelper.removeReagents(p, arrow, 1);
+					InventoryHelper.removeReagents(p, charge, 1);
+					InventoryHelper.removeReagents(p, arrow, 1);
 					Projectile fireball1 = p
 							.launchProjectile(SmallFireball.class);
 					fireball1.setVelocity(event.getEntity().getVelocity());

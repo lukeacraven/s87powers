@@ -61,9 +61,8 @@ public class BestialTransmutation extends Power
 		{
 			if(InventoryHelper.checkForReagents(p, rawChicken, 1) && InventoryHelper.checkForReagents(p, redstone, 2))
 			{
-				InventoryHelper inventoryHelper = new InventoryHelper();
-				inventoryHelper.removeReagents(p, rawChicken, 1);
-				inventoryHelper.removeReagents(p, redstone, 2);
+				InventoryHelper.removeReagents(p, rawChicken, 1);
+				InventoryHelper.removeReagents(p, redstone, 2);
 	    		PlayerHelper.damagePlayer(p, "Transmutation", 2);
 	    		return true;
 			}
@@ -74,9 +73,8 @@ public class BestialTransmutation extends Power
 		{
 			if(InventoryHelper.checkForReagents(p, rabbit, 1) && InventoryHelper.checkForReagents(p, redstone, 2))
 			{
-				InventoryHelper inventoryHelper = new InventoryHelper();
-				inventoryHelper.removeReagents(p, rabbit, 1);
-				inventoryHelper.removeReagents(p, redstone, 2);
+				InventoryHelper.removeReagents(p, rabbit, 1);
+				InventoryHelper.removeReagents(p, redstone, 2);
 	    		PlayerHelper.damagePlayer(p, "Transmutation", 2);
 	    		return true;
 			}
@@ -87,9 +85,8 @@ public class BestialTransmutation extends Power
 		{
 			if(InventoryHelper.checkForReagents(p, mutton, 1) && InventoryHelper.checkForReagents(p, redstone, 5))
 			{
-				InventoryHelper inventoryHelper = new InventoryHelper();
-				inventoryHelper.removeReagents(p, mutton, 1);
-				inventoryHelper.removeReagents(p, redstone, 5);
+				InventoryHelper.removeReagents(p, mutton, 1);
+				InventoryHelper.removeReagents(p, redstone, 5);
 	    		PlayerHelper.damagePlayer(p, "Transmutation", 4);
 	    		return true;
 			}
@@ -100,9 +97,8 @@ public class BestialTransmutation extends Power
 		{
 			if(InventoryHelper.checkForReagents(p, pork, 1) && InventoryHelper.checkForReagents(p, redstone, 3))
 			{
-				InventoryHelper inventoryHelper = new InventoryHelper();
-				inventoryHelper.removeReagents(p, pork, 1);
-				inventoryHelper.removeReagents(p, redstone, 3);
+				InventoryHelper.removeReagents(p, pork, 1);
+				InventoryHelper.removeReagents(p, redstone, 3);
 	    		PlayerHelper.damagePlayer(p, "Transmutation", 4);
 	    		return true;
 			}
@@ -113,9 +109,8 @@ public class BestialTransmutation extends Power
 		{
 			if(InventoryHelper.checkForReagents(p, rawBeef, 1) && InventoryHelper.checkForReagents(p, redstone, 6))
 			{
-				InventoryHelper inventoryHelper = new InventoryHelper();
-				inventoryHelper.removeReagents(p, rawBeef, 1);
-				inventoryHelper.removeReagents(p, redstone, 6);
+				InventoryHelper.removeReagents(p, rawBeef, 1);
+				InventoryHelper.removeReagents(p, redstone, 6);
 	    		PlayerHelper.damagePlayer(p, "Transmutation", 5);
 	    		return true;
 			}
