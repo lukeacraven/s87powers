@@ -68,18 +68,22 @@ public class PowersListener implements Listener
 							ItemMeta im = p.getInventory().getItemInMainHand().getItemMeta();
 							if(im.hasDisplayName())
 							{
-								System.out.println(im.getDisplayName());
 								if(im.getDisplayName().equals("Soul Gem"))
 								{
-									System.out.println("Siphoning player");
 									Siphon.onRightClick(p, p, 1);
 								}
 							}
 							else
 							{
 								GemHelper.onRightClick(event);
-								System.out.println("Gem Formed");
 							}
+						}
+						//testing scry
+						if(itemUsed == Material.GLOWSTONE_DUST && actionPerformed == Action.RIGHT_CLICK_BLOCK )//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
+						{
+							System.out.println("Doing it");
+							//Scry.look(p);
+							Wall.createWall(p);
 						}
 
 					}
