@@ -37,7 +37,7 @@ public class S87Powers extends JavaPlugin
 	private static final String permStrings[] =
 	{ "bestialtransmutation", "bestialtransmutation.toggledon", "lumberjack", "lumberjack.toggledon"
 			, "wolfpack" , "wolfpack.toggledon", "chargebow", "chargebow.toggledon"
-			, "reflexes", "reflexes.toggledon" };
+			, "reflexes", "reflexes.toggledon", "siphon", "siphon.toggledon" };
 	
 	//Match power names to power objects
 	private Map<String, Power> powerList = new HashMap<String, Power>();

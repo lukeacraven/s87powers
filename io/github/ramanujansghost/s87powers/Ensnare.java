@@ -32,10 +32,13 @@ public class Ensnare extends Power{
     	
 			if(InventoryHelper.checkForReagents(p, string, 1) && InventoryHelper.checkForReagents(p, redstone, 1))
 			{
-				InventoryHelper.removeReagents(p, string, 2);
-				InventoryHelper.removeReagents(p, redstone, 2);
-								
-				BlockHelper.placeInEmpty(BlockHelper.getCrossOnFace(BlockHelper.closestToPlayer(BlockHelper.findAir(target), p), target.getFace(BlockHelper.closestToPlayer(BlockHelper.findAir(target), p))), Material.WEB);
+				Block close = BlockHelper.closestToPlayer(BlockHelper.findAir(target), p);
+				if(close != null)
+				{
+					InventoryHelper.removeReagents(p, string, 2);
+					InventoryHelper.removeReagents(p, redstone, 2);
+					BlockHelper.placeInEmpty(p, BlockHelper.getCrossOnFace(close, target.getFace(BlockHelper.closestToPlayer(BlockHelper.findAir(target), p))), Material.WEB);
+				}
 				
 			}
 			else
@@ -54,9 +57,8 @@ public class Ensnare extends Power{
 				line.add(p.getTargetBlock(st,3));
 				line.add(p.getTargetBlock(st,4));
 				
-				System.out.println("Player facing:" + PlayerHelper.getPlayerFacing(p));
 				//BlockHelper.placeInEmpty(BlockHelper.getLine(tempWorld, p.getEyeLocation(), 4, PlayerHelper.getPlayerFacing(p)), Material.WEB);
-				BlockHelper.placeInEmpty(line, Material.WEB);
+				BlockHelper.placeInEmpty(p, line, Material.WEB);
 				
 			}
 			else
