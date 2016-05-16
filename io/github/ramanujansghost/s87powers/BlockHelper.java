@@ -48,7 +48,6 @@ public class BlockHelper
 	//returns block closest to player from a list of blocks
 	public static Block closestToPlayer(ArrayList<Block> blocks, Player p)
 	{
-		S87Powers.log.log(Level.WARNING, "Checking Closeness");
 		double dist = Double.MAX_VALUE;
 		Block closest = null;
 		Location pLoc = p.getLocation();
@@ -61,17 +60,15 @@ public class BlockHelper
 		    	closest = b;
 		    }
 		}
-		S87Powers.log.log(Level.WARNING, "Close block:" + closest);
 		return closest;
 	}
 	
 	//given a list of block, check if air and then change the type
-	public static void placeInEmpty(ArrayList<Block> blocks, Material toPlace)
+	public static void placeInEmpty(Player p, ArrayList<Block> blocks, Material toPlace)
 	{
-		S87Powers.log.log(Level.WARNING, "Placing Blocks");
 		for(Block b : blocks)
 		{
-			if(b.getType() == Material.AIR)
+			if(b.getType() == Material.AIR && S87Powers.canPlayerBuildAt(p, b.getLocation(), b))
 			{
 				b.setType(toPlace);
 			}
@@ -130,7 +127,7 @@ public class BlockHelper
 		 return square;		
 	}
 	
-	//returns a line of blocks in a world... Face is direction probably
+	//returns a line of blocks in a world... face is direction probably
 	public static  ArrayList<Block> getLine(World w, Location start, int length, BlockFace face)
 	{
 		ArrayList<Block> blocks = new ArrayList<Block>();
