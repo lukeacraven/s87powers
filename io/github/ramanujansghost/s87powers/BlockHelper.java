@@ -127,6 +127,115 @@ public class BlockHelper
 		 return square;		
 	}
 	
+	//this is weird, needs much work
+	public static ArrayList<Block> getWallRelP(Block block, Player p)
+	{
+		BlockFace face = PlayerHelper.getPlayerFacing(p);
+		S87Powers.log.log(Level.WARNING, "Begin Wall");
+		ArrayList<Block> square = new ArrayList<Block>();
+		square.add(block);
+		 switch (face) {
+	     case NORTH:
+	    	 square.add(block.getRelative(BlockFace.EAST));
+	    	 square.add(block.getRelative(BlockFace.WEST));
+	    	 square.add(block.getRelative(BlockFace.UP));
+	    	 block = block.getRelative(BlockFace.UP);
+	    	 square.add(block.getRelative(BlockFace.EAST));
+	    	 square.add(block.getRelative(BlockFace.WEST));
+	    	 square.add(block.getRelative(BlockFace.UP));
+	    	 block = block.getRelative(BlockFace.UP);
+	    	 square.add(block.getRelative(BlockFace.EAST));
+	    	 square.add(block.getRelative(BlockFace.WEST));
+	     	break;
+		 case SOUTH:
+	    	 square.add(block.getRelative(BlockFace.EAST));
+	    	 square.add(block.getRelative(BlockFace.WEST));
+	    	 square.add(block.getRelative(BlockFace.UP));
+	    	 block = block.getRelative(BlockFace.UP);
+	    	 square.add(block.getRelative(BlockFace.EAST));
+	    	 square.add(block.getRelative(BlockFace.WEST));
+	    	 square.add(block.getRelative(BlockFace.UP));
+	    	 block = block.getRelative(BlockFace.UP);
+	    	 square.add(block.getRelative(BlockFace.EAST));
+	    	 square.add(block.getRelative(BlockFace.WEST));
+		         break;
+		 case EAST:
+	    	 square.add(block.getRelative(BlockFace.NORTH));
+	    	 square.add(block.getRelative(BlockFace.SOUTH));
+	    	 square.add(block.getRelative(BlockFace.UP));
+	    	 block = block.getRelative(BlockFace.UP);
+	    	 square.add(block.getRelative(BlockFace.NORTH));
+	    	 square.add(block.getRelative(BlockFace.SOUTH));
+	    	 square.add(block.getRelative(BlockFace.UP));
+	    	 block = block.getRelative(BlockFace.UP);
+	    	 square.add(block.getRelative(BlockFace.NORTH));
+	    	 square.add(block.getRelative(BlockFace.SOUTH));
+		 	break;
+		 case WEST:
+	    	 square.add(block.getRelative(BlockFace.NORTH));
+	    	 square.add(block.getRelative(BlockFace.SOUTH));
+	    	 square.add(block.getRelative(BlockFace.UP));
+	    	 block = block.getRelative(BlockFace.UP);
+	    	 square.add(block.getRelative(BlockFace.NORTH));
+	    	 square.add(block.getRelative(BlockFace.SOUTH));
+	    	 square.add(block.getRelative(BlockFace.UP));
+	    	 block = block.getRelative(BlockFace.UP);
+	    	 square.add(block.getRelative(BlockFace.NORTH));
+	    	 square.add(block.getRelative(BlockFace.SOUTH));
+		 	break;
+		 case NORTH_WEST:
+	    	 square.add(block.getRelative(BlockFace.SOUTH_WEST));
+	    	 square.add(block.getRelative(BlockFace.NORTH_EAST));
+	    	 square.add(block.getRelative(BlockFace.UP));
+	    	 block = block.getRelative(BlockFace.UP);
+	    	 square.add(block.getRelative(BlockFace.SOUTH_WEST));
+	    	 square.add(block.getRelative(BlockFace.NORTH_EAST));
+	    	 square.add(block.getRelative(BlockFace.UP));
+	    	 block = block.getRelative(BlockFace.UP);
+	    	 square.add(block.getRelative(BlockFace.SOUTH_WEST));
+	    	 square.add(block.getRelative(BlockFace.NORTH_EAST));
+		 	break;
+		 case SOUTH_WEST:
+			 square.add(block.getRelative(BlockFace.NORTH_WEST));
+	    	 square.add(block.getRelative(BlockFace.SOUTH_EAST));
+	    	 square.add(block.getRelative(BlockFace.UP));
+	    	 block = block.getRelative(BlockFace.UP);
+	    	 square.add(block.getRelative(BlockFace.NORTH_WEST));
+	    	 square.add(block.getRelative(BlockFace.SOUTH_EAST));
+	    	 square.add(block.getRelative(BlockFace.UP));
+	    	 block = block.getRelative(BlockFace.UP);
+	    	 square.add(block.getRelative(BlockFace.NORTH_WEST));
+	    	 square.add(block.getRelative(BlockFace.SOUTH_EAST));
+		 	break;
+		 case NORTH_EAST:
+			 square.add(block.getRelative(BlockFace.NORTH_WEST));
+	    	 square.add(block.getRelative(BlockFace.SOUTH_EAST));
+	    	 square.add(block.getRelative(BlockFace.UP));
+	    	 block = block.getRelative(BlockFace.UP);
+	    	 square.add(block.getRelative(BlockFace.NORTH_WEST));
+	    	 square.add(block.getRelative(BlockFace.SOUTH_EAST));
+	    	 square.add(block.getRelative(BlockFace.UP));
+	    	 block = block.getRelative(BlockFace.UP);
+	    	 square.add(block.getRelative(BlockFace.NORTH_WEST));
+	    	 square.add(block.getRelative(BlockFace.SOUTH_EAST));
+		 	break;
+		 case SOUTH_EAST:
+	    	 square.add(block.getRelative(BlockFace.SOUTH_WEST));
+	    	 square.add(block.getRelative(BlockFace.NORTH_EAST));
+	    	 square.add(block.getRelative(BlockFace.UP));
+	    	 block = block.getRelative(BlockFace.UP);
+	    	 square.add(block.getRelative(BlockFace.SOUTH_WEST));
+	    	 square.add(block.getRelative(BlockFace.NORTH_EAST));
+	    	 square.add(block.getRelative(BlockFace.UP));
+	    	 block = block.getRelative(BlockFace.UP);
+	    	 square.add(block.getRelative(BlockFace.SOUTH_WEST));
+	    	 square.add(block.getRelative(BlockFace.NORTH_EAST));
+		 	break;
+		default:
+			break;
+		 }
+		 return square;		
+	}
 	//returns a line of blocks in a world... face is direction probably
 	public static  ArrayList<Block> getLine(World w, Location start, int length, BlockFace face)
 	{
@@ -140,4 +249,15 @@ public class BlockHelper
 		return blocks;
 	}
 
+	public static ArrayList<Block> tempPlace(ArrayList<Block> blocks, long duration)
+	{
+		ArrayList<Block> bs = new ArrayList<Block>();
+		long current = System.currentTimeMillis();
+		for(Block b: blocks) 
+		{
+			S87Powers.tempBlocks.put(b, current + duration);
+			bs.add(b);
+		}
+		return bs;
+	}
 }

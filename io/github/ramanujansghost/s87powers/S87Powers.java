@@ -5,7 +5,10 @@ import com.massivecraft.factions.engine.EngineMain;
 import com.massivecraft.massivecore.ps.PS;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,12 +16,14 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitScheduler;
 
 public class S87Powers extends JavaPlugin
 {
@@ -34,6 +39,8 @@ public class S87Powers extends JavaPlugin
 	public static HashMap<UUID, Long> timeSinceChargeBowUse = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeTillSiphonAgain = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeSinceInteract = new HashMap<UUID, Long>();
+	public static HashMap<Block, Long> tempBlocks = new HashMap<Block, Long>();
+	public static Set<Material> empty = null;
 	private static final String permStrings[] =
 	{ "bestialtransmutation", "bestialtransmutation.toggledon", "lumberjack", "lumberjack.toggledon"
 			, "wolfpack" , "wolfpack.toggledon", "chargebow", "chargebow.toggledon"
@@ -113,6 +120,23 @@ public class S87Powers extends JavaPlugin
 		checkIfFactionsIsEnabled();
 		getServer().getPluginManager().registerEvents(new PowersListener(),
 				this);
+		
+		//test async task
+		BukkitScheduler scheduler = getServer().getScheduler();
+        scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
+            @Override
+            public void run() {
+            	Iterator<Map.Entry<Block,Long>> iter = tempBlocks.entrySet().iterator();
+            	while (iter.hasNext()) {
+            	    Entry<Block, Long> entry = iter.next();
+            	    if(entry.getValue() <= System.currentTimeMillis())
+            	    {
+            	    	entry.getKey().setType(Material.AIR);
+            	        iter.remove();
+            	    }
+            	}
+            }
+        }, 0L, 20L);
 	}
 	
 	//Handle commands (consider moving)
