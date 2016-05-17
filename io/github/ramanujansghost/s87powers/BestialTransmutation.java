@@ -1,7 +1,6 @@
 package io.github.ramanujansghost.s87powers;
 
 import java.util.Set;
-import java.util.logging.Level;
 
 import org.bukkit.Material;
 import org.bukkit.World;
