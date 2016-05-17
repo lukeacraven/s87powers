@@ -18,16 +18,14 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class WolfPack extends Power
+public class WolfPack
 {
 	ItemStack bone = new ItemStack(Material.BONE, 1);
 	
 	//Constructor
 	public WolfPack()
 	{
-		name = "WolfPack";
-		type = "Combat";
-		description = "When a player with this power right clicks, they will summon some wolves.";
+
 	}
 	
 	//Check if a player has wolves

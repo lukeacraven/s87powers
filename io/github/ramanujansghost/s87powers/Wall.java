@@ -7,7 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class Wall extends Power
+public class Wall
 {
 	
 	private static final ItemStack redstone = new ItemStack(Material.REDSTONE,1);

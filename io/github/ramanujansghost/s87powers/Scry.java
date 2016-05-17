@@ -3,7 +3,7 @@ package io.github.ramanujansghost.s87powers;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
-public class Scry extends Power
+public class Scry
 {
 	public static void look(Player p)
 	{

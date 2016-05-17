@@ -7,7 +7,7 @@ import org.bukkit.entity.SmallFireball;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class ChargeBow extends Power
+public class ChargeBow
 {
 	ItemStack charge = new ItemStack(Material.FIREBALL, 1);
 	ItemStack arrow = new ItemStack(Material.ARROW, 1);
@@ -15,9 +15,7 @@ public class ChargeBow extends Power
 	//Constructor
 	public ChargeBow()
 	{
-		name = "Charge Bow";
-		type = "Combat";
-		description = "This power allows the player to shoot powerful fireballs from their bow at a cost of 1 fire charge per shot.";
+
 	}
 	
 	//Check if cooldown has elapsed

@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class Lumberjack extends Power
+public class Lumberjack
 {
 	private short blocksBroken = 0;
 	private int maxBlocksToBreak = 0;
@@ -26,9 +26,7 @@ public class Lumberjack extends Power
 	//Constructor
 	public Lumberjack()
 	{
-		name = "Lumberjack";
-		type = "Utility";
-		description = "Allows one to rapidly cut down trees.";
+
 	}
 	
 	//When a log is broken, check and see if player has an axe

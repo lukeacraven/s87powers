@@ -11,7 +11,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class BestialTransmutation extends Power
+public class BestialTransmutation
 {
 	private static final ItemStack rawChicken = new ItemStack(Material.RAW_CHICKEN,1);
 	private static final ItemStack rabbit = new ItemStack(Material.RABBIT,1);
@@ -23,9 +23,7 @@ public class BestialTransmutation extends Power
 	//Constructor
 	public BestialTransmutation()
 	{
-		name = "BestialTransmutation";
-		type = "Alchemy";
-		description = "Allows player to use 1 meat from a chicken, rabbit, sheep, pig, or cow, a varying amount of redstone, and life to create an animal";		
+		
 	}
 	
 	//Create a mob where player is looking

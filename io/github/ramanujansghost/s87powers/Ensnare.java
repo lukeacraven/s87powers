@@ -8,14 +8,12 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class Ensnare extends Power{
+public class Ensnare{
 	
 	//Constructor
 	public Ensnare()
 	{
-		name = "Ensnare";
-		type = "Alchemy";
-		description = "Ensnares your opponent with webbing, costs string and redstone.";
+
 	}
 	
 	private static final ItemStack redstone = new ItemStack(Material.REDSTONE,1);

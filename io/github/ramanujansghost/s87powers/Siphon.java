@@ -1,21 +1,18 @@
 package io.github.ramanujansghost.s87powers;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.Material;
-
 import org.bukkit.inventory.PlayerInventory;
 
-public class Siphon extends Power{
+public class Siphon{
 
 	//Constructor
 	public Siphon()
 	{
-		name = "Siphon";
-		type = "Lifeforce";
-		description = "Drain the lifeforce of a being."; //meh
+
 	}
 	
 	//Damage entity over time, add value to soulgem
