@@ -4,10 +4,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class Reflexes extends Power
+public class Letta extends Power
 {
 	//Constructor
-	public Reflexes()
+	public Letta()
 	{
 		name = "Reflexes";
 		type = "Combat";
@@ -15,13 +15,10 @@ public class Reflexes extends Power
 	}
 
 	//When hit, ignore damage, disappear arrow
-	public void reflexOnHit(EntityDamageByEntityEvent event, Entity damagedEntity)
+	public void onArrowHitPlayer(EntityDamageByEntityEvent event, Entity damagedEntity)
 	{
-		//Pushed
 		event.setCancelled(true);
 		event.getDamager().remove();
-		Projectile projectile = (Projectile) event.getDamager();
-		projectile.setBounce(true);
 		damagedEntity.sendMessage("Your swift reflexes let you evade the arrow!");		
 	}
 	

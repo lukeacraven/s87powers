@@ -163,7 +163,7 @@ public class PowersListener implements Listener
 	}
 	
 	//Check for entity being damaged by entity
-	//Used for Reflexes
+	//Used for Letta
 	@EventHandler
 	public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event)
 	{
@@ -178,9 +178,8 @@ public class PowersListener implements Listener
 				{
 					if(damagedEntity.hasPermission("s87powers.reflexes.toggledon"))
 					{
-						//New
-						Reflexes r = new Reflexes();
-						r.reflexOnHit(event, damagedEntity);
+						Letta letta = new Letta();
+						letta.onArrowHitPlayer(event, damagedEntity);
 					}
 				}
 			}
