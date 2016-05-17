@@ -31,8 +31,10 @@ public class BestialTransmutation
 	{
 		World tempWorld = p.getWorld();
     	Set<Material> st = null;
+    	/*
 		S87Powers.log.log(Level.INFO, "Spawning " + entityType.toString()
 				+ " for " + p.getDisplayName() + " via power " + getName());
+		*/
 		if(action == Action.LEFT_CLICK_AIR)
 		{
 			

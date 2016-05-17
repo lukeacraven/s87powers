@@ -46,19 +46,10 @@ public class S87Powers extends JavaPlugin
 			, "wolfpack" , "wolfpack.toggledon", "chargebow", "chargebow.toggledon"
 			, "reflexes", "reflexes.toggledon", "siphon", "siphon.toggledon" };
 	
-	//Match power names to power objects
-	private Map<String, Power> powerList = new HashMap<String, Power>();
-	
 	//Constructor, declares current power list 
 	public S87Powers()
 	{		
-		powerList.put("Bestial Transmutation", new BestialTransmutation());
-		powerList.put("Charge Bow", new ChargeBow());
-		powerList.put("Ensnare", new Ensnare());
-		powerList.put("Lumberjack", new Lumberjack());
-		powerList.put("Reflexes", new Reflexes());
-		powerList.put("Siphon", new Siphon());
-		powerList.put("Wolfpack", new WolfPack());
+		
 	}
 
 	//Begin permissions
@@ -226,10 +217,12 @@ public class S87Powers extends JavaPlugin
 				}
 				if (args[0].equalsIgnoreCase("list"))
 				{
+					/*
 					sender.sendMessage("The powers are as follows: ");
 					for (Map.Entry<String, Power> entry : powerList.entrySet()) {
 						sender.sendMessage(entry.getKey());
-					}			
+					}
+					*/			
 				}
 				if (args[0].equalsIgnoreCase("lookup"))
 				{
