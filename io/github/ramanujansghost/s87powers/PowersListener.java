@@ -89,17 +89,17 @@ public class PowersListener implements Listener
 					}
 					else
 					{
-						S87Powers.log.log(Level.WARNING, "Got a null player in onPlayerUse");
+						S87Powers.LOG.log(Level.WARNING, "Got a null player in onPlayerUse");
 					}
 				}
 				else
 				{
-					S87Powers.log.log(Level.WARNING, "Got a null action in onPlayerUse");
+					S87Powers.LOG.log(Level.WARNING, "Got a null action in onPlayerUse");
 				}
 			}
 			else
 			{
-				S87Powers.log.log(Level.WARNING, "Got a null material in onPlayerUse");
+				S87Powers.LOG.log(Level.WARNING, "Got a null material in onPlayerUse");
 			}
 		}
 	}
@@ -132,18 +132,18 @@ public class PowersListener implements Listener
 					}
 					else
 					{
-						S87Powers.log.log(Level.WARNING, "Got a null blockBroken in onPlayerBlockBreak");
+						S87Powers.LOG.log(Level.WARNING, "Got a null blockBroken in onPlayerBlockBreak");
 					}
 				}
 				else
 				{
-					S87Powers.log.log(Level.WARNING, "Got a null itemUsed in onPlayerBlockBreak");
+					S87Powers.LOG.log(Level.WARNING, "Got a null itemUsed in onPlayerBlockBreak");
 				}
 			}
 		}
 		else
 		{
-			S87Powers.log.log(Level.WARNING, "Got a null player in onPlayerBlockBreak");
+			S87Powers.LOG.log(Level.WARNING, "Got a null player in onPlayerBlockBreak");
 		}
 	}
 	
