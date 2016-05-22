@@ -84,24 +84,13 @@ public class S87Powers extends JavaPlugin
 	{
 		Statement stmt = null;
 		try {
-			String createPlayerTable = "IF (NOT (EXISTS (SELECT * "
-					+ "FROM INFORMATION_SCHEMA.TABLES"
-					+ "WHERE TABLE_SCHEMA = 'S87Powers'"
-					+ "AND TABLE_NAME = 'PLAYERS')))"
-					+ "BEGIN"
-					+ "CREATE TABLE `S87Powers.PLAYERS` ("
+			String createPlayerTable = "CREATE TABLE `S87Powers.PLAYERS` ("
 					+ "`ID`	TEXT NOT NULL,"
-					+ "PRIMARY KEY(ID))"
-					+ "END";
+					+ "PRIMARY KEY(ID))";
 			stmt = connection.createStatement();
 			stmt.executeUpdate(createPlayerTable);
 			
-			String createPowersTable = "IF (NOT (EXISTS (SELECT * "
-					+ "FROM INFORMATION_SCHEMA.TABLES"
-					+ "WHERE TABLE_SCHEMA = 'S87Powers'"
-					+ "AND TABLE_NAME = 'POWERS')))"
-					+ "BEGIN"
-					+ "CREATE TABLE `POWERS` ("
+			String createPowersTable = "CREATE TABLE `S87Powers.POWERS` ("
 					+ "`POWER_ID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
 					+ "`NAME`	TEXT NOT NULL,"
 					+ "`DESCRIPTION`	TEXT NOT NULL,"
@@ -109,11 +98,7 @@ public class S87Powers extends JavaPlugin
 			stmt = connection.createStatement();
 			stmt.executeUpdate(createPowersTable);
 			
-			String createPlayerPowerRelTable = "IF (NOT (EXISTS (SELECT * "
-					+ "FROM INFORMATION_SCHEMA.TABLES"
-					+ "WHERE TABLE_SCHEMA = 'S87Powers'"
-					+ "AND TABLE_NAME = 'PLAYER_POWER_REL')))"
-					+ "CREATE TABLE 'PLAYER_POWER_REL' ("
+			String createPlayerPowerRelTable = "CREATE TABLE 'S87Powers.PLAYER_POWER_REL' ("
 					+ "`PLAYER_ID`	TEXT NOT NULL,"
 					+ "`POWER_ID`	INTEGER NOT NULL,"
 					+ "`REL_COST`	INTEGER NOT NULL,"
