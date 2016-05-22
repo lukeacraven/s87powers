@@ -95,7 +95,6 @@ public class S87Powers extends JavaPlugin
 					+ "`NAME`	TEXT NOT NULL,"
 					+ "`DESCRIPTION`	TEXT NOT NULL,"
 					+ "`COST`	INTEGER NOT NULL)";
-			stmt = connection.createStatement();
 			stmt.executeUpdate(createPowersTable);
 			
 			String createPlayerPowerRelTable = "CREATE TABLE IF NOT EXISTS 'S87Powers.PLAYER_POWER_REL' ("
@@ -103,7 +102,6 @@ public class S87Powers extends JavaPlugin
 					+ "`POWER_ID`	INTEGER NOT NULL,"
 					+ "`REL_COST`	INTEGER NOT NULL,"
 					+ "PRIMARY KEY(PLAYER_ID,POWER_ID))";
-			stmt = connection.createStatement();
 			stmt.executeUpdate(createPlayerPowerRelTable);
 		}
 		catch(Exception e) {
