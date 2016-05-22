@@ -85,6 +85,10 @@ public class PowersListener implements Listener
 							//Scry.look(p);
 							Wall.createWall(p);
 						}
+						if(itemUsed == Material.AIR && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
+						{
+							System.out.println(p.getInventory().getHeldItemSlot());
+						}
 
 					}
 					else
