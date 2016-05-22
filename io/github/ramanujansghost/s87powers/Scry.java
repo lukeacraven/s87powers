@@ -1,6 +1,5 @@
 package io.github.ramanujansghost.s87powers;
 
-//import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 public class Scry
