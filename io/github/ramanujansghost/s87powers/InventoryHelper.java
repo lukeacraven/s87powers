@@ -13,8 +13,8 @@ public class InventoryHelper
 	//If an tool has been used up, break the tool
 	public static void breakTool(Player p, ItemStack item)
 	{
-		if (S87Powers.debugInventoryHelper)
-			S87Powers.log.log(Level.INFO, "Trying to remove " + item.getType());
+		if (S87Powers.DEBUGINVENTORYHELPER)
+			S87Powers.LOG.log(Level.INFO, "Trying to remove " + item.getType());
 		p.getInventory().removeItem(item);
 		p.playSound(p.getLocation(), Sound.ENTITY_ITEM_BREAK, 10, 0);
 	}
@@ -34,7 +34,7 @@ public class InventoryHelper
 		ItemStack firstItemStack;
 		PlayerInventory inventory = p.getInventory();
 
-		if (S87Powers.debugInventoryHelper) S87Powers.log.log(Level.INFO,
+		if (S87Powers.DEBUGINVENTORYHELPER) S87Powers.LOG.log(Level.INFO,
 				"[S87 Powers] Removing " + amountToConsume + " "
 						+ item.getType() + " from " + p.getDisplayName());
 
@@ -44,10 +44,10 @@ public class InventoryHelper
 			ItemStack remove = new ItemStack(item.getType(), 1);
 			inventory.removeItem(remove);
 
-			if (S87Powers.debugInventoryHelper) S87Powers.log.log(Level.INFO,
+			if (S87Powers.DEBUGINVENTORYHELPER) S87Powers.LOG.log(Level.INFO,
 					"Amount is now " + firstItemStack.getAmount());
-			if (S87Powers.debugInventoryHelper)
-				S87Powers.log.log(Level.INFO, "Index of first found is: "
+			if (S87Powers.DEBUGINVENTORYHELPER)
+				S87Powers.LOG.log(Level.INFO, "Index of first found is: "
 						+ inventory.first(item.getType()));
 		}
 	}

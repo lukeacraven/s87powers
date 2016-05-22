@@ -4,6 +4,10 @@ import net.milkbowl.vault.permission.Permission;
 import com.massivecraft.factions.engine.EngineMain;
 import com.massivecraft.massivecore.ps.PS;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -27,13 +31,14 @@ import org.bukkit.scheduler.BukkitScheduler;
 
 public class S87Powers extends JavaPlugin
 {
-	public static final Logger log = Logger.getLogger("Minecraft");
-	public static final String version = "Powers Version .06";
-	public static final boolean debugInventoryHelper = true;
-	public static final boolean debugLumberjack = true;
+	public static final Logger LOG = Logger.getLogger("Minecraft");
+	public static final String VERSION = "Powers Version .06";
+	public static final boolean DEBUGINVENTORYHELPER = true;
 	public static boolean isFactionsEnabled = false;
 	
 	public static Permission perms = null;
+	
+	public static Connection connection = null;
 
 	public static HashMap<UUID, Long> timeSinceWolfSummon = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeSinceChargeBowUse = new HashMap<UUID, Long>();
@@ -46,7 +51,7 @@ public class S87Powers extends JavaPlugin
 			, "wolfpack" , "wolfpack.toggledon", "chargebow", "chargebow.toggledon"
 			, "reflexes", "reflexes.toggledon", "siphon", "siphon.toggledon" };
 	
-	//Constructor, declares current power list 
+	//Constructor
 	public S87Powers()
 	{		
 		
@@ -59,6 +64,47 @@ public class S87Powers extends JavaPlugin
 				.getServicesManager().getRegistration(Permission.class);
 		perms = rsp.getProvider();
 		return perms != null;
+	}
+	
+	//Set up SqLite DB connection
+	private void setUpDBConnection()
+	{
+		try {
+			Class.forName("org.sqlite.JDBC");
+			connection = DriverManager.getConnection("jdbc:sqlite:s87powers.db");
+		
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//Set up SqLite DB structure
+	private void setUpDBStructure() throws SQLException
+	{
+		Statement stmt = null;
+		try {
+			/*	TODO
+			String createPlayerTable = "IF (NOT (EXISTS (SELECT * "
+					+ "FROM INFORMATION_SCHEMA.TABLES"
+					+ "WHERE TABLE_SCHEMA = 'S87Powers'"
+					+ "AND TABLE_NAME = 'Players')))"
+					+ "BEGIN"
+					+ "CREATE TABLE S87Powers.Players"
+					+ "(UUID"
+					+ "END";
+			stmt = connection.createStatement();
+			stmt.execute(createPlayerTable);
+			*/
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(stmt != null) {	//Any exceptions here are thrown
+				stmt.close();
+			}
+		}
 	}
 	
 	//Attempt to establish factions, indicate error if massivecore/factions are missing
@@ -75,23 +121,23 @@ public class S87Powers extends JavaPlugin
 					if (getServer().getPluginManager().getPlugin("MassiveCore")
 							.isEnabled())
 					{
-						log.log(Level.INFO,
+						LOG.log(Level.INFO,
 								"Factions and MassiveCore were successfully detected.");
 						isFactionsEnabled = true;
 						return true;
 					}
 					else
-						log.log(Level.WARNING,
+						LOG.log(Level.WARNING,
 								"MassiveCore could not be detected");
 				}
 				else
-					log.log(Level.WARNING, "MassiveCore could not be detected");
+					LOG.log(Level.WARNING, "MassiveCore could not be detected");
 			}
 			else
-				log.log(Level.WARNING, "Factions could not be detected");
+				LOG.log(Level.WARNING, "Factions could not be detected");
 		}
 		else
-			log.log(Level.WARNING, "Factions could not be detected");
+			LOG.log(Level.WARNING, "Factions could not be detected");
 		return false;
 	}
 	
@@ -109,6 +155,13 @@ public class S87Powers extends JavaPlugin
 	{
 		setUpPermissions();
 		checkIfFactionsIsEnabled();
+		setUpDBConnection();
+		try {
+			setUpDBStructure();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 		getServer().getPluginManager().registerEvents(new PowersListener(),
 				this);
 		
@@ -138,7 +191,7 @@ public class S87Powers extends JavaPlugin
 		{
 			if (args.length == 0)
 			{
-				sender.sendMessage(ChatColor.DARK_AQUA + S87Powers.version);
+				sender.sendMessage(ChatColor.DARK_AQUA + S87Powers.VERSION);
 				sender.sendMessage(ChatColor.GOLD
 						+ "Use the command '/powers help' to list S87 Power's commands.");
 			}
@@ -307,7 +360,7 @@ public class S87Powers extends JavaPlugin
 		else
 		{
 			sender.sendMessage(playerString + " could not be found.");
-			log.log(Level.WARNING, sender.getName()
+			LOG.log(Level.WARNING, sender.getName()
 					+ " attempted to find an invalid player " + playerString);
 		}
 	}
@@ -329,13 +382,13 @@ public class S87Powers extends JavaPlugin
 			{
 				if (perms.playerAdd(p, "s87powers." + permissionString))
 				{
-					log.log(Level.INFO,
+					LOG.log(Level.INFO,
 							sender.getName() + " is adding " + "s87powers."
 									+ permissionString + " to "
 									+ p.getDisplayName());
 					return true;
 				}
-				log.log(Level.WARNING, "Failed to add " + "s87powers."
+				LOG.log(Level.WARNING, "Failed to add " + "s87powers."
 						+ permissionString + " from " + p.getDisplayName());
 				return false;
 			}
@@ -343,7 +396,7 @@ public class S87Powers extends JavaPlugin
 			{
 				sender.sendMessage(
 						permissionString + " is not a valid permission.");
-				log.log(Level.WARNING,
+				LOG.log(Level.WARNING,
 						sender.getName()
 								+ " attempted to add invalid permission: "
 								+ "s87powers." + permissionString + " to "
@@ -354,7 +407,7 @@ public class S87Powers extends JavaPlugin
 		else
 		{
 			sender.sendMessage(playerString + " could not be found.");
-			log.log(Level.WARNING, sender.getName()
+			LOG.log(Level.WARNING, sender.getName()
 					+ " attempted to find an invalid player " + playerString);
 			return false;
 		}
@@ -377,13 +430,13 @@ public class S87Powers extends JavaPlugin
 			{
 				if (perms.playerRemove(p, "s87powers." + permissionString))
 				{
-					log.log(Level.INFO,
+					LOG.log(Level.INFO,
 							sender.getName() + " is removing " + "s87powers."
 									+ permissionString + " from "
 									+ p.getDisplayName());
 					return true;
 				}
-				log.log(Level.WARNING, "Failed to remove " + "s87powers."
+				LOG.log(Level.WARNING, "Failed to remove " + "s87powers."
 						+ permissionString + " from " + p.getDisplayName());
 				return false;
 			}
@@ -391,7 +444,7 @@ public class S87Powers extends JavaPlugin
 			{
 				sender.sendMessage(
 						permissionString + " is not a valid permission.");
-				log.log(Level.WARNING,
+				LOG.log(Level.WARNING,
 						sender.getName()
 								+ " attempted to remove invalid permission: "
 								+ "s87powers." + permissionString + " from "
@@ -402,7 +455,7 @@ public class S87Powers extends JavaPlugin
 		else
 		{
 			sender.sendMessage(playerString + " could not be found.");
-			log.log(Level.WARNING, sender.getName()
+			LOG.log(Level.WARNING, sender.getName()
 					+ " attempted to find an invalid player " + playerString);
 			return false;
 		}

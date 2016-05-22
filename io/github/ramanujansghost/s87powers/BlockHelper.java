@@ -15,7 +15,7 @@ public class BlockHelper
 	//Returns list of open adj. blocks
 	public static ArrayList<Block> findAir(Block b)
 	{
-		S87Powers.log.log(Level.WARNING, "Getting air");
+		S87Powers.LOG.log(Level.WARNING, "Getting air");
 		ArrayList<Block> airs = new ArrayList<Block>();
 		if(b.getRelative(BlockFace.UP).getType() == Material.AIR)
 		{
@@ -41,7 +41,7 @@ public class BlockHelper
 		{
 			airs.add(b.getRelative(BlockFace.WEST));
 		}
-		S87Powers.log.log(Level.WARNING, "Airs:" + airs);
+		S87Powers.LOG.log(Level.WARNING, "Airs:" + airs);
 		return airs;
 	}
 	
@@ -81,7 +81,7 @@ public class BlockHelper
 	//Gets a cross shape relative to face of block
 	public static ArrayList<Block> getCrossOnFace(Block block, BlockFace face)
 	{
-		S87Powers.log.log(Level.WARNING, "Begin Cross");
+		S87Powers.LOG.log(Level.WARNING, "Begin Cross");
 		ArrayList<Block> square = new ArrayList<Block>();
 		square.add(block);
 		 switch (face) {
@@ -131,7 +131,7 @@ public class BlockHelper
 	public static ArrayList<Block> getWallRelP(Block block, Player p)
 	{
 		BlockFace face = PlayerHelper.getPlayerFacing(p);
-		S87Powers.log.log(Level.WARNING, "Begin Wall");
+		S87Powers.LOG.log(Level.WARNING, "Begin Wall");
 		ArrayList<Block> square = new ArrayList<Block>();
 		square.add(block);
 		 switch (face) {
