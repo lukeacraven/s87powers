@@ -91,7 +91,7 @@ public class S87Powers extends JavaPlugin
 					+ "AND TABLE_NAME = 'Players')))"
 					+ "BEGIN"
 					+ "CREATE TABLE S87Powers.Players"
-					+ "(UUID"
+					+ "(UUID TEXT PRIMARY KEY	NOT NULL)"
 					+ "END";
 			stmt = connection.createStatement();
 			stmt.execute(createPlayerTable);
