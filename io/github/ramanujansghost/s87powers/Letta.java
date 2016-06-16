@@ -1,7 +1,6 @@
 package io.github.ramanujansghost.s87powers;
 
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class Letta

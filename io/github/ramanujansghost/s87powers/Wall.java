@@ -24,9 +24,9 @@ public class Wall
 				Block close = BlockHelper.closestToPlayer(BlockHelper.findAir(target), p);
 				if(close != null)
 				{
-					InventoryHelper.removeReagents(p, stone, 2);
+					InventoryHelper.removeReagents(p, stone, 9);
 					InventoryHelper.removeReagents(p, redstone, 2);
-					BlockHelper.placeInEmpty(p, BlockHelper.tempPlace(BlockHelper.getWallRelP(close, p),5000), Material.STONE);
+					BlockHelper.placeInEmpty(p, BlockHelper.getWallRelP(close, p), Material.STONE);
 				}
 		
 			}

@@ -1,7 +1,6 @@
 package io.github.ramanujansghost.s87powers;
 
 import java.util.Set;
-import java.util.logging.Level;
 
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -33,6 +32,12 @@ public class BestialTransmutation
     	Set<Material> st = null;
 		//S87Powers.log.log(Level.INFO, "Spawning " + entityType.toString()
 		//		+ " for " + p.getDisplayName() + " via power " + PowersMapper.retrievePowerByName(powerName)[0]);
+
+    	/*
+		S87Powers.log.log(Level.INFO, "Spawning " + entityType.toString()
+				+ " for " + p.getDisplayName() + " via power " + getName());
+		*/
+
 		if(action == Action.LEFT_CLICK_AIR)
 		{
 			

@@ -3,7 +3,6 @@ package io.github.ramanujansghost.s87powers;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.logging.Level;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -73,15 +72,6 @@ public class Lumberjack
 							.getEnchantmentLevel(Enchantment.DURABILITY) + 1));
 				else
 					damageCaused = blocksBroken;
-
-				if (S87Powers.debugLumberjack)
-				{
-					S87Powers.log.log(Level.INFO,
-							"Initial durability: " + initialDurability);
-					S87Powers.log.log(Level.INFO,
-							"Damage caused: " + damageCaused + " from breaking "
-									+ blocksBroken + " blocks");
-				}
 
 				axeItem.setDurability(
 						(short) (initialDurability + damageCaused));
@@ -215,11 +205,6 @@ public class Lumberjack
 		{
 			if (p != null)
 			{
-				if (S87Powers.debugLumberjack) S87Powers.log.log(Level.INFO,
-						"Received block at " + block.getX() + ", "
-								+ block.getY() + ", " + block.getZ()
-								+ " checking around block.");
-
 				for (int y = -1; y < 2; y++)
 				{
 					for (int x = -1; x < 2; x++)

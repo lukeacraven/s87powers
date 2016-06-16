@@ -83,6 +83,7 @@ public class PowersListener implements Listener
 						{
 							Wall.createWall(p);
 						}
+
 						//Leap test
 						if(itemUsed == Material.RABBIT_FOOT && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
 						{
@@ -92,24 +93,29 @@ public class PowersListener implements Listener
 						if(itemUsed == Material.STICK && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
 						{
 							Push.onRightClick(p);
+
+						if(itemUsed == Material.AIR && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
+						{
+							System.out.println(p.getInventory().getHeldItemSlot());
 						}
 
 					}
 					else
 					{
-						S87Powers.log.log(Level.WARNING, "Got a null player in onPlayerUse");
+						S87Powers.LOG.log(Level.WARNING, "Got a null player in onPlayerUse");
 					}
 				}
 				else
 				{
-					S87Powers.log.log(Level.WARNING, "Got a null action in onPlayerUse");
+					S87Powers.LOG.log(Level.WARNING, "Got a null action in onPlayerUse");
 				}
 			}
 			else
 			{
-				S87Powers.log.log(Level.WARNING, "Got a null material in onPlayerUse");
+				S87Powers.LOG.log(Level.WARNING, "Got a null material in onPlayerUse");
 			}
 		}
+	}
 	}
 	
 	//Check for breaking block
@@ -140,18 +146,18 @@ public class PowersListener implements Listener
 					}
 					else
 					{
-						S87Powers.log.log(Level.WARNING, "Got a null blockBroken in onPlayerBlockBreak");
+						S87Powers.LOG.log(Level.WARNING, "Got a null blockBroken in onPlayerBlockBreak");
 					}
 				}
 				else
 				{
-					S87Powers.log.log(Level.WARNING, "Got a null itemUsed in onPlayerBlockBreak");
+					S87Powers.LOG.log(Level.WARNING, "Got a null itemUsed in onPlayerBlockBreak");
 				}
 			}
 		}
 		else
 		{
-			S87Powers.log.log(Level.WARNING, "Got a null player in onPlayerBlockBreak");
+			S87Powers.LOG.log(Level.WARNING, "Got a null player in onPlayerBlockBreak");
 		}
 	}
 	

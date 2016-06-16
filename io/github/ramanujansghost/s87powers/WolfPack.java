@@ -62,13 +62,13 @@ public class WolfPack
 											}
 											else
 											{
-												S87Powers.log.log(Level.WARNING,
+												S87Powers.LOG.log(Level.WARNING,
 														"Got a null animalTamerUUID in checkForWolves");
 											}
 										}
 										else
 										{
-											S87Powers.log.log(Level.WARNING,
+											S87Powers.LOG.log(Level.WARNING,
 													"Got a null entityTamer in checkForWolves");
 										}
 									}
@@ -76,23 +76,23 @@ public class WolfPack
 							}
 							else
 							{
-								S87Powers.log.log(Level.WARNING, "Got a null entity in checkForWolves");
+								S87Powers.LOG.log(Level.WARNING, "Got a null entity in checkForWolves");
 							}
 						}
 					}
 					else
 					{
-						S87Powers.log.log(Level.WARNING, "Got a null entityList in checkForWolves");
+						S87Powers.LOG.log(Level.WARNING, "Got a null entityList in checkForWolves");
 					}
 				}
 				else
 				{
-					S87Powers.log.log(Level.WARNING, "Got a null world in checkForWolves");
+					S87Powers.LOG.log(Level.WARNING, "Got a null world in checkForWolves");
 				}
 			}
 			else
 			{
-				S87Powers.log.log(Level.WARNING, "Got a null playerUUID in checkForWolves");
+				S87Powers.LOG.log(Level.WARNING, "Got a null playerUUID in checkForWolves");
 			}
 		return amountOfWolves;
 	}
@@ -117,7 +117,7 @@ public class WolfPack
 		}
 		else
 		{
-			S87Powers.log.log(Level.WARNING, "Got a null player in canPlayerSpawnWolves");
+			S87Powers.LOG.log(Level.WARNING, "Got a null player in canPlayerSpawnWolves");
 		}
 		return true; // in this case, player has never spawned wolves
 	}
@@ -184,18 +184,18 @@ public class WolfPack
 						}
 						else
 						{
-							S87Powers.log.log(Level.WARNING, "Got a null spawnedWolf in SpawnWolf");
+							S87Powers.LOG.log(Level.WARNING, "Got a null spawnedWolf in SpawnWolf");
 						}
 					}
 				}
 				else
 				{
-					S87Powers.log.log(Level.WARNING, "Got a null world in SpawnWolf");
+					S87Powers.LOG.log(Level.WARNING, "Got a null world in SpawnWolf");
 				}
 			}
 			else
 			{
-				S87Powers.log.log(Level.WARNING, "Got a null player in SpawnWolf");
+				S87Powers.LOG.log(Level.WARNING, "Got a null player in SpawnWolf");
 			}
 	}
 	
@@ -217,7 +217,7 @@ public class WolfPack
 			{
 				while (checkForWolves(p) < 3)
 				{
-					S87Powers.log.log(Level.INFO, String.valueOf(checkForWolves(p)));
+					S87Powers.LOG.log(Level.INFO, String.valueOf(checkForWolves(p)));
 					consumeBones(p, 5);
 					spawnWolf(p);
 					spawnedWolves++;
