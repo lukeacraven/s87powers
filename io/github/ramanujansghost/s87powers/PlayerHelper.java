@@ -1,7 +1,12 @@
 package io.github.ramanujansghost.s87powers;
 
+import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 public class PlayerHelper
 {	
@@ -70,5 +75,27 @@ public class PlayerHelper
 	        {
 	                return null;
 	        }
+	}
+	//borrowed from S86 with permission.
+	public static LivingEntity getTarget(Player user, double maxRange) {
+		Location startLoc = user.getEyeLocation();
+		Vector vec = user.getLocation().getDirection();
+		for (int i = 0; i < maxRange; i ++) {
+			Location testLoc = new Location(startLoc.getWorld(), startLoc.getX() + (vec.getX() * i), startLoc.getY() + (vec.getY() * i), startLoc.getZ() + (vec.getZ() * i));
+			if (Math.abs(startLoc.distance(testLoc)) <= maxRange) {
+				Block block = testLoc.getBlock();
+				if (block.getType().isOccluding()) break;
+				for (Entity entity : block.getChunk().getEntities()) {
+					if (entity instanceof LivingEntity && (entity.getLocation().distanceSquared(testLoc) < 1.0D || ((LivingEntity) entity).getEyeLocation().distanceSquared(testLoc) < 1.0D) && entity != user) {
+						return (LivingEntity) entity;
+					}
+					else
+					{
+						System.out.println(entity);
+					}
+					}
+				}
+		}
+		return null;
 	}
 }

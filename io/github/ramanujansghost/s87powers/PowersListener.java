@@ -78,12 +78,20 @@ public class PowersListener implements Listener
 								GemHelper.onRightClick(event);
 							}
 						}
-						//testing scry
+						//testing Wall
 						if(itemUsed == Material.GLOWSTONE_DUST && actionPerformed == Action.RIGHT_CLICK_BLOCK )//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
 						{
-							System.out.println("Doing it");
-							//Scry.look(p);
 							Wall.createWall(p);
+						}
+						//Leap test
+						if(itemUsed == Material.RABBIT_FOOT && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
+						{
+							Leap.onRightClick(p);
+						}
+						//Push test
+						if(itemUsed == Material.STICK && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
+						{
+							Push.onRightClick(p);
 						}
 
 					}
