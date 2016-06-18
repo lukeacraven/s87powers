@@ -93,7 +93,23 @@ public class PowersListener implements Listener
 						if(itemUsed == Material.STICK && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
 						{
 							Push.onRightClick(p);
-
+						}
+						if(itemUsed == Material.FEATHER && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
+						{
+							Levitate.onRightClick(p);
+						}
+						if(itemUsed == Material.BLAZE_ROD && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
+						{
+							Fireball.onRightClick(p);
+						}
+						if(itemUsed == Material.SEEDS && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
+						{
+							Leviosa.onRightClick(p);
+						}
+						if(itemUsed == Material.COAL && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
+						{
+							Translocation.onRightClick(p);
+						}
 						if(itemUsed == Material.AIR && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
 						{
 							System.out.println(p.getInventory().getHeldItemSlot());
@@ -116,7 +132,7 @@ public class PowersListener implements Listener
 			}
 		}
 	}
-	}
+
 	
 	//Check for breaking block
 	//Used for lumberjack

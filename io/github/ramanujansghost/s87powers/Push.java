@@ -11,13 +11,25 @@ public class Push
 	public static void onRightClick(Player p) 
 	{
 		Vector push = p.getLocation().getDirection();
-		LivingEntity target = PlayerHelper.getTarget(p, 8);
-		if(target != null)
+		//Pull
+		if(p.isSneaking())
 		{
-			System.out.println("Target:" + target);
-			target.setVelocity(new Vector(push.getX()*4, (push.getY()+.4)*2, push.getZ()*4));
+			LivingEntity target = PlayerHelper.getTarget(p, 12);
+			if(target != null)
+			{
+				target.setVelocity(new Vector(push.getX()*-4, (push.getY()+.4)*-2, push.getZ()*-4));
+			}
 		}
-		
+		//Push
+		else
+		{
+			LivingEntity target = PlayerHelper.getTarget(p, 8);
+			if(target != null)
+			{
+				target.setVelocity(new Vector(push.getX()*4, (push.getY()+.4)*2, push.getZ()*4));
+			}
+		}
+
 	}
 
 }
