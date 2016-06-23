@@ -15,6 +15,7 @@ public class BlockHelper
 	//Returns list of open adj. blocks
 	public static ArrayList<Block> findAir(Block b)
 	{
+		System.out.println("Begin find air");
 		S87Powers.LOG.log(Level.WARNING, "Getting air");
 		ArrayList<Block> airs = new ArrayList<Block>();
 		if(b.getRelative(BlockFace.UP).getType() == Material.AIR)
@@ -42,16 +43,20 @@ public class BlockHelper
 			airs.add(b.getRelative(BlockFace.WEST));
 		}
 		S87Powers.LOG.log(Level.WARNING, "Airs:" + airs);
+		System.out.println("End Find Airs");
 		return airs;
+		
 	}
 	
 	//returns block closest to player from a list of blocks
 	public static Block closestToPlayer(ArrayList<Block> blocks, Player p)
 	{
+		System.out.println("Begin CTP");
 		double dist = Double.MAX_VALUE;
 		Block closest = null;
 		Location pLoc = p.getLocation();
 		
+		System.out.println("Begin Iterate");
 		for(Block b : blocks){
 			double newDist = b.getLocation().distance(pLoc);
 		    if(newDist < dist)
@@ -59,6 +64,7 @@ public class BlockHelper
 		    	dist = newDist;
 		    	closest = b;
 		    }
+		    System.out.println("FINISH CTP");
 		}
 		return closest;
 	}

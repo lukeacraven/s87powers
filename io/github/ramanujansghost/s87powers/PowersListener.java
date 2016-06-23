@@ -110,9 +110,26 @@ public class PowersListener implements Listener
 						{
 							Translocation.onRightClick(p);
 						}
+						if(itemUsed == Material.ARROW && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
+						{
+							Mount.onRightClick(p);
+						}
+						if(itemUsed == Material.CLAY_BRICK && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
+						{
+							Blink.onRightClick(p);
+						}
+						
 						if(itemUsed == Material.AIR && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
 						{
 							System.out.println(p.getInventory().getHeldItemSlot());
+						}
+						if(itemUsed == Material.NETHER_STAR && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
+						{
+							Possess.onRightClick(p);
+						}
+						if(itemUsed == Material.FLINT && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
+						{
+							Cloak.onRightClick(p);
 						}
 
 					}
