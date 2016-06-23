@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -82,9 +83,13 @@ public class GemHelper {
 	//Return the current power value of a gem
 	public static int getGemPower(PlayerInventory inv, int itemLocation)
 	{
+		System.out.println("Line 1");
 		ItemStack gem = inv.getItem(itemLocation);
-		String oldData = gem.getItemMeta().getLore().get(0);		
+		System.out.println("2");
+		String oldData = gem.getItemMeta().getLore().get(0);	
+		System.out.println("3");
 		int value = Integer.parseInt(oldData.substring(0,oldData.indexOf('/')));
+		System.out.println("4");
 		return value;
 	}
 	
@@ -117,15 +122,46 @@ public class GemHelper {
 		String oldData = gem.getItemMeta().getLore().get(0);
 		int value = Integer.parseInt(oldData.substring(0,oldData.indexOf('/')));
 		if(rmvValue > value)
-		{
+		{			
 			setGemPower(inv, itemLocation, 0);
-			//Take power from elsewhere.
-			
+			Siphon.extract((Player)inv.getHolder(), (Player)inv.getHolder(), rmvValue - value);			
 		}
 		else
 		{
 			setGemPower(inv, itemLocation, value-rmvValue);
 		}
+	}
+	public static boolean cast(PlayerInventory inv, int val)
+	{
+		if(inv.getItem(40)!= null)
+		{
+			ItemMeta meta = inv.getItemInOffHand().getItemMeta();
+			if(meta.getDisplayName().equals("Soul Gem") && Character.isDigit(meta.getLore().get(0).charAt(0)))
+			{
+				System.out.println(getGemPower(inv, 40));
+				removePower(inv, 40, val);
+			}
+			else
+			{
+				Siphon.extract((Player)inv.getHolder(), (Player)inv.getHolder(), (val/7)+1);
+			}
+		}
+		else
+		{
+			Siphon.extract((Player)inv.getHolder(), (Player)inv.getHolder(), (val/7)+1);
+		}
+		if(((Player)inv.getHolder()).getHealth() == 0)
+		{
+			System.out.println("Fail");
+			return false;
+		}
+		else
+		{
+			System.out.println("Success");
+			return true;
+		}
+			
+			
 	}
 
 	
