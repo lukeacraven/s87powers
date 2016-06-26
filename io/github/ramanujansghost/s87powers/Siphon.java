@@ -19,7 +19,6 @@ public class Siphon{
 	//Scale damage and power gained by amount (in hearts/foods)
 	public static int extract(Entity target, Player p, int amount)
 	{		
-		target.setGlowing(true);
 		
 		{
 			LivingEntity le = (LivingEntity)target;

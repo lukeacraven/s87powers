@@ -11,7 +11,7 @@ public class Cloak
 	{
 			for(Player onP: Bukkit.getOnlinePlayers())
 			{
-				p.hidePlayer(onP);
+				onP.hidePlayer(p);
 			}
 	}
 
