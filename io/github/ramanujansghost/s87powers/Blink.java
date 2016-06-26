@@ -51,26 +51,6 @@ public class Blink
 
 		}
 	
-	private static boolean canBlink(Player p)
-	{
-		if (p != null)
-		{
-			System.out.println("Player is not null");
-			if (S87Powers.timeTillBlinkAgain.containsKey(p.getUniqueId()))
-			{
-				System.out.println("Unique ID Met");
-				Long coolDown = S87Powers.timeTillBlinkAgain.get(p.getUniqueId());
-				if (System.currentTimeMillis() > coolDown)
-					return true;
-				else
-				{
-					return false;
-				}
-			}
-			return true;
-		}
-		return false;
-	}
 
 
 }

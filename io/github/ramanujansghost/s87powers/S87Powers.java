@@ -43,7 +43,6 @@ public class S87Powers extends JavaPlugin
 	public static HashMap<UUID, Long> timeSinceWolfSummon = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeSinceChargeBowUse = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeTillSiphonAgain = new HashMap<UUID, Long>();
-	public static HashMap<UUID, Long> timeTillBlinkAgain = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeSinceInteract = new HashMap<UUID, Long>();
 	public static HashMap<Block, Long> tempBlocks = new HashMap<Block, Long>();
 	public static Set<Material> empty = null;
