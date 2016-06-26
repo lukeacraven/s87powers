@@ -135,6 +135,7 @@ public class PowersListener implements Listener
 						if(itemUsed == Material.CLAY_BALL && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
 						{
 							SoulShatter.onRightClick(p);
+						}
 
 						if(itemUsed == Material.INK_SACK && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
 						{
