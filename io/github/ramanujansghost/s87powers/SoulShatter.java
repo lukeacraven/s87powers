@@ -9,6 +9,8 @@ import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class SoulShatter 
 {
@@ -17,7 +19,7 @@ public class SoulShatter
 		System.out.println("Begin Shatter");
 		World s = p.getWorld();
 		List<Block> blocks = null;
-		int bsize = 50;
+		int bsize = 30;
         double bpow = Math.pow(bsize + .5, 2);
         double zpow;
         double xpow;
@@ -25,6 +27,14 @@ public class SoulShatter
         int by = (int)p.getLocation().getY();
         int bz =(int) p.getLocation().getZ();
 		
+	      for(Entity e: p.getNearbyEntities(40, 40, 40))
+	      {
+	    	 if(e instanceof LivingEntity)
+	    	 {
+	    	  ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 999999, 10));
+	    	 }
+	      }
+	      
 	      for (int z = 0; z <= bsize; z++) {
 	            zpow = Math.pow(z, 2);
 	            for (int x = 0; x <= bsize; x++) {
@@ -43,7 +53,7 @@ public class SoulShatter
 	                }
 	            }
 	        }
-	      for(Entity e: p.getNearbyEntities(50, 50, 50))
+	      for(Entity e: p.getNearbyEntities(40, 40, 40))
 	      {
 	    	 if(e instanceof LivingEntity)
 	    	 {
