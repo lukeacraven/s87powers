@@ -29,11 +29,13 @@ public class SoulShatter
 		
 	      for(Entity e: p.getNearbyEntities(40, 40, 40))
 	      {
-	    	 if(e instanceof LivingEntity)
+	    	 if(e instanceof Player)
 	    	 {
-	    	  ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 999999, 10));
+	    	  ((Player) e).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 999999, 10));
+	    	  ((Player) e).addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 999999, 10));
 	    	 }
 	    	 p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 999999, 10));
+	    	 p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 999999, 10));
 	      }
 	      
 	      for (int z = 0; z <= bsize; z++) {
