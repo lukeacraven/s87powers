@@ -33,6 +33,7 @@ public class SoulShatter
 	    	 {
 	    	  ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 999999, 10));
 	    	 }
+	    	 p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 999999, 10));
 	      }
 	      
 	      for (int z = 0; z <= bsize; z++) {
@@ -59,6 +60,7 @@ public class SoulShatter
 	    	 {
 	    	  ((LivingEntity) e).damage(1000);
 	    	 }
+	    	 p.damage(1000);
 	      }
 	      System.out.println("End Shatter");
 	}
