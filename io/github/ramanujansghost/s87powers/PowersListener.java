@@ -131,9 +131,18 @@ public class PowersListener implements Listener
 						{
 							Cloak.onRightClick(p);
 						}
+
 						if(itemUsed == Material.CLAY_BALL && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
 						{
 							SoulShatter.onRightClick(p);
+
+						if(itemUsed == Material.INK_SACK && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
+						{
+							Juggernaut.onRightClick(p);
+						}
+						if(itemUsed == Material.BLAZE_POWDER && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
+						{
+							Shell.onRightClick(p);
 						}
 
 					}
