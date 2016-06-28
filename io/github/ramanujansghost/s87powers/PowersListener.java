@@ -4,17 +4,22 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityPortalEnterEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 
 import java.util.logging.Level;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.TravelAgent;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -144,6 +149,10 @@ public class PowersListener implements Listener
 						if(itemUsed == Material.BLAZE_POWDER && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
 						{
 							Shell.onRightClick(p);
+						}		
+						if(itemUsed == Material.BOOK && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
+						{
+							GateBuilder.onRightClick(p);
 						}
 
 					}
@@ -269,4 +278,24 @@ public class PowersListener implements Listener
 		}
 
 	}
+	@EventHandler
+	public void onEntityPortal(EntityPortalEnterEvent e)
+	{
+		//System.out.println(e.getEntity() + "-" + e.getLocation());
+	}
+	
+	@EventHandler
+	public void onPlayerPortal(PlayerPortalEvent e)
+	{
+		System.out.print(e.getFrom().getBlock() + "vs");
+		System.out.println(S87Powers.slipGates);
+		Player p = e.getPlayer();
+		if(S87Powers.slipGates.contains(e.getFrom().getBlock().getRelative(1, 0, 0)) || S87Powers.slipGates.contains(e.getFrom().getBlock().getRelative(-1, 0, 0)))
+		{
+			e.setCancelled(true);
+			p.teleport(new Location(p.getWorld(), 100, 100, 100));
+			System.out.println("Override");
+		}
+	}
+
 }

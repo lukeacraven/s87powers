@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -45,6 +46,8 @@ public class S87Powers extends JavaPlugin
 	public static HashMap<UUID, Long> timeTillSiphonAgain = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeSinceInteract = new HashMap<UUID, Long>();
 	public static HashMap<Block, Long> tempBlocks = new HashMap<Block, Long>();
+	public static HashMap<Location, Location> slipGateLocs = new HashMap<Location, Location>();
+	public static ArrayList<Block> slipGates = new ArrayList<Block>();
 	public static Set<Material> empty = null;
 	private static final String permStrings[] =
 	{ "bestialtransmutation", "bestialtransmutation.toggledon", "lumberjack", "lumberjack.toggledon"
