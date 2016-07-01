@@ -6,6 +6,7 @@ import com.massivecraft.massivecore.ps.PS;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -46,8 +48,7 @@ public class S87Powers extends JavaPlugin
 	public static HashMap<UUID, Long> timeTillSiphonAgain = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeSinceInteract = new HashMap<UUID, Long>();
 	public static HashMap<Block, Long> tempBlocks = new HashMap<Block, Long>();
-	public static HashMap<Location, Location> slipGateLocs = new HashMap<Location, Location>();
-	public static ArrayList<Block> slipGates = new ArrayList<Block>();
+	public static HashMap<Block, Integer> slipGateLocs = new HashMap<Block, Integer>();
 	public static Set<Material> empty = null;
 	private static final String permStrings[] =
 	{ "bestialtransmutation", "bestialtransmutation.toggledon", "lumberjack", "lumberjack.toggledon"
@@ -108,6 +109,46 @@ public class S87Powers extends JavaPlugin
 					+ "`REL_COST`	INTEGER NOT NULL,"
 					+ "PRIMARY KEY(PLAYER_ID,POWER_ID))";
 			stmt.executeUpdate(createPlayerPowerRelTable);
+			
+			String createSlipGateTable = "CREATE TABLE IF NOT EXISTS `S87Powers.SLIPGATES` ("
+					+ "`GATE_ID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
+					+ "`X`	DOUBLE NOT NULL,"
+					+ "`Y`	DOUBLE NOT NULL,"
+					+ "`Z`	DOUBLE NOT NULL,"
+					+ "`WORLD`	STRING NOT NULL,"
+					+ "`DIR`	INTEGER NOT NULL)";
+			stmt.executeUpdate(createSlipGateTable);
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(stmt != null) {	//Any exceptions here are thrown
+				stmt.close();
+			}
+		}
+	}
+	
+	private void loadGates() throws SQLException
+	{
+		Statement stmt = null;
+		try {
+			String sql = "SELECT X, Y, Z, WORLD, DIR FROM 'S87Powers.SLIPGATES'";
+			stmt = connection.createStatement();
+		    ResultSet rs = stmt.executeQuery(sql);
+		    while(rs.next())
+		    {
+		    	System.out.println(Bukkit.getWorld(rs.getString(4)));
+		    	System.out.println(rs.getDouble(1));
+		    	System.out.println(rs.getDouble(2));
+		    	System.out.println(rs.getDouble(3));
+		    	System.out.println(rs.getDouble(5));
+		    	Location loc = new Location(Bukkit.getWorld(rs.getString(4)), rs.getDouble(1),rs.getDouble(2),rs.getDouble(3));
+		    	Block portalBot = loc.getBlock();
+		    	System.out.println(portalBot);
+		    	S87Powers.slipGateLocs.put(portalBot, rs.getInt(5));
+		    }
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -170,6 +211,7 @@ public class S87Powers extends JavaPlugin
 		setUpDBConnection();
 		try {
 			setUpDBStructure();
+			loadGates();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -218,6 +260,27 @@ public class S87Powers extends JavaPlugin
 							sender.sendMessage("Attempting to add power "
 									+ args[1] + " to " + args[2]);
 							S87Powers.addPower(sender, args[1], args[2]);
+						}
+						else
+						{
+							sender.sendMessage(ChatColor.RED
+									+ "Error while performing command!  User does not have permission.");
+						}
+					}
+					else
+					{
+						sender.sendMessage(
+								"Error while performing command!  Syntax is /powers add <power> <playername>");
+					}
+				}
+				//finish later
+				if (args[0].equalsIgnoreCase("select"))
+				{
+					if (args.length == 2)
+					{
+						if (sender.hasPermission("s87powers.add"))
+						{
+
 						}
 						else
 						{

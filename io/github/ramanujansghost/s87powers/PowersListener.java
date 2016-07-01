@@ -7,11 +7,16 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPortalEnterEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.TravelAgent;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -19,16 +24,21 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.Vector;
 
 public class PowersListener implements Listener
 {
 	//Checks for player use of an item.
 	//Used for Bestial Transmutation, Ensnare, and Wolfpack
 	@EventHandler
-	public void onPlayerUse(PlayerInteractEvent event)
+	public void onPlayerUse(PlayerInteractEvent event) throws SQLException
 	{
 		ItemStack item = event.getItem();
 		if (item != null)
@@ -177,7 +187,7 @@ public class PowersListener implements Listener
 	//Check for breaking block
 	//Used for lumberjack
 	@EventHandler
-	public void onPlayerBlockBreak(BlockBreakEvent event)
+	public void onPlayerBlockBreak(BlockBreakEvent event) throws SQLException
 	{
 		Player p = event.getPlayer();
 		if (p != null)
@@ -208,6 +218,32 @@ public class PowersListener implements Listener
 				else
 				{
 					S87Powers.LOG.log(Level.WARNING, "Got a null itemUsed in onPlayerBlockBreak");
+				}
+			}
+			//Might be portal
+			Block b = event.getBlock();
+			if(b.getType() == Material.OBSIDIAN)
+			{
+				System.out.println("Is Obby");
+				for(Entry<Block, Integer> entry : S87Powers.slipGateLocs.entrySet())
+				{
+					if(b.getLocation().distanceSquared(entry.getKey().getLocation()) < 16)
+					{
+						System.out.println("Is <16");
+						for(Block gateBlock : GateBuilder.checkShape(entry.getKey().getRelative(0, -1, 0), entry.getValue()))
+						{
+							if(b.equals(gateBlock))
+							{
+								System.out.println("Is Gate");
+								entry.getKey().setType(Material.AIR);
+								entry.getKey().getRelative(0,1,0).setType(Material.AIR);
+								GateBuilder.removeGateFromDB(entry.getKey(), entry.getValue());
+								S87Powers.slipGateLocs.remove(entry.getKey());
+
+								return;
+							}
+						}
+					}
 				}
 			}
 		}
@@ -278,23 +314,44 @@ public class PowersListener implements Listener
 		}
 
 	}
+	
 	@EventHandler
-	public void onEntityPortal(EntityPortalEnterEvent e)
+	public void onShift(PlayerToggleSneakEvent e)
 	{
-		//System.out.println(e.getEntity() + "-" + e.getLocation());
+
 	}
 	
 	@EventHandler
-	public void onPlayerPortal(PlayerPortalEvent e)
+	public void onPlayerConnect(PlayerJoinEvent e)
 	{
-		System.out.print(e.getFrom().getBlock() + "vs");
-		System.out.println(S87Powers.slipGates);
-		Player p = e.getPlayer();
-		if(S87Powers.slipGates.contains(e.getFrom().getBlock().getRelative(1, 0, 0)) || S87Powers.slipGates.contains(e.getFrom().getBlock().getRelative(-1, 0, 0)))
+		boolean firstTime = true;
+
+		System.out.println("Trying");
+		if(firstTime)
 		{
-			e.setCancelled(true);
-			p.teleport(new Location(p.getWorld(), 100, 100, 100));
-			System.out.println("Override");
+			e.getPlayer().sendMessage("Welcome!");
+			e.getPlayer().sendMessage("You have not yet selected any powers.");
+			e.getPlayer().sendMessage("Please use the command '/powers select' to begin.");
+			firstTime = false;
+			System.out.println("Success");
+		}
+
+	
+	}
+	
+	@EventHandler
+	public void playerMove(PlayerMoveEvent e)
+	{
+		//Only checking movement from block to block to be efficient
+		if(!GateBuilder.PlayerMove(e))
+		{
+			Player p = e.getPlayer();
+			if(p.getLocation().getBlock().getType() == Material.WATER || p.getLocation().getBlock().getType() == Material.STATIONARY_WATER)
+			{
+				System.out.println("Go!");
+				Vector vel = p.getLocation().getDirection();
+				p.setVelocity(new Vector(vel.getX()+2, vel.getY()+2, vel.getZ()+2));
+			}
 		}
 	}
 
