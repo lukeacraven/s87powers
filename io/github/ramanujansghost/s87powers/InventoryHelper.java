@@ -28,7 +28,7 @@ public class InventoryHelper
 			return false;
 	}
 	
-	//Remove an amount of a reagent from a player's invetory 
+	//Remove an amount of a reagent from a player's inventory  
 	public static void removeReagents(Player p, ItemStack item, int amountToConsume)
 	{
 		ItemStack firstItemStack;
