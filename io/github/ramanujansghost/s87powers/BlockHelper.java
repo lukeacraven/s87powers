@@ -42,8 +42,6 @@ public class BlockHelper
 		{
 			airs.add(b.getRelative(BlockFace.WEST));
 		}
-		S87Powers.LOG.log(Level.WARNING, "Airs:" + airs);
-		System.out.println("End Find Airs");
 		return airs;
 		
 	}
@@ -51,12 +49,10 @@ public class BlockHelper
 	//returns block closest to player from a list of blocks
 	public static Block closestToPlayer(ArrayList<Block> blocks, Player p)
 	{
-		System.out.println("Begin CTP");
 		double dist = Double.MAX_VALUE;
 		Block closest = null;
 		Location pLoc = p.getLocation();
 		
-		System.out.println("Begin Iterate");
 		for(Block b : blocks){
 			double newDist = b.getLocation().distance(pLoc);
 		    if(newDist < dist)
@@ -64,32 +60,29 @@ public class BlockHelper
 		    	dist = newDist;
 		    	closest = b;
 		    }
-		    System.out.println("FINISH CTP");
 		}
 		return closest;
 	}
 	
-	//given a list of block, check if air and then change the type
+	//given a list of block, check if air(or other light material) and then change the type
 	public static void placeInEmpty(Player p, ArrayList<Block> blocks, Material toPlace)
 	{
 		for(Block b : blocks)
 		{
-			if(b.getType() == Material.AIR && S87Powers.canPlayerBuildAt(p, b.getLocation(), b))
+			if((b.getType() == Material.AIR || b.getType() == Material.LONG_GRASS || b.getType() == Material.STATIONARY_WATER || b.getType() == Material.WATER) && S87Powers.canPlayerBuildAt(p, b.getLocation(), b))
 			{
 				b.setType(toPlace);
 			}
-
 		}
-		
 	}
 	
 	//Only works with cardinal faces
 	//Gets a cross shape relative to face of block
 	public static ArrayList<Block> getCrossOnFace(Block block, BlockFace face)
 	{
-		S87Powers.LOG.log(Level.WARNING, "Begin Cross");
 		ArrayList<Block> square = new ArrayList<Block>();
 		square.add(block);
+		//Kinda hate this
 		 switch (face) {
 	     case UP:  
 	    	 square.add(block.getRelative(BlockFace.NORTH));
@@ -134,10 +127,10 @@ public class BlockHelper
 	}
 	
 	//this is weird, needs much work
+	//Allows creation of walls.
 	public static ArrayList<Block> getWallRelP(Block block, Player p)
 	{
 		BlockFace face = PlayerHelper.getPlayerFacing(p);
-		S87Powers.LOG.log(Level.WARNING, "Begin Wall");
 		ArrayList<Block> square = new ArrayList<Block>();
 		square.add(block);
 		 switch (face) {
@@ -242,9 +235,12 @@ public class BlockHelper
 		 }
 		 return square;		
 	}
+	
 	//returns a line of blocks in a world... face is direction probably
+	//Don't think we're using this...
 	public static  ArrayList<Block> getLine(World w, Location start, int length, BlockFace face)
 	{
+		
 		ArrayList<Block> blocks = new ArrayList<Block>();
 		Block currentBlock = start.getBlock();
 		
@@ -254,7 +250,8 @@ public class BlockHelper
 		}
 		return blocks;
 	}
-
+	
+	//Places blocks and removes after a time
 	public static ArrayList<Block> tempPlace(ArrayList<Block> blocks, long duration)
 	{
 		ArrayList<Block> bs = new ArrayList<Block>();
