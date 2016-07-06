@@ -23,7 +23,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -42,6 +41,8 @@ public class S87Powers extends JavaPlugin
 	public static Permission perms = null;
 	
 	public static Connection connection = null;
+	
+	public static ArrayList<Power> allPowers = new ArrayList<Power>();
 
 	public static HashMap<UUID, Long> timeSinceWolfSummon = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeSinceChargeBowUse = new HashMap<UUID, Long>();
@@ -139,16 +140,33 @@ public class S87Powers extends JavaPlugin
 		    ResultSet rs = stmt.executeQuery(sql);
 		    while(rs.next())
 		    {
-		    	System.out.println(Bukkit.getWorld(rs.getString(4)));
-		    	System.out.println(rs.getDouble(1));
-		    	System.out.println(rs.getDouble(2));
-		    	System.out.println(rs.getDouble(3));
-		    	System.out.println(rs.getDouble(5));
 		    	Location loc = new Location(Bukkit.getWorld(rs.getString(4)), rs.getDouble(1),rs.getDouble(2),rs.getDouble(3));
 		    	Block portalBot = loc.getBlock();
-		    	System.out.println(portalBot);
 		    	S87Powers.slipGateLocs.put(portalBot, rs.getInt(5));
 		    }
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(stmt != null) {	//Any exceptions here are thrown
+				stmt.close();
+			}
+		}
+	}
+	
+	private void loadPowers() throws SQLException
+	{
+		Statement stmt = null;
+		try {
+			String sql = "SELECT * FROM 'S87Powers.POWERS'";
+			stmt = connection.createStatement();
+		    ResultSet rs = stmt.executeQuery(sql);
+		    while(rs.next())
+		    {
+		    	allPowers.add(new Power(rs.getString(2),rs.getString(3),rs.getInt(4)));
+		    }
+	    	System.out.println(allPowers);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -212,6 +230,7 @@ public class S87Powers extends JavaPlugin
 		try {
 			setUpDBStructure();
 			loadGates();
+			loadPowers();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -291,7 +310,7 @@ public class S87Powers extends JavaPlugin
 					else
 					{
 						sender.sendMessage(
-								"Error while performing command!  Syntax is /powers add <power> <playername>");
+								"Error while performing command!  Syntax is /powers select <power>");
 					}
 				}
 				if (args[0].equalsIgnoreCase("toggle"))
@@ -345,18 +364,13 @@ public class S87Powers extends JavaPlugin
 				}
 				if (args[0].equalsIgnoreCase("list"))
 				{
-					/*
+
 					sender.sendMessage("The powers are as follows: ");
-
-					String [][] powers = PowersMapper.retrieveAllPowers();
-					for (int x = 0; x < powers.length; x++) {
-						sender.sendMessage(powers[x][0]);
-					}			
-
-					for (Map.Entry<String, Power> entry : powerList.entrySet()) {
-						sender.sendMessage(entry.getKey());
+					for(Power p : allPowers)
+					{
+						sender.sendMessage(p.getName() + " - " + p.getDesc());
 					}
-					*/			
+
 				}
 				if (args[0].equalsIgnoreCase("lookup"))
 				{
