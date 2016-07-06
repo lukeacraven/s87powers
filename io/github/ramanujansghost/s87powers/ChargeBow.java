@@ -40,6 +40,7 @@ public class ChargeBow
 	}
 	
 	//When firing a bow, if the player has the reagents, launch two fireballs
+	
 	public void onBowShootEvent(EntityShootBowEvent event)
 	{
 		Player p = (Player) event.getEntity();
@@ -56,10 +57,10 @@ public class ChargeBow
 					InventoryHelper.removeReagents(p, arrow, 1);
 					Projectile fireball1 = p
 							.launchProjectile(SmallFireball.class);
-					fireball1.setVelocity(event.getEntity().getVelocity());
+					fireball1.setVelocity(event.getEntity().getLocation().getDirection());
 					Projectile fireball2 = p
 							.launchProjectile(SmallFireball.class);
-					fireball2.setVelocity(event.getEntity().getVelocity());
+					fireball2.setVelocity(event.getEntity().getLocation().getDirection());
 				}
 			}
 			else
