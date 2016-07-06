@@ -3,10 +3,8 @@ package io.github.ramanujansghost.s87powers;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.Map.Entry;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,13 +17,16 @@ public class GateBuilder
 {
 	public static void onRightClick(Player p) throws SQLException
 	{
-		System.out.println("Begin Gate");
+		//On center of gate
 		Block center = p.getTargetBlock((Set<Material>)null, 4);
 		Integer dir = checkDir(center);
+		//Check the shape
 		if(center != null  && center.getType() == Material.OBSIDIAN && !checkShape(center, dir).isEmpty())
 		{
 			Block portalBot = center.getRelative(0, 1, 0);
 			Block portalTop = center.getRelative(0, 2, 0);
+			
+			//If clear, create gate, add to DB
 			if(portalBot.getType() == Material.AIR && portalTop.getType() == Material.AIR)
 			{
 				S87Powers.slipGateLocs.put(portalBot, dir);
@@ -36,12 +37,8 @@ public class GateBuilder
 			
 		}
 	}
-	public static void createGate(Location loc)
-	{
-		
-		
-	}
 	
+	//Check the direction of a gate and returns a corresponding number (1-4)
 	public static Integer checkDir(Block start)
 	{
 		Block dirCheck = start.getRelative(BlockFace.UP);
@@ -71,6 +68,7 @@ public class GateBuilder
 		return 0;
 	}
 	
+	//Adds gate to DB 
 	public static void addGateToDB(Block key, int dir) throws SQLException
 	{
 		Statement stmt = null;
@@ -78,7 +76,6 @@ public class GateBuilder
 		String sql = "INSERT INTO 'S87Powers.SLIPGATES' " +
                 "VALUES (NULL, " + key.getX() + " , " + key.getY() + " , " + key.getZ() + " , \'" + key.getWorld().getName() +  "\' , " + dir + ")";
 		stmt = S87Powers.connection.createStatement();
-		System.out.println(sql);
 		stmt.executeUpdate(sql);
 		}
 		catch(Exception e) {
@@ -91,13 +88,13 @@ public class GateBuilder
 		}
 	}
 	
+	//Removes gate from DB
 	public static void removeGateFromDB(Block key, int dir) throws SQLException
 	{
 		Statement stmt = null;
 		try {
 		String sql = "DELETE FROM 'S87Powers.SLIPGATES' " +
                 "WHERE X = " + key.getX() + " AND Y = " + key.getY() + " AND Z = " + key.getZ() + " AND WORLD = \'" + key.getWorld().getName() + "\'";
-		System.out.println(sql);
 		stmt = S87Powers.connection.createStatement();
 		stmt.executeUpdate(sql);
 		}
@@ -111,6 +108,7 @@ public class GateBuilder
 		}
 	}
 	
+	//Check the shape of gate, return empty list if false
 	public static ArrayList<Block> checkShape(Block start, Integer dir)
 	{
 		
@@ -179,16 +177,25 @@ public class GateBuilder
 		return portalBlocks;
 		
 	}
+	
+	//Checks to see if a player is entering a gate block.
+	//Seems inefficient, but is only being called every time a player changes blocks
+	//^^Still may be inefficient
 	public static boolean PlayerMove(PlayerMoveEvent e) {
 		
 		Player p = e.getPlayer();
+		//See if block is in a gate
 		if(S87Powers.slipGateLocs.containsKey(e.getTo().getBlock()))
 		{
+			//If so, get the block
 			Integer dir = S87Powers.slipGateLocs.get(e.getTo().getBlock());
-			//e.setCancelled(true);
 			ArrayList<Location> gates = new ArrayList<Location>();
+			
+			//Make sure it wasn't deleted (?)
 			if(!S87Powers.slipGateLocs.isEmpty())
 			{
+				//Check for connecting gate(s)
+				//Could probably be made into sub-function
 				for(Entry<Block, Integer> entry : S87Powers.slipGateLocs.entrySet())
 				{
 				    Block key = entry.getKey();
@@ -229,6 +236,8 @@ public class GateBuilder
 					    } 	
 				    }
 				}
+				
+				//If found, find closest gate
 				if(!gates.isEmpty())
 				{
 					Location close = gates.get(0); 
@@ -240,8 +249,11 @@ public class GateBuilder
 							close = l;
 						}
 					}
+					
+					//If within 500 blocks, teleport and return true
 					if(close.distanceSquared(p.getLocation())< 250000)
 					{
+						//Teleport to center of block outside of gate facing original direction
 						p.teleport((close.setDirection(p.getLocation().getDirection())).add(new Vector(.5,0,.5)));
 						return true;
 					}
