@@ -19,12 +19,6 @@ public class BestialTransmutation
 	private static final ItemStack rawBeef = new ItemStack(Material.RAW_BEEF,1);	
 	private static final ItemStack redstone = new ItemStack(Material.REDSTONE,1);
 	
-	//Constructor
-	public BestialTransmutation()
-	{
-		
-	}
-	
 	//Create a mob where player is looking
 	public void spawnEntity(Player p, EntityType entityType, Action action)
 	{
