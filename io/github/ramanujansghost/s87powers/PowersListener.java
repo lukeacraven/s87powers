@@ -4,20 +4,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityPortalEnterEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
-
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.logging.Level;
-
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.TravelAgent;
-import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -25,13 +17,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.util.Vector;
 
 public class PowersListener implements Listener
 {
@@ -85,7 +74,7 @@ public class PowersListener implements Listener
 							{
 								if(im.getDisplayName().equals("Soul Gem"))
 								{
-									Siphon.onRightClick(p, p, 1);
+									Siphon.onRightClick(p, p, 14);
 								}
 							}
 							else
@@ -318,7 +307,7 @@ public class PowersListener implements Listener
 	@EventHandler
 	public void onShift(PlayerToggleSneakEvent e)
 	{
-
+		WaterStrider.onShift(e);
 	}
 	
 	@EventHandler
@@ -343,14 +332,11 @@ public class PowersListener implements Listener
 	public void playerMove(PlayerMoveEvent e)
 	{
 		//Only checking movement from block to block to be efficient
-		if(!GateBuilder.PlayerMove(e))
+		if(e.getTo() != e.getFrom())
 		{
-			Player p = e.getPlayer();
-			if(p.getLocation().getBlock().getType() == Material.WATER || p.getLocation().getBlock().getType() == Material.STATIONARY_WATER)
+			if(!GateBuilder.PlayerMove(e))
 			{
-				System.out.println("Go!");
-				Vector vel = p.getLocation().getDirection();
-				p.setVelocity(new Vector(vel.getX()+2, vel.getY()+2, vel.getZ()+2));
+
 			}
 		}
 	}
