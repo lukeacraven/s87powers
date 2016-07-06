@@ -6,43 +6,55 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class Siphon{
-
-	//Constructor
-	public Siphon()
-	{
-
-	}
 	
 	//Damage entity over time, add value to soulgem
 	//Scale damage and power gained by amount (in hearts/foods)
+	//Amount = Power
 	public static int extract(Entity target, Player p, int amount)
 	{		
 		
 		{
 			LivingEntity le = (LivingEntity)target;
 			
-			//If player, take food first, then life (2 food/health = 13 power)
+			//If player, take food first, then life (2 food/health = 14 power)
+			//Rounding up
 			if(le.getType() == EntityType.PLAYER)
 			{
 				p = (Player)le;
 				int food = p.getFoodLevel();
-				if(food-4*amount < 0)
+				if((food-(int)(Math.ceil((double)amount/7))) < 0)
 				{
 					p.setFoodLevel(0);	
-					p.damage(((4*amount)-food)/2);
+					p.damage((int)(Math.ceil((double)amount/7))-food);
 				}
 				else
 				{
-					p.setFoodLevel(food-(4*amount));
+					p.setFoodLevel(food-(int)(Math.ceil((double)amount/7)));
+				}
+				
+				if(le == p)
+				{
+					//If using regen-potion, rebound
+					for(PotionEffect efx : p.getActivePotionEffects())
+					{
+						System.out.println(efx.getType());
+						if(efx.getType().getName() == PotionEffectType.REGENERATION.getName())
+						{
+							p.sendMessage("REBOUND!");
+							p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 500, 1));
+						}
+					}
 				}
 			}
 			else
 			{
-				le.damage(2 * amount, p);
+				le.damage((Math.ceil((double)amount/7)), p);
 			}			
-			return 7*amount;
+				return amount;
 			}
 	}
 	
