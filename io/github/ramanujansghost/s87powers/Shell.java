@@ -1,36 +1,48 @@
 package io.github.ramanujansghost.s87powers;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 public class Shell 
 {
-	@SuppressWarnings("null")
+	private static final ItemStack redstone = new ItemStack(Material.REDSTONE,1);
+	private static final ItemStack stone = new ItemStack(Material.STONE,1);
+	
+	//create a shell of stone around target or self
 	public static void onRightClick(Player p) 
 	{
 		Location loc = null;
-		if(p.isSneaking())
+		if(InventoryHelper.checkForReagents(p, stone, 13) && InventoryHelper.checkForReagents(p, redstone, 2))
 		{
-			loc = p.getLocation();
-			
-		}
-		else
-		{
-			LivingEntity le = PlayerHelper.getTarget(p, 8);
-			if(le != null)
+			if(p.isSneaking())
 			{
-				loc = le.getLocation();
+				InventoryHelper.removeReagents(p, stone, 9);
+				InventoryHelper.removeReagents(p, redstone, 2);
+				loc = p.getLocation();
+				
 			}
-			
+			else
+			{
+				LivingEntity le = PlayerHelper.getTarget(p, 8);
+				if(le != null)
+				{
+					InventoryHelper.removeReagents(p, stone, 13);
+					InventoryHelper.removeReagents(p, redstone, 2);
+					le.teleport((le.getLocation().getBlock().getLocation()).add(new Vector(.5,0,.5)));
+					le.setVelocity(new Vector(0,0,0));
+					loc = le.getLocation();
+				}
+				
+			}
 		}
+		//probably should use coords
 		Block center = loc.getBlock();
 		ArrayList<Block> toChange = new ArrayList<Block>();
 		toChange.add(center.getRelative(BlockFace.NORTH_EAST));
