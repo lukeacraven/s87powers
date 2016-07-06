@@ -19,7 +19,7 @@ public class Wall
 
 		if(target.getType() != Material.AIR){			
     	
-			if(InventoryHelper.checkForReagents(p, stone, 1) && InventoryHelper.checkForReagents(p, redstone, 1))
+			if(InventoryHelper.checkForReagents(p, stone, 9) && InventoryHelper.checkForReagents(p, redstone, 2))
 			{
 				Block close = BlockHelper.closestToPlayer(BlockHelper.findAir(target), p);
 				if(close != null)
