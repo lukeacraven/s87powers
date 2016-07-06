@@ -2,18 +2,21 @@ package io.github.ramanujansghost.s87powers;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class GemHelper {
 	
+	//Creates a Soulgem
 	public static void formGem(PlayerInventory inv)
 	{
+		//Basically just adding metadata and name to item
 		ItemStack gem = inv.getItemInMainHand();
 		ItemMeta meta = gem.getItemMeta();
 		meta.setDisplayName("Soul Gem");
@@ -36,14 +39,14 @@ public class GemHelper {
 			//set cooldown 2 sec
 		}
 		
+		//Load to player
 		data.add(lore);
 		meta.setLore(data);
 		gem.setItemMeta(meta);
 		inv.setItemInMainHand(gem);
 	}
 	
-	//Current thought is to store value in Lore[0] and maxValue in Lore[1]
-	//This idea needs to be tested
+	//Current thought is to store value/max in Lore[0]
 	public static void setGemPower(PlayerInventory inv, int itemLocation, int value)
 	{
 		ItemStack gem = inv.getItem(itemLocation);
@@ -51,6 +54,7 @@ public class GemHelper {
 		List<String> data = new ArrayList<String>();				
 		int max = getGemMaxPower(inv, itemLocation);
 		String lore;
+		
 		//If too high, set to maxValue
 		if(value <= max)
 		{
@@ -61,6 +65,7 @@ public class GemHelper {
 			lore = new Integer(max).toString() + "/" + new Integer(max).toString();
 		}
 		
+		//Load to player
 		data.add(lore);
 		meta.setLore(data);
 		gem.setItemMeta(meta);
@@ -74,6 +79,8 @@ public class GemHelper {
 		List<String> data = new ArrayList<String>();			
 		int value = getGemPower(inv, itemLocation);
 		String lore = new Integer(value).toString() + "/" + new Integer(max).toString();
+		
+		//Load to player
 		data.add(lore);
 		meta.setLore(data);
 		gem.setItemMeta(meta);
@@ -83,13 +90,9 @@ public class GemHelper {
 	//Return the current power value of a gem
 	public static int getGemPower(PlayerInventory inv, int itemLocation)
 	{
-		System.out.println("Line 1");
 		ItemStack gem = inv.getItem(itemLocation);
-		System.out.println("2");
 		String oldData = gem.getItemMeta().getLore().get(0);	
-		System.out.println("3");
 		int value = Integer.parseInt(oldData.substring(0,oldData.indexOf('/')));
-		System.out.println("4");
 		return value;
 	}
 	
@@ -108,6 +111,7 @@ public class GemHelper {
 		formGem(event.getPlayer().getInventory());			
 	}
 	
+	//Add to current power level
 	public static void addPower(PlayerInventory inv, int itemLocation, int addValue)
 	{
 		ItemStack gem = inv.getItem(itemLocation);
@@ -116,6 +120,7 @@ public class GemHelper {
 		setGemPower(inv, itemLocation, value+addValue);		
 	}
 	
+	//Subtract from current power, take from player if necessary
 	public static void removePower(PlayerInventory inv, int itemLocation, int rmvValue)
 	{
 		ItemStack gem = inv.getItem(itemLocation);
@@ -131,6 +136,9 @@ public class GemHelper {
 			setGemPower(inv, itemLocation, value-rmvValue);
 		}
 	}
+	
+	//Removes power from held (left hand) soulgem
+	//Returns false if dead
 	public static boolean cast(PlayerInventory inv, int val)
 	{
 		if(inv.getItem(40)!= null)
@@ -138,32 +146,36 @@ public class GemHelper {
 			ItemMeta meta = inv.getItemInOffHand().getItemMeta();
 			if(meta.getDisplayName().equals("Soul Gem") && Character.isDigit(meta.getLore().get(0).charAt(0)))
 			{
-				System.out.println(getGemPower(inv, 40));
 				removePower(inv, 40, val);
 			}
 			else
 			{
-				Siphon.extract((Player)inv.getHolder(), (Player)inv.getHolder(), (val/7)+1);
+				//If not holding a gem, take from player
+				Siphon.extract((Player)inv.getHolder(), (Player)inv.getHolder(), val);	
+				if(val > 10)
+				{
+					((Player)inv.getHolder()).addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 1));		
+				}
 			}
 		}
 		else
 		{
-			Siphon.extract((Player)inv.getHolder(), (Player)inv.getHolder(), (val/7)+1);
+			//If not holding a gem, take from player
+			Siphon.extract((Player)inv.getHolder(), (Player)inv.getHolder(), val);	
+			if(val > 10)
+			{
+				((Player)inv.getHolder()).addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 1));		
+			}
 		}
+		
+
 		if(((Player)inv.getHolder()).getHealth() == 0)
 		{
-			System.out.println("Fail");
 			return false;
 		}
 		else
 		{
-			System.out.println("Success");
 			return true;
-		}
-			
-			
+		}			
 	}
-
-	
-
 }
