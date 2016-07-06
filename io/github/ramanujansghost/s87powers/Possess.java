@@ -1,11 +1,10 @@
 package io.github.ramanujansghost.s87powers;
 
 import org.bukkit.GameMode;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
+//For update two, needs timers/removal stuff
 public class Possess 
 {
 	public static void onRightClick(Player p) 
