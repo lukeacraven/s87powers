@@ -5,19 +5,25 @@ import org.bukkit.util.Vector;
 
 public class Levitate 
 {
+	//Self-Levitation, cancel fall speed
 	public static void onRightClick(Player p) 
 	{
-		Vector lev = p.getVelocity();
-		//Pull
-		if(p.isSneaking())
+		//If not dead, float
+		if(GemHelper.cast(p.getInventory(), 1))
 		{
-			p.setVelocity(new Vector(lev.getX(),-0.2,lev.getZ()));
-			p.setFallDistance(0);
-		}
-		else
-		{
-			p.setVelocity(new Vector(lev.getX(),0.2,lev.getZ()));
-			p.setFallDistance(0);
+			Vector lev = p.getVelocity();
+			//Levitate down
+			if(p.isSneaking())
+			{
+				p.setVelocity(new Vector(lev.getX(),-0.2,lev.getZ()));
+				p.setFallDistance(0);
+			}
+			//Levitate up
+			else
+			{
+				p.setVelocity(new Vector(lev.getX(),0.2,lev.getZ()));
+				p.setFallDistance(0);
+			}
 		}
 	}
 
