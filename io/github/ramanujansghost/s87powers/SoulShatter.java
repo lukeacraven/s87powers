@@ -3,14 +3,11 @@ package io.github.ramanujansghost.s87powers;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -21,9 +18,7 @@ public class SoulShatter
 {
 	public static void onRightClick(Player p) throws SQLException
 	{
-		System.out.println("Begin Shatter");
 		World s = p.getWorld();
-		List<Block> blocks = null;
 		int bsize = 30;
         double bpow = Math.pow(bsize + .5, 2);
         double zpow;
@@ -64,6 +59,8 @@ public class SoulShatter
 	        }
 	      for(Block b : destroy)
 	      {
+	    	 if(S87Powers.canPlayerBuildAt(p, b.getLocation(), b))
+	    	 {
 				if(b.getType() == Material.OBSIDIAN)
 				{
 					System.out.println("Is Obby");
@@ -98,6 +95,7 @@ public class SoulShatter
 				{
 					b.setType(Material.AIR);
 				}
+	    	 }
 	      }
 	      
 	      for(Entity e: p.getNearbyEntities(40, 40, 40))
