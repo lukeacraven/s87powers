@@ -22,12 +22,6 @@ public class WolfPack
 {
 	ItemStack bone = new ItemStack(Material.BONE, 1);
 	
-	//Constructor
-	public WolfPack()
-	{
-
-	}
-	
 	//Check if a player has wolves
 	private int checkForWolves(Player p)
 	{
