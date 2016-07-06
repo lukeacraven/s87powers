@@ -3,7 +3,6 @@ package io.github.ramanujansghost.s87powers;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
-
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -21,12 +20,6 @@ public class Lumberjack
 	private static final int stoneAxeDurability = 132;
 	private static final int ironAxeDurability = 251;
 	private static final int diamondAxeDurability = 1562;
-
-	//Constructor
-	public Lumberjack()
-	{
-
-	}
 	
 	//When a log is broken, check and see if player has an axe
 	//Call helper functions to break blocks and remove axe durability
@@ -36,6 +29,7 @@ public class Lumberjack
 		short damageCaused = 0;
 
 		Player p = event.getPlayer();
+		//Do we need this?
 		if (p != null)
 		{
 			ItemStack axeItem = p.getEquipment().getItemInMainHand();
