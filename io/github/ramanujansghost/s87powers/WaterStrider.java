@@ -8,7 +8,7 @@ import org.bukkit.util.Vector;
 public class WaterStrider 
 {
 	//Press and release shift to jet forward in water
-	public static void onShift(PlayerToggleSneakEvent e)
+	public void onShift(PlayerToggleSneakEvent e)
 	{
 		Player p = e.getPlayer();
 		if(p.isSneaking() && (p.getLocation().getBlock().getType() == Material.WATER || p.getLocation().getBlock().getType() == Material.STATIONARY_WATER))
