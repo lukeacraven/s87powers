@@ -15,7 +15,7 @@ import org.bukkit.util.Vector;
 
 public class GateBuilder 
 {
-	public static void onRightClick(Player p) throws SQLException
+	public void onRightClick(Player p) throws SQLException
 	{
 		//On center of gate
 		Block center = p.getTargetBlock((Set<Material>)null, 4);
@@ -39,7 +39,7 @@ public class GateBuilder
 	}
 	
 	//Check the direction of a gate and returns a corresponding number (1-4)
-	public static Integer checkDir(Block start)
+	public Integer checkDir(Block start)
 	{
 		Block dirCheck = start.getRelative(BlockFace.UP);
 		if(dirCheck.getRelative(BlockFace.NORTH).getType() == Material.AIR)
@@ -69,7 +69,7 @@ public class GateBuilder
 	}
 	
 	//Adds gate to DB 
-	public static void addGateToDB(Block key, int dir) throws SQLException
+	public void addGateToDB(Block key, int dir) throws SQLException
 	{
 		Statement stmt = null;
 		try {
@@ -89,7 +89,7 @@ public class GateBuilder
 	}
 	
 	//Removes gate from DB
-	public static void removeGateFromDB(Block key, int dir) throws SQLException
+	public void removeGateFromDB(Block key, int dir) throws SQLException
 	{
 		Statement stmt = null;
 		try {
@@ -109,7 +109,7 @@ public class GateBuilder
 	}
 	
 	//Check the shape of gate, return empty list if false
-	public static ArrayList<Block> checkShape(Block start, Integer dir)
+	public ArrayList<Block> checkShape(Block start, Integer dir)
 	{
 		
 		ArrayList<Block> portalBlocks = new ArrayList<Block>();
@@ -181,7 +181,7 @@ public class GateBuilder
 	//Checks to see if a player is entering a gate block.
 	//Seems inefficient, but is only being called every time a player changes blocks
 	//^^Still may be inefficient
-	public static boolean PlayerMove(PlayerMoveEvent e) {
+	public boolean PlayerMove(PlayerMoveEvent e) {
 		
 		Player p = e.getPlayer();
 		//See if block is in a gate
