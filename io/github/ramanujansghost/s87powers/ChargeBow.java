@@ -12,12 +12,6 @@ public class ChargeBow
 	ItemStack charge = new ItemStack(Material.FIREBALL, 1);
 	ItemStack arrow = new ItemStack(Material.ARROW, 1);
 	
-	//Constructor
-	public ChargeBow()
-	{
-
-	}
-	
 	//Check if cooldown has elapsed
 	private boolean canPlayerUseChargeBow(Player p)
 	{
