@@ -8,7 +8,7 @@ import org.bukkit.util.Vector;
 public class Leviosa
 {
 	//Levitate a target entity
-	public static void onRightClick(Player p) 
+	public void onRightClick(Player p) 
 	{
 		//UP UP and AWAY
 		//8 Block range
