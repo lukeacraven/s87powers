@@ -12,12 +12,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class BestialTransmutation
 {
-	private static final ItemStack rawChicken = new ItemStack(Material.RAW_CHICKEN,1);
-	private static final ItemStack rabbit = new ItemStack(Material.RABBIT,1);
-	private static final ItemStack mutton = new ItemStack(Material.MUTTON,1);
-	private static final ItemStack pork = new ItemStack(Material.PORK,1);
-	private static final ItemStack rawBeef = new ItemStack(Material.RAW_BEEF,1);	
-	private static final ItemStack redstone = new ItemStack(Material.REDSTONE,1);
+	private final ItemStack rawChicken = new ItemStack(Material.RAW_CHICKEN,1);
+	private final ItemStack rabbit = new ItemStack(Material.RABBIT,1);
+	private final ItemStack mutton = new ItemStack(Material.MUTTON,1);
+	private final ItemStack pork = new ItemStack(Material.PORK,1);
+	private final ItemStack rawBeef = new ItemStack(Material.RAW_BEEF,1);	
+	private final ItemStack redstone = new ItemStack(Material.REDSTONE,1);
 	
 	//Create a mob where player is looking
 	public void spawnEntity(Player p, EntityType entityType, Action action)
