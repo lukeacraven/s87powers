@@ -8,10 +8,11 @@ import org.bukkit.util.Vector;
 //Pretty simple, just creates a fire-ball
 public class Fireball 
 {
-	public static void onRightClick(Player p) 
+	public void onRightClick(Player p) 
 	{
-		if(GemHelper.cast(p.getInventory(), 10))
+		if(GemHelper.cast(p.getInventory(), 11))
 		{
+			System.out.println("Cast fireball");
 			Vector vel = p.getLocation().getDirection();
 			Projectile ball = p.launchProjectile(LargeFireball.class);
 			ball.setVelocity(vel);
