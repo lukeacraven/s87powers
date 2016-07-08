@@ -2,12 +2,14 @@ package io.github.ramanujansghost.s87powers;
 
 public class Power 
 {
+	private int id;
 	private String name;
 	private String desc;
 	private int cost;
 	
-	public Power(String name, String desc, int cost)
+	public Power(int id, String name, String desc, int cost)
 	{
+		this.setId(id);
 		this.name = name;
 		this.desc = desc;
 		this.cost = cost;
@@ -35,6 +37,14 @@ public class Power
 
 	public void setCost(int cost) {
 		this.cost = cost;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }
