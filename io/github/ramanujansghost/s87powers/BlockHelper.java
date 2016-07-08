@@ -238,7 +238,7 @@ public class BlockHelper
 	
 	//returns a line of blocks in a world... face is direction probably
 	//Don't think we're using this...
-	public static  ArrayList<Block> getLine(World w, Location start, int length, BlockFace face)
+	public static ArrayList<Block> getLine(World w, Location start, int length, BlockFace face)
 	{
 		
 		ArrayList<Block> blocks = new ArrayList<Block>();
