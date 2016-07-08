@@ -8,7 +8,7 @@ import org.bukkit.util.Vector;
 public class Leap 
 {
 	//Initiate jumping in the direction you are pointing
-	public static void onRightClick(Player p) 
+	public void onRightClick(Player p) 
 	{
 		Material below = p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType();
 		//If you're on the ground and have more than 6 food, jump
