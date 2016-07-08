@@ -18,6 +18,7 @@ public class SoulShatter
 {
 	public static void onRightClick(Player p) throws SQLException
 	{
+		GateBuilder gb = new GateBuilder();
 		World s = p.getWorld();
 		int bsize = 30;
         double bpow = Math.pow(bsize + .5, 2);
@@ -37,7 +38,7 @@ public class SoulShatter
 	    	 p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 999999, 10));
 	    	 p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 999999, 10));
 	      }
-	      //.setType(Material.AIR)
+
 	      ArrayList<Block> destroy = new ArrayList<Block>();
 	      for (int z = 0; z <= bsize; z++) {
 	            zpow = Math.pow(z, 2);
@@ -71,14 +72,14 @@ public class SoulShatter
 							if(b.getLocation().distanceSquared(entry.getKey().getLocation()) < 16)
 							{
 								System.out.println("Is <16");
-								for(Block gateBlock : GateBuilder.checkShape(entry.getKey().getRelative(0, -1, 0), entry.getValue()))
+								for(Block gateBlock : gb.checkShape(entry.getKey().getRelative(0, -1, 0), entry.getValue()))
 								{
 									if(b.equals(gateBlock))
 									{
 										System.out.println("Is Gate");
 										entry.getKey().setType(Material.AIR);
 										entry.getKey().getRelative(0,1,0).setType(Material.AIR);
-										GateBuilder.removeGateFromDB(entry.getKey(), entry.getValue());
+										gb.removeGateFromDB(entry.getKey(), entry.getValue());
 										it.remove();
 
 										b.setType(Material.AIR);
