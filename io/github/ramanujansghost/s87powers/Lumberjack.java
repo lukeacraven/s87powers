@@ -15,11 +15,11 @@ public class Lumberjack
 	private short blocksBroken = 0;
 	private int maxBlocksToBreak = 0;
 	Queue<Block> destroyQueue = new LinkedList<Block>();
-	private static final int goldAxeDurability = 33;
-	private static final int woodAxeDurability = 60;
-	private static final int stoneAxeDurability = 132;
-	private static final int ironAxeDurability = 251;
-	private static final int diamondAxeDurability = 1562;
+	private  final int goldAxeDurability = 33;
+	private  final int woodAxeDurability = 60;
+	private  final int stoneAxeDurability = 132;
+	private  final int ironAxeDurability = 251;
+	private  final int diamondAxeDurability = 1562;
 	
 	//When a log is broken, check and see if player has an axe
 	//Call helper functions to break blocks and remove axe durability
