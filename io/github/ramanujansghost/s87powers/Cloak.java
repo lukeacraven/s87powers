@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 public class Cloak 
 {
 	//Not Ready for Release... Need to Stealthing method
-	public static void onRightClick(Player p) 
+	public void onRightClick(Player p) 
 	{
 			for(Player onP: Bukkit.getOnlinePlayers())
 			{
