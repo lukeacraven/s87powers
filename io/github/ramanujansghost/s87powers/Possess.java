@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 //For update two, needs timers/removal stuff
 public class Possess 
 {
-	public static void onRightClick(Player p) 
+	public void onRightClick(Player p) 
 	{
 		LivingEntity target = PlayerHelper.getTarget(p, 3);
 		if(target != null)
