@@ -7,7 +7,7 @@ import org.bukkit.util.Vector;
 public class Push 
 {
 	//Feels okay, may need twerking
-	public static void onRightClick(Player p) 
+	public void onRightClick(Player p) 
 	{
 		LivingEntity target = PlayerHelper.getTarget(p, 10);
 		if(target != null)
@@ -20,6 +20,8 @@ public class Push
 				{
 					if(target != null)
 					{
+						target.leaveVehicle();
+						target.setPassenger(null);
 						target.setVelocity(new Vector(push.getX()*(-4), (push.getY()+.1)*-2, push.getZ()*-4));
 					}
 				}
@@ -28,6 +30,10 @@ public class Push
 				{
 					if(target != null)
 					{
+						if(target.isInsideVehicle())
+						{
+							target.leaveVehicle();
+						}
 						target.setVelocity(new Vector(push.getX()*4, (push.getY()+.1)*2, push.getZ()*4));
 					}
 				}
