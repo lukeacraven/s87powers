@@ -41,6 +41,8 @@ public class PowersMapper implements PowersInterface {
 	public static boolean powerExists(String powerName) {	
 		return powersMap.containsKey(powerName);						
 	}
+	
+	
 }
 
 
