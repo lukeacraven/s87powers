@@ -5,12 +5,19 @@ import java.util.UUID;
 public class S87Player 
 {
 	private UUID id;
-	private ArrayList<Power> powers;
+	private ArrayList<Power> powers = new ArrayList<Power>();
+	private ArrayList<StatusEffect> Stati = new ArrayList<StatusEffect>();
 	
-	public S87Player(UUID u, ArrayList<Power> powers)
+	public S87Player(UUID u, ArrayList<Power> powers, ArrayList<StatusEffect> Stati)
 	{
 		id = u;
 		this.powers = powers;
+		this.Stati = Stati;
+	}
+	
+	public S87Player(UUID u)
+	{
+		id = u;
 	}
 
 	public UUID getId() {
@@ -27,6 +34,14 @@ public class S87Player
 
 	public void setPowers(ArrayList<Power> powers) {
 		this.powers = powers;
+	}
+
+	public ArrayList<StatusEffect> getStati() {
+		return Stati;
+	}
+
+	public void setStati(ArrayList<StatusEffect> stati) {
+		Stati = stati;
 	}
 
 }
