@@ -12,11 +12,11 @@ import org.bukkit.util.Vector;
 
 public class Shell 
 {
-	private static final ItemStack redstone = new ItemStack(Material.REDSTONE,1);
-	private static final ItemStack stone = new ItemStack(Material.STONE,1);
+	private final ItemStack redstone = new ItemStack(Material.REDSTONE,1);
+	private final ItemStack stone = new ItemStack(Material.STONE,1);
 	
 	//create a shell of stone around target or self
-	public static void onRightClick(Player p) 
+	public void onRightClick(Player p) 
 	{
 		Location loc = null;
 		if(InventoryHelper.checkForReagents(p, stone, 13) && InventoryHelper.checkForReagents(p, redstone, 2))
