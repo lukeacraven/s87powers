@@ -8,6 +8,8 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import java.sql.SQLException;
 import java.util.Map.Entry;
 import java.util.logging.Level;
+
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -18,7 +20,9 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -29,6 +33,8 @@ public class PowersListener implements Listener
 	@EventHandler
 	public void onPlayerUse(PlayerInteractEvent event) throws SQLException
 	{
+		if (!(event.getHand() == EquipmentSlot.HAND))
+				return;
 		ItemStack item = event.getItem();
 		if (item != null)
 		{
@@ -42,119 +48,141 @@ public class PowersListener implements Listener
 
 					if (p != null)
 					{
-						if ((itemUsed == Material.RAW_CHICKEN || itemUsed == Material.RABBIT
-								|| itemUsed == Material.MUTTON || itemUsed == Material.PORK
-								|| itemUsed == Material.RAW_BEEF) && (p.hasPermission("s87powers.bestialtransmutation.toggledon"))
-								&& (actionPerformed == Action.LEFT_CLICK_AIR
-										|| actionPerformed == Action.LEFT_CLICK_BLOCK))
+						if(actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK)
 						{
-							BestialTransmutation bestialTransmutation = new BestialTransmutation();
-							bestialTransmutation.onRawMeatUse(event);
-						}
-						if ((itemUsed == Material.BONE)
-								&& (actionPerformed == Action.RIGHT_CLICK_AIR
-										|| actionPerformed == Action.RIGHT_CLICK_BLOCK)
-								&& (p.hasPermission("s87powers.wolfpack.toggledon")))
-						{
-							WolfPack wolfPack = new WolfPack();
-							wolfPack.onBoneRightClick(event);
-						}
-						//Also not ready
-						if ((itemUsed == Material.STRING) 
-								&& (actionPerformed == Action.RIGHT_CLICK_AIR
-								|| actionPerformed == Action.RIGHT_CLICK_BLOCK))
-						{
-							Ensnare ensnare = new Ensnare();
-							ensnare.deployWebbing(p);
-						}
-						if ((itemUsed == Material.DIAMOND || itemUsed == Material.EMERALD || itemUsed == Material.QUARTZ) && actionPerformed == Action.RIGHT_CLICK_AIR)
-						{
-							ItemMeta im = p.getInventory().getItemInMainHand().getItemMeta();
-							if(im.hasDisplayName())
-							{
-								if(im.getDisplayName().equals("Soul Gem"))
+
+							//if (S87Powers.globalCD.containsKey(p.getUniqueId()))
 								{
-									Siphon.onRightClick(p, p, 14);
+									//Long timeSinceEpoch = S87Powers.globalCD.get(p.getUniqueId());
+									//if ((System.currentTimeMillis() - timeSinceEpoch) > 500) // global cd
+									{
+		
+										if(S87Powers.allPlayers.get(p.getUniqueId()).getPowers().size() > p.getInventory().getHeldItemSlot())
+										{
+											Power used = S87Powers.allPlayers.get(p.getUniqueId()).getPowers().get(p.getInventory().getHeldItemSlot());
+											
+											switch(used.getId())
+											{
+											case 1:
+												if ((itemUsed == Material.RAW_CHICKEN || itemUsed == Material.RABBIT
+												|| itemUsed == Material.MUTTON || itemUsed == Material.PORK
+												|| itemUsed == Material.RAW_BEEF))
+												{
+													BestialTransmutation bt = new BestialTransmutation();
+													bt.onRawMeatUse(event);
+													event.setCancelled(true);	
+												}
+												break;
+											case 2:
+												if (itemUsed == Material.BONE)
+												{
+													WolfPack wp = new WolfPack();
+													wp.onBoneRightClick(event);
+													event.setCancelled(true);	
+												}
+												break;
+											case 3:
+												Ensnare en = new Ensnare();
+												en.deployWebbing(p);
+												event.setCancelled(true);	
+												break;
+											case 4:
+												if ((itemUsed == Material.DIAMOND || itemUsed == Material.EMERALD || itemUsed == Material.QUARTZ) && actionPerformed == Action.RIGHT_CLICK_AIR)
+												{
+													ItemMeta im = p.getInventory().getItemInMainHand().getItemMeta();
+													if(im.hasDisplayName())
+													{
+														if(im.getDisplayName().equals("Soul Gem"))
+														{
+															Siphon si = new Siphon();
+															si.onRightClick(p, p, 14);
+															event.setCancelled(true);	
+														}
+													}
+													else
+													{
+														GemHelper.onRightClick(event);
+														event.setCancelled(true);	
+													}
+												}
+												break;
+											case 5:
+												if(actionPerformed == Action.RIGHT_CLICK_BLOCK )
+												{
+													Wall wa = new Wall();
+													wa.createWall(p);
+													event.setCancelled(true);	
+												}
+												break;
+											case 6:
+												Leap lp = new Leap();
+												lp.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 7:
+												Push ph = new Push();
+												ph.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 8:
+												Levitate lt = new Levitate();
+												lt.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 9:
+												Fireball fb = new Fireball();
+												fb.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 10:
+												Leviosa l = new Leviosa();
+												l.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 11:
+												Translocation tloc = new Translocation();
+												tloc.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 12:
+												Possess ps = new Possess();
+												ps.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 13:
+												Cloak clk = new Cloak();
+												clk.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 14:
+												SoulShatter.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 15:
+												Juggernaut jg = new Juggernaut();
+												jg.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 16:
+												Shell sh = new Shell();
+												sh.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 17:
+												GateBuilder gb = new GateBuilder();
+												gb.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											default:
+												break;
+											}
+											S87Powers.globalCD.put(p.getUniqueId(), System.currentTimeMillis());
+										}
+										
+									}
 								}
 							}
-							else
-							{
-								GemHelper.onRightClick(event);
-							}
 						}
-						//testing Wall
-						if(itemUsed == Material.GLOWSTONE_DUST && actionPerformed == Action.RIGHT_CLICK_BLOCK )//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
-						{
-							Wall.createWall(p);
-						}
-
-						//Leap test
-						if(itemUsed == Material.RABBIT_FOOT && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
-						{
-							Leap.onRightClick(p);
-						}
-						//Push test
-						if(itemUsed == Material.STICK && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
-						{
-							Push.onRightClick(p);
-						}
-						if(itemUsed == Material.FEATHER && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
-						{
-							Levitate.onRightClick(p);
-						}
-						if(itemUsed == Material.BLAZE_ROD && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
-						{
-							Fireball.onRightClick(p);
-						}
-						if(itemUsed == Material.SEEDS && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
-						{
-							Leviosa.onRightClick(p);
-						}
-						if(itemUsed == Material.COAL && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
-						{
-							Translocation.onRightClick(p);
-						}
-						if(itemUsed == Material.ARROW && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
-						{
-							Mount.onRightClick(p);
-						}
-						if(itemUsed == Material.CLAY_BRICK && (actionPerformed == Action.RIGHT_CLICK_BLOCK || actionPerformed == Action.RIGHT_CLICK_AIR))//&& p.getTargetBlock(S87Powers.empty, 3).getType() == Material.WATER)
-						{
-							Blink.onRightClick(p);
-						}
-						
-						if(itemUsed == Material.AIR && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
-						{
-							System.out.println(p.getInventory().getHeldItemSlot());
-						}
-						if(itemUsed == Material.NETHER_STAR && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
-						{
-							Possess.onRightClick(p);
-						}
-						if(itemUsed == Material.FLINT && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
-						{
-							Cloak.onRightClick(p);
-						}
-
-						if(itemUsed == Material.CLAY_BALL && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
-						{
-							SoulShatter.onRightClick(p);
-						}
-
-						if(itemUsed == Material.INK_SACK && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
-						{
-							Juggernaut.onRightClick(p);
-						}
-						if(itemUsed == Material.BLAZE_POWDER && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
-						{
-							Shell.onRightClick(p);
-						}		
-						if(itemUsed == Material.BOOK && (actionPerformed == Action.RIGHT_CLICK_AIR || actionPerformed == Action.RIGHT_CLICK_BLOCK))
-						{
-							GateBuilder.onRightClick(p);
-						}
-
-					}
 					else
 					{
 						S87Powers.LOG.log(Level.WARNING, "Got a null player in onPlayerUse");
@@ -181,7 +209,7 @@ public class PowersListener implements Listener
 		Player p = event.getPlayer();
 		if (p != null)
 		{
-			if (p.hasPermission("s87powers.lumberjack.toggledon"))
+			if(S87Powers.allPlayers.get(p.getUniqueId()).getPowers().contains(S87Powers.allPowers.get(19)))
 			{
 				Material itemUsed = event.getPlayer().getEquipment().getItemInMainHand().getType();
 
@@ -219,14 +247,15 @@ public class PowersListener implements Listener
 					if(b.getLocation().distanceSquared(entry.getKey().getLocation()) < 16)
 					{
 						System.out.println("Is <16");
-						for(Block gateBlock : GateBuilder.checkShape(entry.getKey().getRelative(0, -1, 0), entry.getValue()))
+						GateBuilder gb = new GateBuilder();
+						for(Block gateBlock : gb.checkShape(entry.getKey().getRelative(0, -1, 0), entry.getValue()))
 						{
 							if(b.equals(gateBlock))
 							{
 								System.out.println("Is Gate");
 								entry.getKey().setType(Material.AIR);
 								entry.getKey().getRelative(0,1,0).setType(Material.AIR);
-								GateBuilder.removeGateFromDB(entry.getKey(), entry.getValue());
+								gb.removeGateFromDB(entry.getKey(), entry.getValue());
 								S87Powers.slipGateLocs.remove(entry.getKey());
 
 								return;
@@ -249,10 +278,10 @@ public class PowersListener implements Listener
 	{
 		if (event.getEntity().getType() == EntityType.PLAYER)
 		{
-			if (event.getEntity().hasPermission("s87powers.chargebow.toggledon"))
+			if(S87Powers.allPlayers.get(event.getEntity().getUniqueId()).getPowers().contains(S87Powers.allPowers.get(17)))
 			{
-				ChargeBow chargeBow = new ChargeBow();
-				chargeBow.onBowShootEvent(event);
+				ChargeBow cb = new ChargeBow();
+				cb.onBowShootEvent(event);
 			}
 		}
 	}
@@ -271,10 +300,10 @@ public class PowersListener implements Listener
 						|| event.getDamager().getType() == EntityType.SPECTRAL_ARROW
 						|| event.getDamager().getType() == EntityType.TIPPED_ARROW)
 				{
-					if(damagedEntity.hasPermission("s87powers.reflexes.toggledon"))
+					if(S87Powers.allPlayers.get(event.getEntity().getUniqueId()).getPowers().contains(S87Powers.allPowers.get(18)))
 					{
-						Letta letta = new Letta();
-						letta.onArrowHitPlayer(event, damagedEntity);
+						Letta ltt = new Letta();
+						ltt.onArrowHitPlayer(event, damagedEntity);
 					}
 				}
 			}
@@ -286,20 +315,24 @@ public class PowersListener implements Listener
 	@EventHandler
 	 public void onEntityInteract(PlayerInteractEntityEvent event) 
 	{
-		if((!S87Powers.timeSinceInteract.containsKey(event.getPlayer().getUniqueId()) || System.currentTimeMillis() - S87Powers.timeSinceInteract.get(event.getPlayer().getUniqueId()) > 500))
-		{	
-			//Material itemUsed = event.getPlayer().getInventory().getItemInMainHand().getType();
-			if(event.getRightClicked() != null && event.getPlayer() != null)
-			{
-				Entity clickedEntity = event.getRightClicked();
-				Player p = event.getPlayer();
-				ItemMeta meta = event.getPlayer().getInventory().getItemInMainHand().getItemMeta();
-				if (meta.hasDisplayName() && meta.getDisplayName().equals("Soul Gem")) //&& (p.hasPermission("s87powers.siphon.toggledon")
+		if(S87Powers.allPlayers.get(event.getPlayer().getUniqueId()).getPowers().contains(new Power(4, "Siphon", "Drain life into a Soulgem", 2)))
+		{
+			if((!S87Powers.timeSinceInteract.containsKey(event.getPlayer().getUniqueId()) || System.currentTimeMillis() - S87Powers.timeSinceInteract.get(event.getPlayer().getUniqueId()) > 500))
+			{	
+				//Material itemUsed = event.getPlayer().getInventory().getItemInMainHand().getType();
+				if(event.getRightClicked() != null && event.getPlayer() != null)
 				{
-					Siphon.onRightClick(clickedEntity, p, 1);
+					Entity clickedEntity = event.getRightClicked();
+					Player p = event.getPlayer();
+					ItemMeta meta = event.getPlayer().getInventory().getItemInMainHand().getItemMeta();
+					if (meta.hasDisplayName() && meta.getDisplayName().equals("Soul Gem")) //&& (p.hasPermission("s87powers.siphon.toggledon")
+					{
+						Siphon si = new Siphon();
+						si.onRightClick(clickedEntity, p, 14);
+					}
 				}
+				S87Powers.timeSinceInteract.put(event.getPlayer().getUniqueId(), System.currentTimeMillis());
 			}
-			S87Powers.timeSinceInteract.put(event.getPlayer().getUniqueId(), System.currentTimeMillis());
 		}
 
 	}
@@ -307,22 +340,23 @@ public class PowersListener implements Listener
 	@EventHandler
 	public void onShift(PlayerToggleSneakEvent e)
 	{
-		WaterStrider.onShift(e);
+		if(S87Powers.allPlayers.get(e.getPlayer().getUniqueId()).getPowers().contains(S87Powers.allPowers.get(20)))
+		{
+			WaterStrider ws = new WaterStrider();
+			ws.onShift(e);
+		}
 	}
 	
 	@EventHandler
 	public void onPlayerConnect(PlayerJoinEvent e)
 	{
-		boolean firstTime = true;
-
-		System.out.println("Trying");
-		if(firstTime)
+		S87Powers.globalCD.put(e.getPlayer().getUniqueId(), System.currentTimeMillis());
+		if(S87Powers.allPlayers.get(e.getPlayer().getUniqueId()).getPowers().isEmpty())
 		{
-			e.getPlayer().sendMessage("Welcome!");
-			e.getPlayer().sendMessage("You have not yet selected any powers.");
-			e.getPlayer().sendMessage("Please use the command '/powers select' to begin.");
-			firstTime = false;
-			System.out.println("Success");
+			e.getPlayer().sendMessage(ChatColor.GOLD + "Welcome!");
+			e.getPlayer().sendMessage(ChatColor.GOLD + "You have not yet selected any powers.");
+			e.getPlayer().sendMessage(ChatColor.GOLD + "Please use the command '/powers list' to see avalialbe powers.");
+			e.getPlayer().sendMessage(ChatColor.GOLD + "Use '/powers select <power>' to choose a power.");
 		}
 
 	
@@ -334,11 +368,41 @@ public class PowersListener implements Listener
 		//Only checking movement from block to block to be efficient
 		if(e.getTo() != e.getFrom())
 		{
-			if(!GateBuilder.PlayerMove(e))
+			GateBuilder gb = new GateBuilder();
+			if(!gb.PlayerMove(e))
 			{
 
 			}
 		}
+	}
+	
+	@EventHandler
+	public void playerLeave(PlayerQuitEvent e )
+	{
+		for(S87Player p87 : S87Powers.playersOnline)
+		{
+			if(p87.getId() == e.getPlayer().getUniqueId())
+			{
+				S87Powers.playersOnline.remove(p87);
+			}
+		}
+	}
+	
+	@EventHandler
+	public void playerJoin(PlayerJoinEvent e ) throws SQLException
+	{
+		
+		if(S87Powers.allPlayers.containsKey(e.getPlayer().getUniqueId()))
+		{
+			S87Powers.playersOnline.add(S87Powers.allPlayers.get(e.getPlayer().getUniqueId()));
+		}
+		else
+		{
+			S87Powers.allPlayers.put(e.getPlayer().getUniqueId(), new S87Player(e.getPlayer().getUniqueId()));
+			S87Powers.playersOnline.add(S87Powers.allPlayers.get(e.getPlayer().getUniqueId()));
+			PlayerHelper.addPlayer(S87Powers.allPlayers.get(e.getPlayer().getUniqueId()));
+		}
+
 	}
 
 }
