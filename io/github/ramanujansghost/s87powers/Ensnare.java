@@ -11,8 +11,8 @@ import org.bukkit.inventory.ItemStack;
 public class Ensnare{
 	
 	
-	private static final ItemStack redstone = new ItemStack(Material.REDSTONE,1);
-	private static final ItemStack string = new ItemStack(Material.STRING,1);
+	private final ItemStack redstone = new ItemStack(Material.REDSTONE,1);
+	private final ItemStack string = new ItemStack(Material.STRING,1);
 	
 	//Creates web cross at block or on a target
 	public void deployWebbing(Player p)
