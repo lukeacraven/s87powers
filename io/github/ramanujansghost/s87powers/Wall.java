@@ -10,9 +10,9 @@ import org.bukkit.inventory.ItemStack;
 public class Wall
 {
 	
-	private static final ItemStack redstone = new ItemStack(Material.REDSTONE,1);
-	private static final ItemStack stone = new ItemStack(Material.STONE,1);
-	public static void createWall(Player p)
+	private final ItemStack redstone = new ItemStack(Material.REDSTONE,1);
+	private final ItemStack stone = new ItemStack(Material.STONE,1);
+	public void createWall(Player p)
 	{
 		Set<Material> st = null;
     	Block target = p.getTargetBlock(st, 8);
