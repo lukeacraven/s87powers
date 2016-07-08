@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 public class Translocation 
 {
 	//Swap the locations of player with target entity
-	public static void onRightClick(Player p) 
+	public void onRightClick(Player p) 
 	{
 		//SWAP!
 		LivingEntity target = PlayerHelper.getTarget(p, 30);
@@ -15,6 +15,9 @@ public class Translocation
 		{
 			if(GemHelper.cast(p.getInventory(),(int) target.getLocation().distance(p.getLocation())/2))
 			{
+
+				target.leaveVehicle();
+				target.setPassenger(null);
 				Location me = p.getLocation();
 				Location you = target.getLocation();
 				p.teleport(you.setDirection(p.getLocation().getDirection()));
