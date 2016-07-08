@@ -1,5 +1,8 @@
 package io.github.ramanujansghost.s87powers;
 
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -97,5 +100,26 @@ public class PlayerHelper
 				}
 		}
 		return null;
+	}
+
+	
+	public static void addPlayer(S87Player p) throws SQLException
+	{
+		Statement stmt = null;
+		try {
+		System.out.println(p.getId());
+		String sql = "INSERT INTO 'S87Powers.PLAYERS' VALUES (\"" + p.getId() + "\")";
+		stmt = S87Powers.connection.createStatement();
+		stmt.executeUpdate(sql);
+		
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(stmt != null) {	//Any exceptions here are thrown
+				stmt.close();
+			}
+		}
 	}
 }
