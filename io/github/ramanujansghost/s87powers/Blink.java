@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 public class Blink //182
 {
-	public static void onRightClick(Player p) 
+	public  void onRightClick(Player p) 
 	{
 		//Get target
     	Block target = p.getTargetBlock((Set<Material>)null, 15);
