@@ -123,25 +123,30 @@ public class GemHelper {
 	//Subtract from current power, take from player if necessary
 	public static void removePower(PlayerInventory inv, int itemLocation, int rmvValue)
 	{
+		Siphon si = new Siphon();
 		ItemStack gem = inv.getItem(itemLocation);
 		String oldData = gem.getItemMeta().getLore().get(0);
 		int value = Integer.parseInt(oldData.substring(0,oldData.indexOf('/')));
 		if(rmvValue > value)
 		{			
 			setGemPower(inv, itemLocation, 0);
-			Siphon.extract((Player)inv.getHolder(), (Player)inv.getHolder(), rmvValue - value);			
+			si.extract((Player)inv.getHolder(), (Player)inv.getHolder(), rmvValue - value);	
+			System.out.println("Siphoned");
 		}
 		else
 		{
 			setGemPower(inv, itemLocation, value-rmvValue);
 		}
+		((Player)inv.getHolder()).sendMessage("Soul Gem: " + getGemPower(inv, itemLocation));
 	}
 	
 	//Removes power from held (left hand) soulgem
 	//Returns false if dead
 	public static boolean cast(PlayerInventory inv, int val)
 	{
-		if(inv.getItem(40)!= null)
+		Siphon si = new Siphon();
+		System.out.println("Cast");
+		if(inv.getItem(40)!= null && inv.getItemInOffHand().hasItemMeta())
 		{
 			ItemMeta meta = inv.getItemInOffHand().getItemMeta();
 			if(meta.getDisplayName().equals("Soul Gem") && Character.isDigit(meta.getLore().get(0).charAt(0)))
@@ -151,20 +156,22 @@ public class GemHelper {
 			else
 			{
 				//If not holding a gem, take from player
-				Siphon.extract((Player)inv.getHolder(), (Player)inv.getHolder(), val);	
+				si.extract((Player)inv.getHolder(), (Player)inv.getHolder(), val);	
 				if(val > 10)
 				{
-					((Player)inv.getHolder()).addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 1));		
+					((Player)inv.getHolder()).addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 200, 2));	
+					((Player)inv.getHolder()).addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200, 2));
 				}
 			}
 		}
 		else
 		{
 			//If not holding a gem, take from player
-			Siphon.extract((Player)inv.getHolder(), (Player)inv.getHolder(), val);	
+			si.extract((Player)inv.getHolder(), (Player)inv.getHolder(), val);	
 			if(val > 10)
 			{
-				((Player)inv.getHolder()).addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 1));		
+				((Player)inv.getHolder()).addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 200, 2));	
+				((Player)inv.getHolder()).addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200, 2));
 			}
 		}
 		
