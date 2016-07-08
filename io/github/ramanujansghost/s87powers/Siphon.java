@@ -1,5 +1,6 @@
 package io.github.ramanujansghost.s87powers;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -14,9 +15,9 @@ public class Siphon{
 	//Damage entity over time, add value to soulgem
 	//Scale damage and power gained by amount (in hearts/foods)
 	//Amount = Power
-	public static int extract(Entity target, Player p, int amount)
+	public int extract(Entity target, Player p, int amount)
 	{		
-		
+		if(amount > 0)
 		{
 			LivingEntity le = (LivingEntity)target;
 			
@@ -26,10 +27,21 @@ public class Siphon{
 			{
 				p = (Player)le;
 				int food = p.getFoodLevel();
-				if((food-(int)(Math.ceil((double)amount/7))) < 0)
+				if(food == 0)
+				{
+					if(p.getHealth() - ((int)(Math.ceil((double)amount/7))) < 0)
+					{
+						p.setHealth(0);
+					}
+					else
+					{
+						p.setHealth(p.getHealth() - ((int)(Math.ceil((double)amount/7))));
+					}
+				}
+				else if((food-(int)(Math.ceil((double)amount/7))) < 0)
 				{
 					p.setFoodLevel(0);	
-					p.damage((int)(Math.ceil((double)amount/7))-food);
+					p.setHealth(p.getHealth() - ((int)(Math.ceil((double)amount/7))-food));
 				}
 				else
 				{
@@ -44,7 +56,7 @@ public class Siphon{
 						System.out.println(efx.getType());
 						if(efx.getType().getName() == PotionEffectType.REGENERATION.getName())
 						{
-							p.sendMessage("REBOUND!");
+							p.sendMessage(ChatColor.RED +"REBOUND!");
 							p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 500, 1));
 						}
 					}
@@ -56,10 +68,11 @@ public class Siphon{
 			}			
 				return amount;
 			}
+		return 0;
 	}
 	
 	//Empower the gem in the hand a of a player
-	public static void onRightClick(Entity target, Player p, int amount)
+	public void onRightClick(Entity target, Player p, int amount)
 	{	
 		EntityType type = target.getType();
 		if(type == EntityType.SHEEP || type == EntityType.COW || type == EntityType.WOLF || type == EntityType.PIG || type == EntityType.PLAYER || type == EntityType.RABBIT || type == EntityType.VILLAGER || type == EntityType.SQUID || type == EntityType.HORSE || type == EntityType.CHICKEN)
@@ -90,7 +103,7 @@ public class Siphon{
 		}
 	}
 	
-	private static boolean canSiphon(Player p)
+	private boolean canSiphon(Player p)
 	{
 		if (p != null)
 		{
