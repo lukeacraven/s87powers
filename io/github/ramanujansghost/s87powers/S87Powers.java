@@ -43,7 +43,11 @@ public class S87Powers extends JavaPlugin
 	public static Connection connection = null;
 	
 	public static ArrayList<Power> allPowers = new ArrayList<Power>();
-
+	//public static HashMap <String, Power> stringToPower = new HashMap<String, Power>();
+	//public static ArrayList<S87Player> allPlayers = new ArrayList<S87Player>();
+	public static HashMap<UUID, S87Player> allPlayers = new HashMap<UUID, S87Player>();
+	public static ArrayList<S87Player> playersOnline = new ArrayList<S87Player>();
+	public static HashMap<UUID, Long> globalCD = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeSinceWolfSummon = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeSinceChargeBowUse = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeTillSiphonAgain = new HashMap<UUID, Long>();
@@ -51,10 +55,7 @@ public class S87Powers extends JavaPlugin
 	public static HashMap<Block, Long> tempBlocks = new HashMap<Block, Long>();
 	public static HashMap<Block, Integer> slipGateLocs = new HashMap<Block, Integer>();
 	public static Set<Material> empty = null;
-	private static final String permStrings[] =
-	{ "bestialtransmutation", "bestialtransmutation.toggledon", "lumberjack", "lumberjack.toggledon"
-			, "wolfpack" , "wolfpack.toggledon", "chargebow", "chargebow.toggledon"
-			, "reflexes", "reflexes.toggledon", "siphon", "siphon.toggledon" };
+
 
 	
 	//Constructor
@@ -104,12 +105,24 @@ public class S87Powers extends JavaPlugin
 					+ "`COST`	INTEGER NOT NULL)";
 			stmt.executeUpdate(createPowersTable);
 			
+			String createStatiTable = "CREATE TABLE IF NOT EXISTS `S87Powers.STATI` ("
+					+ "`STAT_ID`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
+					+ "`NAME`			TEXT NOT NULL,"
+					+ "`DESCRIPTION`	TEXT NOT NULL)";
+			stmt.executeUpdate(createStatiTable);
+			
 			String createPlayerPowerRelTable = "CREATE TABLE IF NOT EXISTS 'S87Powers.PLAYER_POWER_REL' ("
 					+ "`PLAYER_ID`	TEXT NOT NULL,"
 					+ "`POWER_ID`	INTEGER NOT NULL,"
 					+ "`REL_COST`	INTEGER NOT NULL,"
 					+ "PRIMARY KEY(PLAYER_ID,POWER_ID))";
 			stmt.executeUpdate(createPlayerPowerRelTable);
+			
+			String createPlayerStatRelTable = "CREATE TABLE IF NOT EXISTS 'S87Powers.PLAYER_STAT_REL' ("
+					+ "`PLAYER_ID`	TEXT NOT NULL,"
+					+ "`STAT_ID`	INTEGER NOT NULL,"
+					+ "PRIMARY KEY(PLAYER_ID,STAT_ID))";
+			stmt.executeUpdate(createPlayerStatRelTable);
 			
 			String createSlipGateTable = "CREATE TABLE IF NOT EXISTS `S87Powers.SLIPGATES` ("
 					+ "`GATE_ID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
@@ -164,9 +177,37 @@ public class S87Powers extends JavaPlugin
 		    ResultSet rs = stmt.executeQuery(sql);
 		    while(rs.next())
 		    {
-		    	allPowers.add(new Power(rs.getString(2),rs.getString(3),rs.getInt(4)));
+		    	allPowers.add(new Power(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getInt(4)));
 		    }
-	    	System.out.println(allPowers);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(stmt != null) {	//Any exceptions here are thrown
+				stmt.close();
+			}
+		}
+	}
+	
+	private void loadPlayers() throws SQLException
+	{
+		Statement stmt = null;
+		try {
+			String sql = "SELECT * FROM 'S87Powers.PLAYERS'";
+			stmt = connection.createStatement();
+		    ResultSet rs = stmt.executeQuery(sql);
+		    while(rs.next())
+		    {
+		    	allPlayers.put(UUID.fromString(rs.getString(1)), new S87Player(UUID.fromString(rs.getString(1))));
+		    }
+		    
+		    sql = "SELECT * FROM 'S87Powers.PLAYER_POWER_REL'";
+		    rs = stmt.executeQuery(sql);
+		    while(rs.next())
+		    {
+		    	allPlayers.get(UUID.fromString(rs.getString(1))).getPowers().add(allPowers.get(rs.getInt(2)-1));
+		    }
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -227,10 +268,12 @@ public class S87Powers extends JavaPlugin
 		setUpPermissions();
 		checkIfFactionsIsEnabled();
 		setUpDBConnection();
+		setPowers();
 		try {
 			setUpDBStructure();
 			loadGates();
 			loadPowers();
+			loadPlayers();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -274,11 +317,12 @@ public class S87Powers extends JavaPlugin
 				{
 					if (args.length == 3)
 					{
-						if (sender.hasPermission("s87powers.add"))
+						if (sender.isOp())
 						{
 							sender.sendMessage("Attempting to add power "
 									+ args[1] + " to " + args[2]);
-							S87Powers.addPower(sender, args[1], args[2]);
+							
+							S87Powers.addPower(Bukkit.getPlayer(args[2]),StringToPower(args[1]));
 						}
 						else
 						{
@@ -297,51 +341,45 @@ public class S87Powers extends JavaPlugin
 				{
 					if (args.length == 2)
 					{
-						if (sender.hasPermission("s87powers.add"))
+						int totalPower = 0;
+						int powerNum = 0;
+						
+						if(!S87Powers.allPlayers.get(((Player)sender).getUniqueId()).getPowers().contains(StringToPower(args[1])))
 						{
-
+							for(Power pow : S87Powers.allPlayers.get(((Player)sender).getUniqueId()).getPowers())
+							{
+								totalPower += pow.getCost();
+								powerNum++;
+							}
+							if(totalPower + StringToPower(args[1]).getCost() <= 5)
+							{
+								S87Powers.addPower((Player) sender,StringToPower(args[1]));
+								try {
+									addPlayerPower((Player) sender, StringToPower(args[1]));
+								} catch (SQLException e) {
+									e.printStackTrace();
+								}
+								sender.sendMessage(ChatColor.GOLD + "Power added to slot " + (powerNum+1) + "!");
+								sender.sendMessage(ChatColor.GOLD + "You have " + (5 - (totalPower + StringToPower(args[1]).getCost())) +  " power points remaining.");
+							}
+							else
+							{
+								sender.sendMessage(
+										ChatColor.RED + "Not enough points!");
+							}
 						}
 						else
 						{
-							sender.sendMessage(ChatColor.RED
-									+ "Error while performing command!  User does not have permission.");
+							sender.sendMessage(
+									ChatColor.RED + "You already have this power!");
 						}
+							
+
 					}
 					else
 					{
 						sender.sendMessage(
 								"Error while performing command!  Syntax is /powers select <power>");
-					}
-				}
-				if (args[0].equalsIgnoreCase("toggle"))
-				{
-					if (args.length == 2)
-					{
-						if (sender.hasPermission("s87powers." + args[1]))
-						{
-							if (sender.hasPermission("s87powers." + args[1] + ".toggledon"))
-							{
-								sender.sendMessage(args[1] + "off");
-								S87Powers.removePower(sender,
-										args[1] + ".toggledon", sender.getName());
-							}
-							else
-							{
-								sender.sendMessage(args[1] + ": on");
-								S87Powers.addPower(sender, args[1] + ".toggledon",
-										sender.getName());
-							}
-						}
-						else
-						{
-							sender.sendMessage(ChatColor.RED
-									+ "Error while performing command!  User does not have permission.");
-						}
-					}
-					else
-					{
-						sender.sendMessage(
-								"Error while performing command!  Syntax is /powers toggle <power>");
 					}
 				}
 				if (args[0].equalsIgnoreCase("help"))
@@ -362,13 +400,17 @@ public class S87Powers extends JavaPlugin
 							+ "/powers desc <power> - Shows <power>'s description");
 
 				}
+				if (args[0].equalsIgnoreCase("me"))
+				{
+					lookupPlayer(sender, sender.getName());
+				}
 				if (args[0].equalsIgnoreCase("list"))
 				{
 
 					sender.sendMessage("The powers are as follows: ");
 					for(Power p : allPowers)
 					{
-						sender.sendMessage(p.getName() + " - " + p.getDesc());
+						sender.sendMessage(ChatColor.GOLD + p.getName() + " - " + p.getDesc() + " - " + p.getCost());
 					}
 
 				}
@@ -399,11 +441,16 @@ public class S87Powers extends JavaPlugin
 				{
 					if (args.length == 3)
 					{
-						if (sender.hasPermission("s87powers.remove"))
+						if (sender.isOp())
 						{
 							sender.sendMessage("Attempting to remove power "
 									+ args[1] + " from " + args[2]);
-							S87Powers.removePower(sender, args[1], args[2]);
+							try {
+								S87Powers.removePower(sender, args[1], args[2]);
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						else
 						{
@@ -436,18 +483,17 @@ public class S87Powers extends JavaPlugin
 		int powersCount = 0;
 		if (p != null)
 		{
-			for (int i = 0; i < permStrings.length; i++)
+			sender.sendMessage(ChatColor.GOLD + p.getDisplayName() + " has: ");
+			for (Power pow : allPlayers.get(p.getUniqueId()).getPowers())
 			{
-				if (perms.has(p, "s87powers." + permStrings[i]))
-				{
-					sender.sendMessage(p.getDisplayName() + " has the power "
-							+ permStrings[i]);
+					sender.sendMessage(ChatColor.GOLD + pow.getName());
 					powersCount++;
-				}
 			}
 			if (powersCount > 0)
-				sender.sendMessage(
-						p.getDisplayName() + " has " + powersCount + " powers");
+			{
+				//sender.sendMessage(
+				//		p.getDisplayName() + " has " + powersCount + " powers");
+			}
 			else
 				sender.sendMessage(p.getDisplayName() + " has no powers :(");
 
@@ -461,43 +507,47 @@ public class S87Powers extends JavaPlugin
 	}
 	
 	//Give a player permission to use a power
-	public static boolean addPower(CommandSender sender,
-			String permissionString, String playerString)
+	public static boolean addPower(Player p, Power pow)
+	{
+		allPlayers.get(p.getUniqueId()).getPowers().add(pow);
+		return true;		
+	}
+
+	//Remove player permission to use a power
+	public static boolean removePower(CommandSender sender,
+			String powerString, String playerString) throws SQLException
 	{
 		Player p = Bukkit.getServer().getPlayer(playerString);
+		Power toRemove = StringToPower(powerString);
 
-		boolean isValidPerm = false;
 		if (p != null)
 		{
-			for (int i = 0; i < permStrings.length; i++)
-			{
-				if (permStrings[i].equals(permissionString)) isValidPerm = true;
-			}
-			if (isValidPerm)
-			{
-				if (perms.playerAdd(p, "s87powers." + permissionString))
+			if(toRemove != null)
+			{					
+				if(allPlayers.get(p.getUniqueId()).getPowers().remove(toRemove))
 				{
+					removePlayerPower(p,toRemove);
 					LOG.log(Level.INFO,
-							sender.getName() + " is adding " + "s87powers."
-									+ permissionString + " to "
+							sender.getName() + " is removing " + "s87powers."
+									+ powerString + " from "
 									+ p.getDisplayName());
 					return true;
 				}
-				LOG.log(Level.WARNING, "Failed to add " + "s87powers."
-						+ permissionString + " from " + p.getDisplayName());
-				return false;
+				else
+				{
+					LOG.log(Level.WARNING, "Failed to remove "
+							+ powerString + " from " + p.getDisplayName());
+					return false;
+				}
 			}
 			else
 			{
-				sender.sendMessage(
-						permissionString + " is not a valid permission.");
-				LOG.log(Level.WARNING,
-						sender.getName()
-								+ " attempted to add invalid permission: "
-								+ "s87powers." + permissionString + " to "
-								+ p.getDisplayName());
+				sender.sendMessage(powerString + " could not be found.");
+				LOG.log(Level.WARNING, sender.getName()
+						+ " attempted to remove an invalid power " + powerString);
 				return false;
 			}
+
 		}
 		else
 		{
@@ -508,51 +558,82 @@ public class S87Powers extends JavaPlugin
 		}
 	}
 
-	//Remove player permission to use a power
-	public static boolean removePower(CommandSender sender,
-			String permissionString, String playerString)
+	public static void setPowers()
 	{
-		Player p = Bukkit.getServer().getPlayer(playerString);
-		boolean isValidPerm = false;
-
-		if (p != null)
+		allPowers.add(new Power(1, "BestialTransmutation", "Transmute meat into animals", 2));
+		allPowers.add(new Power(2, "WolfPack", "Summon friendly wolves", 3));
+		allPowers.add(new Power(3, "Ensnare", "Spin a web, any size!", 2));
+		allPowers.add(new Power(4, "Siphon", "Drain life into a Soulgem", 2));
+		allPowers.add(new Power(5, "Wall", "Quickly constuct a wall", 2));
+		allPowers.add(new Power(6, "Leap", "Leap small buildings in a single bound!", 1));
+		allPowers.add(new Power(7, "Push", "Push and pull your enemies", 2));
+		allPowers.add(new Power(8, "Levitate", "Lift yourself into the air", 1));
+		allPowers.add(new Power(9, "Fireball", "Launch a blazing missile", 2));
+		allPowers.add(new Power(10, "Leviosa", "Lift your friends", 1));
+		allPowers.add(new Power(11, "Translocation", "Swap places with another", 2));
+		allPowers.add(new Power(12, "Possess", "Reside within your prey", 999));
+		allPowers.add(new Power(13, "Cloak", "Hide from all", 999));
+		allPowers.add(new Power(14, "SoulShatter", "Detonate a SoulGem", 2));
+		allPowers.add(new Power(15, "Juggernaut", "Pure strength", 4));
+		allPowers.add(new Power(16, "Shell", "Form a shell around yourself or others", 2));
+		allPowers.add(new Power(17, "GateBuilder", "Construct slipgates", 2));
+		allPowers.add(new Power(18, "Chargebow", "Shoot flaming arrows", 2));
+		allPowers.add(new Power(19, "Letta", "Stop arrows in their path", 2));
+		allPowers.add(new Power(20, "Lumberjack", "Chop down full trees", 1));
+		allPowers.add(new Power(21, "Waterstrider", "Sprint in water", 1));
+//		allPowers.add(new Power(22, "BestialTransmutation", "Transmute meat into animals", 2));
+	}
+	
+	public static Power StringToPower(String s)
+	{
+		for(Power p : allPowers)
 		{
-			for (int i = 0; i < permStrings.length; i++)
+			System.out.println(s + " : " + p.getName());
+			if(p.getName().equalsIgnoreCase(s))
 			{
-				if (permStrings[i].equals(permissionString)) isValidPerm = true;
-			}
-			if (isValidPerm)
-			{
-				if (perms.playerRemove(p, "s87powers." + permissionString))
-				{
-					LOG.log(Level.INFO,
-							sender.getName() + " is removing " + "s87powers."
-									+ permissionString + " from "
-									+ p.getDisplayName());
-					return true;
-				}
-				LOG.log(Level.WARNING, "Failed to remove " + "s87powers."
-						+ permissionString + " from " + p.getDisplayName());
-				return false;
-			}
-			else
-			{
-				sender.sendMessage(
-						permissionString + " is not a valid permission.");
-				LOG.log(Level.WARNING,
-						sender.getName()
-								+ " attempted to remove invalid permission: "
-								+ "s87powers." + permissionString + " from "
-								+ p.getDisplayName());
-				return false;
+				return p;
 			}
 		}
-		else
-		{
-			sender.sendMessage(playerString + " could not be found.");
-			LOG.log(Level.WARNING, sender.getName()
-					+ " attempted to find an invalid player " + playerString);
-			return false;
+		System.out.println("Null Power");
+		return null;
+	}
+
+	public static void addPlayerPower(Player p, Power pow) throws SQLException
+	{
+		Statement stmt = null;
+		try {
+		String sql = "INSERT INTO 'S87Powers.PLAYER_POWER_REL' " +
+                "VALUES (\"" + p.getUniqueId() +  "\"," + pow.getId() + " , " + pow.getCost() + ")";
+		System.out.println(sql);
+		stmt = S87Powers.connection.createStatement();
+		stmt.executeUpdate(sql);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(stmt != null) {	//Any exceptions here are thrown
+				stmt.close();
+			}
+		}
+	}
+	
+	public static void removePlayerPower(Player p, Power pow) throws SQLException
+	{
+		Statement stmt = null;
+		try {
+		String sql = "DELETE FROM 'S87Powers.PLAYER_POWER_REL' " +
+                "WHERE PLAYER_ID = \'" + p.getUniqueId() + "\' AND POWER_ID = " + pow.getId();
+		stmt = S87Powers.connection.createStatement();
+		stmt.executeUpdate(sql);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(stmt != null) {	//Any exceptions here are thrown
+				stmt.close();
+			}
 		}
 	}
 }
