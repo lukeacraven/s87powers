@@ -10,7 +10,8 @@ public class Fireball
 {
 	public void onRightClick(Player p) 
 	{
-		if(GemHelper.cast(p.getInventory(), 11))
+		GemHelper gh = new GemHelper();
+		if(gh.cast(p.getInventory(), 11))
 		{
 			System.out.println("Cast fireball");
 			Vector vel = p.getLocation().getDirection();
