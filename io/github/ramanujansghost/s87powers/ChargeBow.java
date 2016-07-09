@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 public class ChargeBow
 {
 	ItemStack charge = new ItemStack(Material.FIREBALL, 1);
+	ItemStack lighter = new ItemStack(Material.FLINT_AND_STEEL, 1);
 	ItemStack arrow = new ItemStack(Material.ARROW, 1);
 	
 	//Check if cooldown has elapsed
@@ -38,17 +39,30 @@ public class ChargeBow
 	public void onBowShootEvent(EntityShootBowEvent event)
 	{
 		Player p = (Player) event.getEntity();
-		if (InventoryHelper.checkForReagents(p, charge, 1))
+		System.out.println(p.getInventory().getItemInOffHand().getType());
+		if (p.getEquipment().getItemInOffHand().getType() == Material.FLINT_AND_STEEL)
 		{
-			if (InventoryHelper.checkForReagents(p, arrow, 1))
+			lighter = p.getEquipment().getItemInOffHand();
+			if (InventoryHelper.checkForReagents(p, arrow, 2))
 			{
 				if (canPlayerUseChargeBow(p))
 				{
 					event.setCancelled(true);
 					S87Powers.timeSinceChargeBowUse.put(p.getUniqueId(),
 							System.currentTimeMillis());
-					InventoryHelper.removeReagents(p, charge, 1);
-					InventoryHelper.removeReagents(p, arrow, 1);
+					InventoryHelper.removeReagents(p, arrow, 2);
+					short minus = 1;
+					System.out.println(lighter.getDurability());
+					if(lighter.getDurability() + minus >= 65)
+					{
+						p.getEquipment().setItemInOffHand(new ItemStack(Material.AIR, 1));
+						p.updateInventory();
+					}
+					else
+					{
+						p.getEquipment().setItemInOffHand(new ItemStack(Material.FLINT_AND_STEEL, 1, (short) (lighter.getDurability() + minus)));
+					}
+					
 					Projectile fireball1 = p
 							.launchProjectile(SmallFireball.class);
 					fireball1.setVelocity(event.getEntity().getLocation().getDirection());
@@ -65,7 +79,7 @@ public class ChargeBow
 		else
 		{
 			p.sendMessage(
-					"You tried to use Charge Bow, but you had no charges to coat your arrow with!");
+					"You tried to use Charge Bow, but you were not holding a flint'n'steel in your left hand!");
 		}
 	}
 }
