@@ -131,7 +131,6 @@ public class GemHelper {
 		{			
 			setGemPower(inv, itemLocation, 0);
 			si.extract((Player)inv.getHolder(), (Player)inv.getHolder(), rmvValue - value);	
-			System.out.println("Siphoned");
 		}
 		else
 		{
@@ -142,7 +141,7 @@ public class GemHelper {
 	
 	//Removes power from held (left hand) soulgem
 	//Returns false if dead
-	public static boolean cast(PlayerInventory inv, int val)
+	public boolean cast(PlayerInventory inv, int val)
 	{
 		Siphon si = new Siphon();
 		System.out.println("Cast");
@@ -161,6 +160,7 @@ public class GemHelper {
 				{
 					((Player)inv.getHolder()).addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 200, 2));	
 					((Player)inv.getHolder()).addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200, 2));
+					((Player)inv.getHolder()).sendMessage("You've overexerted yourself.");
 				}
 			}
 		}
@@ -172,6 +172,7 @@ public class GemHelper {
 			{
 				((Player)inv.getHolder()).addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 200, 2));	
 				((Player)inv.getHolder()).addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200, 2));
+				((Player)inv.getHolder()).sendMessage("You've overexerted yourself.");
 			}
 		}
 		
