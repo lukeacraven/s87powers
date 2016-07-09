@@ -19,12 +19,12 @@ public class Shell
 	public void onRightClick(Player p) 
 	{
 		Location loc = null;
-		if(InventoryHelper.checkForReagents(p, stone, 13) && InventoryHelper.checkForReagents(p, redstone, 2))
+		if(InventoryHelper.checkForReagents(p, stone, 13) && InventoryHelper.checkForReagents(p, redstone, 5))
 		{
 			if(p.isSneaking())
 			{
-				InventoryHelper.removeReagents(p, stone, 9);
-				InventoryHelper.removeReagents(p, redstone, 2);
+				InventoryHelper.removeReagents(p, stone, 13);
+				InventoryHelper.removeReagents(p, redstone, 5);
 				loc = p.getLocation();
 				
 			}
@@ -34,7 +34,7 @@ public class Shell
 				if(le != null)
 				{
 					InventoryHelper.removeReagents(p, stone, 13);
-					InventoryHelper.removeReagents(p, redstone, 2);
+					InventoryHelper.removeReagents(p, redstone, 5);
 					le.teleport((le.getLocation().getBlock().getLocation()).add(new Vector(.5,0,.5)));
 					le.setVelocity(new Vector(0,0,0));
 					loc = le.getLocation();
@@ -42,6 +42,11 @@ public class Shell
 				
 			}
 		}
+		else
+		{
+			p.sendMessage("You do not have the necessary reagents to summon a shell!  Requires 13 stone and 5 redstone.");
+		}
+		
 		//probably should use coords
 		Block center = loc.getBlock();
 		ArrayList<Block> toChange = new ArrayList<Block>();
