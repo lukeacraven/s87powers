@@ -13,9 +13,9 @@ public class Translocation
 		LivingEntity target = PlayerHelper.getTarget(p, 30);
 		if(target != null)
 		{
-			if(GemHelper.cast(p.getInventory(),(int) target.getLocation().distance(p.getLocation())/2))
+			GemHelper gh = new GemHelper();
+			if(gh.cast(p.getInventory(),(int) target.getLocation().distance(p.getLocation())/2))
 			{
-
 				target.leaveVehicle();
 				target.setPassenger(null);
 				Location me = p.getLocation();
