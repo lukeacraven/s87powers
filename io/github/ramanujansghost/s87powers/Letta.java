@@ -10,8 +10,9 @@ public class Letta
 	//You'd better be handing this a player :P
 	public void onArrowHitPlayer(EntityDamageByEntityEvent event, Entity damagedEntity)
 	{
+		GemHelper gh = new GemHelper();
 		//Block if you have the magic/mana/lifeforce/whatever
-		if(GemHelper.cast(((Player)damagedEntity).getInventory(), 14))
+		if(gh.cast(((Player)damagedEntity).getInventory(), 14))
 		{
 			event.setCancelled(true);
 			event.getDamager().remove();
