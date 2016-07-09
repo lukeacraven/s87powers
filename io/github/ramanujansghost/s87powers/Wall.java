@@ -30,6 +30,10 @@ public class Wall
 				}
 		
 			}
+			else
+			{
+				p.sendMessage("You do not have the necessary reagents to summon a wall!  Requires 9 stone and 2 redstone.");
+			}
 
 		}
 	}
