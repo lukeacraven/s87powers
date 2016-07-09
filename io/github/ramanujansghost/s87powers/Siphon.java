@@ -7,6 +7,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -72,28 +73,75 @@ public class Siphon{
 	}
 	
 	//Empower the gem in the hand a of a player
-	public void onRightClick(Entity target, Player p, int amount)
+	public void onRightClick(Player p, int amount)
 	{	
+		Entity target = PlayerHelper.getTarget(p, 4);
+		if(target == null)
+		{
+			target = p;
+		}
+		
 		EntityType type = target.getType();
 		if(type == EntityType.SHEEP || type == EntityType.COW || type == EntityType.WOLF || type == EntityType.PIG || type == EntityType.PLAYER || type == EntityType.RABBIT || type == EntityType.VILLAGER || type == EntityType.SQUID || type == EntityType.HORSE || type == EntityType.CHICKEN)
 		{
 			if(canSiphon(p))
 			{
-				System.out.println("Can Siphon");
+				if(target == p)
+					p.sendMessage("Self-Siphoning");
 				PlayerInventory inv = p.getInventory();
-				GemHelper.addPower(inv, inv.getHeldItemSlot(), extract(target, p, amount));
 				Material gem = inv.getItemInMainHand().getType(); 
-				if(gem == Material.DIAMOND)
+				if(gem == Material.DIAMOND || gem == Material.EMERALD || gem == Material.QUARTZ)
 				{
-					S87Powers.timeTillSiphonAgain.put(p.getUniqueId(), System.currentTimeMillis()+ 8000);
+					ItemMeta im = p.getInventory().getItemInMainHand().getItemMeta();
+					if(im.hasDisplayName())
+					{
+						if(im.getDisplayName().equals("Soul Gem"))
+						{
+							
+							GemHelper.addPower(inv, inv.getHeldItemSlot(), extract(target, p, amount));
+							
+							if(gem == Material.DIAMOND)
+							{
+								S87Powers.timeTillSiphonAgain.put(p.getUniqueId(), System.currentTimeMillis()+ 8000);
+							}
+							else if(gem == Material.EMERALD)
+							{
+								S87Powers.timeTillSiphonAgain.put(p.getUniqueId(), System.currentTimeMillis()+ 4000);
+							}
+							else if(gem == Material.QUARTZ)
+							{
+								S87Powers.timeTillSiphonAgain.put(p.getUniqueId(), System.currentTimeMillis()+ 2000);
+							}
+						}
+						else
+						{
+							extract(target, p, amount);
+							if(target != p)
+							{
+								p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 1));
+								p.sendMessage("You feel slighly stronger.");
+							}							
+							S87Powers.timeTillSiphonAgain.put(p.getUniqueId(), System.currentTimeMillis()+ 5000);
+						}
+					}
+					else
+					{
+						GemHelper.formGem(inv);
+						p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 1));
+						p.sendMessage("You've created a Soul Gem");
+	
+						S87Powers.timeTillSiphonAgain.put(p.getUniqueId(), System.currentTimeMillis()+ 5000);
+					}
 				}
-				else if(gem == Material.EMERALD)
+				else
 				{
-					S87Powers.timeTillSiphonAgain.put(p.getUniqueId(), System.currentTimeMillis()+ 4000);
-				}
-				else if(gem == Material.QUARTZ)
-				{
-					S87Powers.timeTillSiphonAgain.put(p.getUniqueId(), System.currentTimeMillis()+ 2000);
+					extract(target, p, amount);
+					if(target != p)
+					{
+						p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 1));
+						p.sendMessage("You feel slighly stronger.");
+					}
+					S87Powers.timeTillSiphonAgain.put(p.getUniqueId(), System.currentTimeMillis()+ 5000);
 				}
 			}
 		}
@@ -107,7 +155,6 @@ public class Siphon{
 	{
 		if (p != null)
 		{
-			System.out.println("Player is not null");
 			if (S87Powers.timeTillSiphonAgain.containsKey(p.getUniqueId()))
 			{
 				System.out.println("Unique ID Met");
