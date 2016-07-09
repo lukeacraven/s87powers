@@ -1,6 +1,5 @@
 package io.github.ramanujansghost.s87powers;
 
-import net.milkbowl.vault.permission.Permission;
 import com.massivecraft.factions.engine.EngineMain;
 import com.massivecraft.massivecore.ps.PS;
 
@@ -27,7 +26,6 @@ import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
@@ -38,13 +36,13 @@ public class S87Powers extends JavaPlugin
 	public static final boolean DEBUGINVENTORYHELPER = true;
 	public static boolean isFactionsEnabled = false;
 	
-	public static Permission perms = null;
-	
 	public static Connection connection = null;
 	
 	public static ArrayList<Power> allPowers = new ArrayList<Power>();
 	//public static HashMap <String, Power> stringToPower = new HashMap<String, Power>();
 	//public static ArrayList<S87Player> allPlayers = new ArrayList<S87Player>();
+	
+	public static HashMap<UUID, Long> timeSinceVolleyUse = new HashMap<UUID, Long>();
 	public static HashMap<UUID, S87Player> allPlayers = new HashMap<UUID, S87Player>();
 	public static ArrayList<S87Player> playersOnline = new ArrayList<S87Player>();
 	public static HashMap<UUID, Long> globalCD = new HashMap<UUID, Long>();
@@ -64,15 +62,6 @@ public class S87Powers extends JavaPlugin
 		
 	}
 
-
-	//Begin permissions
-	private boolean setUpPermissions()
-	{
-		RegisteredServiceProvider<Permission> rsp = getServer()
-				.getServicesManager().getRegistration(Permission.class);
-		perms = rsp.getProvider();
-		return perms != null;
-	}
 	
 	//Set up SqLite DB connection
 	private void setUpDBConnection()
@@ -265,7 +254,7 @@ public class S87Powers extends JavaPlugin
 	@Override
 	public void onEnable()
 	{
-		setUpPermissions();
+		//setUpPermissions();
 		checkIfFactionsIsEnabled();
 		setUpDBConnection();
 		setPowers();
@@ -343,38 +332,43 @@ public class S87Powers extends JavaPlugin
 					{
 						int totalPower = 0;
 						int powerNum = 0;
-						
-						if(!S87Powers.allPlayers.get(((Player)sender).getUniqueId()).getPowers().contains(StringToPower(args[1])))
+						if(StringToPower(args[1]) != null)
 						{
-							for(Power pow : S87Powers.allPlayers.get(((Player)sender).getUniqueId()).getPowers())
+							if(!S87Powers.allPlayers.get(((Player)sender).getUniqueId()).getPowers().contains(StringToPower(args[1])))
 							{
-								totalPower += pow.getCost();
-								powerNum++;
-							}
-							if(totalPower + StringToPower(args[1]).getCost() <= 5)
-							{
-								S87Powers.addPower((Player) sender,StringToPower(args[1]));
-								try {
-									addPlayerPower((Player) sender, StringToPower(args[1]));
-								} catch (SQLException e) {
-									e.printStackTrace();
+								for(Power pow : S87Powers.allPlayers.get(((Player)sender).getUniqueId()).getPowers())
+								{
+									totalPower += pow.getCost();
+									powerNum++;
 								}
-								sender.sendMessage(ChatColor.GOLD + "Power added to slot " + (powerNum+1) + "!");
-								sender.sendMessage(ChatColor.GOLD + "You have " + (5 - (totalPower + StringToPower(args[1]).getCost())) +  " power points remaining.");
+								if(totalPower + StringToPower(args[1]).getCost() <= 5)
+								{
+									S87Powers.addPower((Player) sender,StringToPower(args[1]));
+									try {
+										addPlayerPower((Player) sender, StringToPower(args[1]));
+									} catch (SQLException e) {
+										e.printStackTrace();
+									}
+									sender.sendMessage(ChatColor.GOLD + "Power added to slot " + (powerNum+1) + "!");
+									sender.sendMessage(ChatColor.GOLD + "You have " + (5 - (totalPower + StringToPower(args[1]).getCost())) +  " power points remaining.");
+								}
+								else
+								{
+									sender.sendMessage(
+											ChatColor.RED + "Not enough points!");
+								}
 							}
 							else
 							{
 								sender.sendMessage(
-										ChatColor.RED + "Not enough points!");
+										ChatColor.RED + "You already have this power!");
 							}
 						}
 						else
 						{
 							sender.sendMessage(
-									ChatColor.RED + "You already have this power!");
+									ChatColor.RED + "" + args[1] + " is not a real power.");
 						}
-							
-
 					}
 					else
 					{
@@ -581,7 +575,9 @@ public class S87Powers extends JavaPlugin
 		allPowers.add(new Power(19, "Letta", "Stop arrows in their path", 2));
 		allPowers.add(new Power(20, "Lumberjack", "Chop down full trees", 1));
 		allPowers.add(new Power(21, "Waterstrider", "Sprint in water", 1));
-//		allPowers.add(new Power(22, "BestialTransmutation", "Transmute meat into animals", 2));
+		allPowers.add(new Power(22, "Volley", "Fire a swarm of arrows", 2));
+		allPowers.add(new Power(23, "FlameAlchemy", "Incenerate everything", 3));
+		
 	}
 	
 	public static Power StringToPower(String s)
@@ -594,7 +590,6 @@ public class S87Powers extends JavaPlugin
 				return p;
 			}
 		}
-		System.out.println("Null Power");
 		return null;
 	}
 
