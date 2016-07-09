@@ -94,7 +94,6 @@ public class PlayerHelper
 					}
 					else
 					{
-						System.out.println(entity);
 					}
 					}
 				}
@@ -107,7 +106,6 @@ public class PlayerHelper
 	{
 		Statement stmt = null;
 		try {
-		System.out.println(p.getId());
 		String sql = "INSERT INTO 'S87Powers.PLAYERS' VALUES (\"" + p.getId() + "\")";
 		stmt = S87Powers.connection.createStatement();
 		stmt.executeUpdate(sql);

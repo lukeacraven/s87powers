@@ -13,7 +13,6 @@ public class Fireball
 		GemHelper gh = new GemHelper();
 		if(gh.cast(p.getInventory(), 11))
 		{
-			System.out.println("Cast fireball");
 			Vector vel = p.getLocation().getDirection();
 			Projectile ball = p.launchProjectile(LargeFireball.class);
 			ball.setVelocity(vel);

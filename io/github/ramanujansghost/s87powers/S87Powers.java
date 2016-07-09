@@ -385,7 +385,7 @@ public class S87Powers extends JavaPlugin
 					sender.sendMessage(
 							ChatColor.GOLD + "/powers list - Lists the powers");
 					sender.sendMessage(ChatColor.GOLD
-							+ "/powers lookup <playername> - Looks up <playername>'s powers");
+							+ "/powers me - Displays your power list");
 					sender.sendMessage(ChatColor.GOLD
 							+ "/powers add <power> <playername> - Gives <power> to <playername>");
 					sender.sendMessage(ChatColor.GOLD
@@ -408,29 +408,28 @@ public class S87Powers extends JavaPlugin
 					}
 
 				}
-				if (args[0].equalsIgnoreCase("lookup"))
-				{
-					if (args.length == 2)
-					{
-						if (sender.hasPermission("s87powers.lookup")
-								|| sender.getName().equalsIgnoreCase(args[1]))
-						{
-							sender.sendMessage("Attempting to look up "
-									+ args[1] + "'s powers");
-							S87Powers.lookupPlayer(sender, args[1]);
-						}
-						else
-						{
-							sender.sendMessage(ChatColor.RED
-									+ "Error while performing command!  User does not have permission.");
-						}
-					}
-					else
-					{
-						sender.sendMessage(
-								"Error while performing command!  Syntax is /powers lookup <playername>");
-					}
-				}
+//				if (args[0].equalsIgnoreCase("lookup"))
+//				{
+//					if (args.length == 2)
+//					{
+//						if (sender.isOp())
+//						{
+//							sender.sendMessage("Attempting to look up "
+//									+ args[1] + "'s powers");
+//							S87Powers.lookupPlayer(sender, args[1]);
+//						}
+//						else
+//						{
+//							sender.sendMessage(ChatColor.RED
+//									+ "Error while performing command!  User does not have permission.");
+//						}
+//					}
+//					else
+//					{
+//						sender.sendMessage(
+//								"Error while performing command!  Syntax is /powers lookup <playername>");
+//					}
+//	
 				if (args[0].equalsIgnoreCase("remove"))
 				{
 					if (args.length == 3)
@@ -584,7 +583,6 @@ public class S87Powers extends JavaPlugin
 	{
 		for(Power p : allPowers)
 		{
-			System.out.println(s + " : " + p.getName());
 			if(p.getName().equalsIgnoreCase(s))
 			{
 				return p;
@@ -599,7 +597,6 @@ public class S87Powers extends JavaPlugin
 		try {
 		String sql = "INSERT INTO 'S87Powers.PLAYER_POWER_REL' " +
                 "VALUES (\"" + p.getUniqueId() +  "\"," + pow.getId() + " , " + pow.getCost() + ")";
-		System.out.println(sql);
 		stmt = S87Powers.connection.createStatement();
 		stmt.executeUpdate(sql);
 		}

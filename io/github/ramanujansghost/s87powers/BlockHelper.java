@@ -15,7 +15,6 @@ public class BlockHelper
 	//Returns list of open adj. blocks
 	public static ArrayList<Block> findAir(Block b)
 	{
-		System.out.println("Begin find air");
 		S87Powers.LOG.log(Level.WARNING, "Getting air");
 		ArrayList<Block> airs = new ArrayList<Block>();
 		if(b.getRelative(BlockFace.UP).getType() == Material.AIR)

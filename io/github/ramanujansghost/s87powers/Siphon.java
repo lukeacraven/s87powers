@@ -54,7 +54,6 @@ public class Siphon{
 					//If using regen-potion, rebound
 					for(PotionEffect efx : p.getActivePotionEffects())
 					{
-						System.out.println(efx.getType());
 						if(efx.getType().getName() == PotionEffectType.REGENERATION.getName())
 						{
 							p.sendMessage(ChatColor.RED +"REBOUND!");
@@ -157,7 +156,6 @@ public class Siphon{
 		{
 			if (S87Powers.timeTillSiphonAgain.containsKey(p.getUniqueId()))
 			{
-				System.out.println("Unique ID Met");
 				Long coolDown = S87Powers.timeTillSiphonAgain.get(p.getUniqueId());
 				if (System.currentTimeMillis() > coolDown)
 					return true;

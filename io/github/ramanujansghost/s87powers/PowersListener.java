@@ -60,7 +60,6 @@ public class PowersListener implements Listener
 										{
 											Power used = S87Powers.allPlayers.get(p.getUniqueId()).getPowers().get(p.getInventory().getHeldItemSlot());
 											
-											System.out.println(used.getId());
 											switch(used.getId())
 											{
 											case 1:
@@ -231,18 +230,15 @@ public class PowersListener implements Listener
 			Block b = event.getBlock();
 			if(b.getType() == Material.OBSIDIAN)
 			{
-				System.out.println("Is Obby");
 				for(Entry<Block, Integer> entry : S87Powers.slipGateLocs.entrySet())
 				{
 					if(b.getLocation().distanceSquared(entry.getKey().getLocation()) < 16)
 					{
-						System.out.println("Is <16");
 						GateBuilder gb = new GateBuilder();
 						for(Block gateBlock : gb.checkShape(entry.getKey().getRelative(0, -1, 0), entry.getValue()))
 						{
 							if(b.equals(gateBlock))
 							{
-								System.out.println("Is Gate");
 								entry.getKey().setType(Material.AIR);
 								entry.getKey().getRelative(0,1,0).setType(Material.AIR);
 								gb.removeGateFromDB(entry.getKey(), entry.getValue());

@@ -39,7 +39,6 @@ public class ChargeBow
 	public void onBowShootEvent(EntityShootBowEvent event)
 	{
 		Player p = (Player) event.getEntity();
-		System.out.println(p.getInventory().getItemInOffHand().getType());
 		if (p.getEquipment().getItemInOffHand().getType() == Material.FLINT_AND_STEEL)
 		{
 			lighter = p.getEquipment().getItemInOffHand();
@@ -52,7 +51,6 @@ public class ChargeBow
 							System.currentTimeMillis());
 					InventoryHelper.removeReagents(p, arrow, 2);
 					short minus = 1;
-					System.out.println(lighter.getDurability());
 					if(lighter.getDurability() + minus >= 65)
 					{
 						p.getEquipment().setItemInOffHand(new ItemStack(Material.AIR, 1));

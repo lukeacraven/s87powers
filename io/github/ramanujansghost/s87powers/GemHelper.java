@@ -144,7 +144,6 @@ public class GemHelper {
 	public boolean cast(PlayerInventory inv, int val)
 	{
 		Siphon si = new Siphon();
-		System.out.println("Cast");
 		if(inv.getItem(40)!= null && inv.getItemInOffHand().hasItemMeta())
 		{
 			ItemMeta meta = inv.getItemInOffHand().getItemMeta();
