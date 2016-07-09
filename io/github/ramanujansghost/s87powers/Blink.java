@@ -12,7 +12,7 @@ public class Blink //182
 	{
 		//Get target
     	Block target = p.getTargetBlock((Set<Material>)null, 15);
-
+    	GemHelper gh = new GemHelper();
     	if(target.getType() != Material.AIR)
     	{
         	//Valid target
@@ -24,7 +24,8 @@ public class Blink //182
 				if(target.getLocation().add(0,1,0).getBlock().getType()== Material.AIR)
 				{
 					//Extract power/do the thing
-					if(GemHelper.cast(p.getInventory(),(int) target.getLocation().distance(p.getLocation())/2))
+					
+					if(gh.cast(p.getInventory(),(int) target.getLocation().distance(p.getLocation())/2))
 					{
 						p.teleport(target.getLocation().setDirection(p.getLocation().getDirection()).add(0,1,0));
 					}
@@ -34,7 +35,7 @@ public class Blink //182
 			else if(close.getLocation().add(0,1,0).getBlock().getType() == Material.AIR)
 			{
 				//Extract power/do the thing
-				if(GemHelper.cast(p.getInventory(),(int) target.getLocation().distance(p.getLocation())/2))
+				if(gh.cast(p.getInventory(),(int) target.getLocation().distance(p.getLocation())/2))
 				{
 					p.teleport(close.getLocation().setDirection(p.getLocation().getDirection()));
 				}
