@@ -16,7 +16,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -24,7 +23,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+
 
 public class PowersListener implements Listener
 {
@@ -61,6 +60,7 @@ public class PowersListener implements Listener
 										{
 											Power used = S87Powers.allPlayers.get(p.getUniqueId()).getPowers().get(p.getInventory().getHeldItemSlot());
 											
+											System.out.println(used.getId());
 											switch(used.getId())
 											{
 											case 1:
@@ -87,24 +87,9 @@ public class PowersListener implements Listener
 												event.setCancelled(true);	
 												break;
 											case 4:
-												if ((itemUsed == Material.DIAMOND || itemUsed == Material.EMERALD || itemUsed == Material.QUARTZ) && actionPerformed == Action.RIGHT_CLICK_AIR)
-												{
-													ItemMeta im = p.getInventory().getItemInMainHand().getItemMeta();
-													if(im.hasDisplayName())
-													{
-														if(im.getDisplayName().equals("Soul Gem"))
-														{
-															Siphon si = new Siphon();
-															si.onRightClick(p, p, 14);
-															event.setCancelled(true);	
-														}
-													}
-													else
-													{
-														GemHelper.onRightClick(event);
-														event.setCancelled(true);	
-													}
-												}
+												Siphon si = new Siphon();
+												si.onRightClick(p, 14);
+												event.setCancelled(true);
 												break;
 											case 5:
 												if(actionPerformed == Action.RIGHT_CLICK_BLOCK )
@@ -171,6 +156,11 @@ public class PowersListener implements Listener
 											case 17:
 												GateBuilder gb = new GateBuilder();
 												gb.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 23:
+												FlameAlchemy fa = new FlameAlchemy();
+												fa.onRightClick(p);
 												event.setCancelled(true);	
 												break;
 											default:
@@ -276,15 +266,25 @@ public class PowersListener implements Listener
 	@EventHandler
 	public void onBowShootEvent(EntityShootBowEvent event)
 	{
-		if (event.getEntity().getType() == EntityType.PLAYER)
+		if(event.getEntityType() == EntityType.PLAYER)
 		{
-			if(S87Powers.allPlayers.get(event.getEntity().getUniqueId()).getPowers().contains(S87Powers.allPowers.get(17)))
-			{
-				ChargeBow cb = new ChargeBow();
-				cb.onBowShootEvent(event);
+			Player p = (Player) event.getEntity();
+				if(S87Powers.allPlayers.get(p.getUniqueId()).getPowers().size() > p.getInventory().getHeldItemSlot())
+				{
+					Power used = S87Powers.allPlayers.get(p.getUniqueId()).getPowers().get(p.getInventory().getHeldItemSlot());
+					if(used == S87Powers.allPowers.get(17))
+					{
+						ChargeBow cb = new ChargeBow();
+						cb.onBowShootEvent(event);
+					}
+					else if(used == S87Powers.allPowers.get(21))
+					{
+						Volley cb = new Volley();
+						cb.onBowShootEvent(event);
+					}
+				}
 			}
 		}
-	}
 	
 	//Check for entity being damaged by entity
 	//Used for Letta
@@ -310,32 +310,6 @@ public class PowersListener implements Listener
 		}
 	}
 	
-	//Check if an entity is (right?)clicked by a player
-	//Used for Siphon
-	@EventHandler
-	 public void onEntityInteract(PlayerInteractEntityEvent event) 
-	{
-		if(S87Powers.allPlayers.get(event.getPlayer().getUniqueId()).getPowers().contains(new Power(4, "Siphon", "Drain life into a Soulgem", 2)))
-		{
-			if((!S87Powers.timeSinceInteract.containsKey(event.getPlayer().getUniqueId()) || System.currentTimeMillis() - S87Powers.timeSinceInteract.get(event.getPlayer().getUniqueId()) > 500))
-			{	
-				//Material itemUsed = event.getPlayer().getInventory().getItemInMainHand().getType();
-				if(event.getRightClicked() != null && event.getPlayer() != null)
-				{
-					Entity clickedEntity = event.getRightClicked();
-					Player p = event.getPlayer();
-					ItemMeta meta = event.getPlayer().getInventory().getItemInMainHand().getItemMeta();
-					if (meta.hasDisplayName() && meta.getDisplayName().equals("Soul Gem")) //&& (p.hasPermission("s87powers.siphon.toggledon")
-					{
-						Siphon si = new Siphon();
-						si.onRightClick(clickedEntity, p, 14);
-					}
-				}
-				S87Powers.timeSinceInteract.put(event.getPlayer().getUniqueId(), System.currentTimeMillis());
-			}
-		}
-
-	}
 	
 	@EventHandler
 	public void onShift(PlayerToggleSneakEvent e)
