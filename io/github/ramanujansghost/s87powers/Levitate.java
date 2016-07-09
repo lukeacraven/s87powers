@@ -19,7 +19,8 @@ public class Levitate
 			}
 		}
 		//If not dead, float
-		if(!hasEffect && GemHelper.cast(p.getInventory(), 1))
+		GemHelper gh = new GemHelper();
+		if(!hasEffect && gh.cast(p.getInventory(), 1))
 		{
 			//Levitate down
 			if(p.isSneaking())
