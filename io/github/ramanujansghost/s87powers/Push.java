@@ -12,7 +12,8 @@ public class Push
 		LivingEntity target = PlayerHelper.getTarget(p, 10);
 		if(target != null)
 		{
-			if(GemHelper.cast(p.getInventory(), 7))
+			GemHelper gh = new GemHelper();
+			if(gh.cast(p.getInventory(), 7))
 			{
 				Vector push = p.getLocation().getDirection();
 				//Pull
