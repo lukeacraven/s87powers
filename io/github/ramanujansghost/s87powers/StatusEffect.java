@@ -7,5 +7,7 @@ public class StatusEffect
 	{
 		type = t;
 	}
+	
+	
 
 }
