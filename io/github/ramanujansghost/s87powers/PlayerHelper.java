@@ -4,11 +4,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 public class PlayerHelper
@@ -119,5 +122,17 @@ public class PlayerHelper
 				stmt.close();
 			}
 		}
+	}
+	
+	public static int getArmorCount(Player p)
+	{
+		int count = 0;
+		EntityEquipment ee = p.getEquipment();
+		for(ItemStack item : ee.getArmorContents())
+		{
+			if(item != null)
+				count++;
+		}
+		return count;		
 	}
 }
