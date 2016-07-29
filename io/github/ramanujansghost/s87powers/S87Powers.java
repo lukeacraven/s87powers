@@ -565,7 +565,7 @@ public class S87Powers extends JavaPlugin
 		allPowers.add(new Power(10, "Leviosa", "Lift your friends", 1));
 		allPowers.add(new Power(11, "Translocation", "Swap places with another", 2));
 		allPowers.add(new Power(12, "Possess", "Reside within your prey", 999));
-		allPowers.add(new Power(13, "Cloak", "Hide from all", 999));
+		allPowers.add(new Power(13, "Cloak", "Hide from all", 3));
 		allPowers.add(new Power(14, "SoulShatter", "Detonate a SoulGem", 2));
 		allPowers.add(new Power(15, "Juggernaut", "Pure strength", 4));
 		allPowers.add(new Power(16, "Shell", "Form a shell around yourself or others", 2));
@@ -576,6 +576,13 @@ public class S87Powers extends JavaPlugin
 		allPowers.add(new Power(21, "Waterstrider", "Sprint in water", 1));
 		allPowers.add(new Power(22, "Volley", "Fire a swarm of arrows", 2));
 		allPowers.add(new Power(23, "FlameAlchemy", "Incenerate everything", 3));
+		allPowers.add(new Power(24, "OnePunch", "Power! Get the Power!", 4));
+		allPowers.add(new Power(25, "Fissure", "Create a sudden gap in the earth", 2));
+		allPowers.add(new Power(26, "Smelt", "Melt down used armor and weapons", 2));
+		allPowers.add(new Power(27, "ThickSkin", "Little things don't bother you", 1));
+		allPowers.add(new Power(28, "UnlimitedBladeworks", "Always have a blade", 2));
+		allPowers.add(new Power(29, "Sinkhole", "Down they go", 1));
+		allPowers.add(new Power(30, "GrowthAlchemy", "Green thumb!", 1));
 		
 	}
 	
