@@ -154,17 +154,25 @@ public class Siphon{
 	{
 		if (p != null)
 		{
-			if (S87Powers.timeTillSiphonAgain.containsKey(p.getUniqueId()))
+			if(p.getInventory().getItemInMainHand().getAmount() == 1)
 			{
-				Long coolDown = S87Powers.timeTillSiphonAgain.get(p.getUniqueId());
-				if (System.currentTimeMillis() > coolDown)
-					return true;
-				else
+				if (S87Powers.timeTillSiphonAgain.containsKey(p.getUniqueId()))
 				{
-					p.sendMessage("You have used siphon too recently!  Wait "
-							+ (coolDown - (System.currentTimeMillis())) / 1000 + " more seconds.");
-					return false;
+					Long coolDown = S87Powers.timeTillSiphonAgain.get(p.getUniqueId());
+					if (System.currentTimeMillis() > coolDown)
+						return true;
+					else
+					{
+						p.sendMessage("You have used siphon too recently!  Wait "
+								+ (coolDown - (System.currentTimeMillis())) / 1000 + " more seconds.");
+						return false;
+					}
 				}
+			}
+			else
+			{
+				p.sendMessage("You can only siphon into one gem!");
+				return false;
 			}
 			return true;
 		}
