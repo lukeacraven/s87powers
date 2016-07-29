@@ -3,7 +3,9 @@ package io.github.ramanujansghost.s87powers;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import java.sql.SQLException;
 import java.util.Map.Entry;
@@ -23,6 +25,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 
 public class PowersListener implements Listener
@@ -162,6 +165,31 @@ public class PowersListener implements Listener
 												fa.onRightClick(p);
 												event.setCancelled(true);	
 												break;
+											case 25:
+												Fissure fis = new Fissure();
+												fis.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 26:
+												Smelt sml = new Smelt();
+												sml.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 28:
+												UnlimitedBladeworks ubw = new UnlimitedBladeworks();
+												ubw.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 29:
+												Sinkhole sink = new Sinkhole();
+												sink.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 30:
+												GrowthAlchemy grw = new GrowthAlchemy();
+												grw.onRightClick(p);
+												event.setCancelled(true);	
+												break;
 											default:
 												break;
 											}
@@ -198,6 +226,11 @@ public class PowersListener implements Listener
 		Player p = event.getPlayer();
 		if (p != null)
 		{
+			if(S87Powers.allPlayers.get(p.getUniqueId()).getStati().contains("Cloaked"))
+			{
+				Cloak c = new Cloak();
+				c.reveal(p);
+			}
 			if(S87Powers.allPlayers.get(p.getUniqueId()).getPowers().contains(S87Powers.allPowers.get(19)))
 			{
 				Material itemUsed = event.getPlayer().getEquipment().getItemInMainHand().getType();
@@ -289,12 +322,14 @@ public class PowersListener implements Listener
 	{
 		if (event != null)
 		{
+			Entity damager = event.getDamager();
 			Entity damagedEntity = event.getEntity();
 			if(damagedEntity.getType() == EntityType.PLAYER)
 			{
-				if (event.getDamager().getType() == EntityType.ARROW
-						|| event.getDamager().getType() == EntityType.SPECTRAL_ARROW
-						|| event.getDamager().getType() == EntityType.TIPPED_ARROW)
+
+				if (damager.getType() == EntityType.ARROW
+						|| damager.getType() == EntityType.SPECTRAL_ARROW
+						|| damager.getType() == EntityType.TIPPED_ARROW)
 				{
 					if(S87Powers.allPlayers.get(event.getEntity().getUniqueId()).getPowers().contains(S87Powers.allPowers.get(18)))
 					{
@@ -302,6 +337,37 @@ public class PowersListener implements Listener
 						ltt.onArrowHitPlayer(event, damagedEntity);
 					}
 				}
+				
+				if(S87Powers.allPlayers.get(event.getEntity().getUniqueId()).getPowers().contains(S87Powers.allPowers.get(26)))
+				{
+					ThickSkin ts = new ThickSkin();
+					ts.onHit(event);
+				}
+			}
+			
+			if(damager.getType() == EntityType.PLAYER && event.getCause() == DamageCause.ENTITY_ATTACK)
+			{
+				if(S87Powers.allPlayers.get(((Player) damager).getUniqueId()).getPowers().contains(S87Powers.allPowers.get(23)))
+				{
+					OnePunch op = new OnePunch();
+					op.onAttack(event);
+				}
+				ItemMeta meta = ((Player)damager).getInventory().getItemInMainHand().getItemMeta();
+				if((meta.hasDisplayName() && meta.getDisplayName().equals("\u221E")))
+				{
+					if(!S87Powers.allPlayers.get(((Player) damager).getUniqueId()).getPowers().contains(S87Powers.allPowers.get(27)))
+					{
+						((Player)damager).getInventory().setItemInMainHand(null);
+						((Player)damager).updateInventory();
+						((Player)damager).sendMessage("Your sword become dust");
+					}
+				}
+			}
+			
+			if(damager.getType() == EntityType.PLAYER && S87Powers.allPlayers.get(((Player)damager).getUniqueId()).getStati().contains("Cloaked"))
+			{
+				Cloak c = new Cloak();
+				c.reveal((Player)damager);
 			}
 		}
 	}
@@ -374,5 +440,14 @@ public class PowersListener implements Listener
 		}
 
 	}
-
+	@EventHandler
+	public void playerPlace(BlockPlaceEvent e)
+	{
+		Player p = e.getPlayer();
+		if(S87Powers.allPlayers.get(p.getUniqueId()).getStati().contains("Cloaked"))
+		{
+			Cloak c = new Cloak();
+			c.reveal(p);
+		}
+	}
 }
