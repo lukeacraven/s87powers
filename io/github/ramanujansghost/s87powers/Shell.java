@@ -63,7 +63,7 @@ public class Shell
 		toChange.add(center.getRelative(BlockFace.SOUTH).getRelative(0, 1, 0));
 		toChange.add(center.getRelative(BlockFace.WEST).getRelative(0, 1, 0));
 		toChange.add(center.getRelative(0, 2, 0));
-		BlockHelper.placeInEmpty(p, toChange, Material.STONE);
+		BlockHelper.placeInEmpty(p, toChange, Material.STONE, true);
 	}
 
 }
