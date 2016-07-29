@@ -6,9 +6,9 @@ public class S87Player
 {
 	private UUID id;
 	private ArrayList<Power> powers = new ArrayList<Power>();
-	private ArrayList<StatusEffect> Stati = new ArrayList<StatusEffect>();
+	private ArrayList<String> Stati = new ArrayList<String>();
 	
-	public S87Player(UUID u, ArrayList<Power> powers, ArrayList<StatusEffect> Stati)
+	public S87Player(UUID u, ArrayList<Power> powers, ArrayList<String> Stati)
 	{
 		id = u;
 		this.powers = powers;
@@ -36,12 +36,20 @@ public class S87Player
 		this.powers = powers;
 	}
 
-	public ArrayList<StatusEffect> getStati() {
+	public ArrayList<String> getStati() {
 		return Stati;
 	}
 
-	public void setStati(ArrayList<StatusEffect> stati) {
+	public void setStati(ArrayList<String> stati) {
 		Stati = stati;
+	}
+	
+	public void addStatus(String e) {
+		Stati.add(e);
+	}
+	
+	public void removeStatus(String e) {
+		Stati.remove(e);
 	}
 
 }
