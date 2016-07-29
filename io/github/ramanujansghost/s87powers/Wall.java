@@ -26,7 +26,7 @@ public class Wall
 				{
 					InventoryHelper.removeReagents(p, stone, 9);
 					InventoryHelper.removeReagents(p, redstone, 2);
-					BlockHelper.placeInEmpty(p, BlockHelper.getWallRelP(close, p), Material.STONE);
+					BlockHelper.placeInEmpty(p, BlockHelper.getWallRelP(close, p), Material.STONE, true);
 				}
 		
 			}
