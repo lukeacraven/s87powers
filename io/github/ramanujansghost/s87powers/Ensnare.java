@@ -24,7 +24,7 @@ public class Ensnare{
 		//Targeting an entity
 		if(targetEntity != null)
 		{			
-			if(InventoryHelper.checkForReagents(p, string, 6) && InventoryHelper.checkForReagents(p, redstone, 1))
+			if(InventoryHelper.checkForReagents(p, string, 6) && InventoryHelper.checkForReagents(p, redstone, 2))
 			{
 				InventoryHelper.removeReagents(p, string, 6);
 				InventoryHelper.removeReagents(p, redstone, 2);
@@ -35,7 +35,7 @@ public class Ensnare{
 				line.add(targetEntity.getLocation().getBlock().getRelative(-1, 0, 0));
 				line.add(targetEntity.getLocation().getBlock().getRelative(0, 0, 1));
 				line.add(targetEntity.getLocation().getBlock().getRelative(0, 0, -1));
-				BlockHelper.placeInEmpty(p, line, Material.WEB);
+				BlockHelper.placeInEmpty(p, line, Material.WEB, false);
 			}
 			else
 		    	p.sendMessage("You do not have the necessary reagents generate web!  Requires 6 string and 2 redstone.");
@@ -51,7 +51,7 @@ public class Ensnare{
 				{
 					InventoryHelper.removeReagents(p, string, 6);
 					InventoryHelper.removeReagents(p, redstone, 2);
-					BlockHelper.placeInEmpty(p, BlockHelper.getCrossOnFace(close, target.getFace(BlockHelper.closestToPlayer(BlockHelper.findAir(target), p))), Material.WEB);
+					BlockHelper.placeInEmpty(p, BlockHelper.getCrossOnFace(close, target.getFace(BlockHelper.closestToPlayer(BlockHelper.findAir(target), p))), Material.WEB, false);
 				}
 				
 			}
