@@ -9,6 +9,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class BlockHelper 
 {
@@ -64,14 +65,32 @@ public class BlockHelper
 	}
 	
 	//given a list of block, check if air(or other light material) and then change the type
-	public static void placeInEmpty(Player p, ArrayList<Block> blocks, Material toPlace)
+	public static void placeInEmpty(Player p, ArrayList<Block> blocks, Material toPlace, boolean faction)
 	{
+		World w = p.getWorld();
 		for(Block b : blocks)
 		{
-			if((b.getType() == Material.AIR || b.getType() == Material.LONG_GRASS || b.getType() == Material.STATIONARY_WATER || b.getType() == Material.WATER) && S87Powers.canPlayerBuildAt(p, b.getLocation(), b))
+			if((b.getType() == Material.AIR || b.getType() == Material.LONG_GRASS || b.getType() == Material.STATIONARY_WATER || b.getType() == Material.WATER))
 			{
-				b.setType(toPlace);
+				if(faction)
+				{
+					if(S87Powers.canPlayerBuildAt(p, b.getLocation(), b))
+					{
+						b.setType(toPlace);
+					}
+					else
+					{
+						w.dropItem(b.getLocation(), new ItemStack(toPlace, 1));
+						p.sendMessage("You cannot cast in this faction's land!");
+					}
+					
+				}
+				else
+				{
+					b.setType(toPlace);
+				}
 			}
+
 		}
 	}
 	
