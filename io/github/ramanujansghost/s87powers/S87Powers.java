@@ -2,6 +2,8 @@ package io.github.ramanujansghost.s87powers;
 
 import com.massivecraft.factions.engine.EngineMain;
 import com.massivecraft.massivecore.ps.PS;
+import com.massivecraft.factions.entity.BoardColl;
+import com.massivecraft.factions.entity.MPlayer;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,6 +24,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -32,8 +35,8 @@ import org.bukkit.scheduler.BukkitScheduler;
 public class S87Powers extends JavaPlugin
 {
 	public static final Logger LOG = Logger.getLogger("Minecraft");
-	public static final String VERSION = "Powers Version .06";
-	public static final boolean DEBUGINVENTORYHELPER = true;
+	public static final String VERSION = "Powers Version 1.1";
+	public static final boolean DEBUGINVENTORYHELPER = false;
 	public static boolean isFactionsEnabled = false;
 	
 	public static Connection connection = null;
@@ -47,6 +50,7 @@ public class S87Powers extends JavaPlugin
 	public static ArrayList<S87Player> playersOnline = new ArrayList<S87Player>();
 	public static HashMap<UUID, Long> globalCD = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeSinceWolfSummon = new HashMap<UUID, Long>();
+	public static HashMap<UUID, Long> timeSinceLockPick = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeSinceChargeBowUse = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeTillSiphonAgain = new HashMap<UUID, Long>();
 	public static HashMap<UUID, Long> timeSinceInteract = new HashMap<UUID, Long>();
@@ -250,10 +254,25 @@ public class S87Powers extends JavaPlugin
 		return true;
 	}
 	
+	public static boolean canPlayerUseAt(Player p, Block block)
+	{
+		if (isFactionsEnabled) return EngineMain.canPlayerUseBlock(p,
+				block, true);
+		return true;
+	}
+	
 	//On plugin activation, run default setup
 	@Override
 	public void onEnable()
 	{
+		for(Player p : Bukkit.getOnlinePlayers())
+		{
+			for(OfflinePlayer onP: Bukkit.getOfflinePlayers())
+			{
+				if(onP.getPlayer() != null)
+					onP.getPlayer().showPlayer(p);
+			}
+		}
 		//setUpPermissions();
 		checkIfFactionsIsEnabled();
 		setUpDBConnection();
@@ -404,7 +423,24 @@ public class S87Powers extends JavaPlugin
 					sender.sendMessage("The powers are as follows: ");
 					for(Power p : allPowers)
 					{
-						sender.sendMessage(ChatColor.GOLD + p.getName() + " - " + p.getDesc() + " - " + p.getCost());
+						ChatColor color;
+						if(p.getType().equalsIgnoreCase("alchemy"))
+						{
+							color = ChatColor.GREEN;
+						}
+						else if(p.getType().equalsIgnoreCase("magic"))
+						{
+							color = ChatColor.BLUE;
+						}
+						else if(p.getType().equalsIgnoreCase("human"))
+						{
+							color = ChatColor.WHITE;
+						}
+						else
+						{
+							color = ChatColor.GOLD;
+						}
+						sender.sendMessage(color + p.getName() + " - " + p.getDesc() + " - " + p.getCost());
 					}
 
 				}
@@ -479,7 +515,24 @@ public class S87Powers extends JavaPlugin
 			sender.sendMessage(ChatColor.GOLD + p.getDisplayName() + " has: ");
 			for (Power pow : allPlayers.get(p.getUniqueId()).getPowers())
 			{
-					sender.sendMessage(ChatColor.GOLD + pow.getName());
+				ChatColor color;
+				if(pow.getType().equalsIgnoreCase("alchemy"))
+				{
+					color = ChatColor.GREEN;
+				}
+				else if(pow.getType().equalsIgnoreCase("magic"))
+				{
+					color = ChatColor.BLUE;
+				}
+				else if(pow.getType().equalsIgnoreCase("human"))
+				{
+					color = ChatColor.WHITE;
+				}
+				else
+				{
+					color = ChatColor.GOLD;
+				}
+				sender.sendMessage(color + pow.getName() + " - " + pow.getDesc() + " - " + pow.getCost());
 					powersCount++;
 			}
 			if (powersCount > 0)
@@ -553,36 +606,41 @@ public class S87Powers extends JavaPlugin
 
 	public static void setPowers()
 	{
-		allPowers.add(new Power(1, "BestialTransmutation", "Transmute meat into animals", 2));
-		allPowers.add(new Power(2, "WolfPack", "Summon friendly wolves", 3));
-		allPowers.add(new Power(3, "Ensnare", "Spin a web, any size!", 2));
-		allPowers.add(new Power(4, "Siphon", "Drain life into a Soulgem", 2));
-		allPowers.add(new Power(5, "Wall", "Quickly constuct a wall", 2));
-		allPowers.add(new Power(6, "Leap", "Leap small buildings in a single bound!", 1));
-		allPowers.add(new Power(7, "Push", "Push and pull your enemies", 2));
-		allPowers.add(new Power(8, "Levitate", "Lift yourself into the air", 1));
-		allPowers.add(new Power(9, "Fireball", "Launch a blazing missile", 2));
-		allPowers.add(new Power(10, "Leviosa", "Lift your friends", 1));
-		allPowers.add(new Power(11, "Translocation", "Swap places with another", 2));
-		allPowers.add(new Power(12, "Possess", "Reside within your prey", 999));
-		allPowers.add(new Power(13, "Cloak", "Hide from all", 3));
-		allPowers.add(new Power(14, "SoulShatter", "Detonate a SoulGem", 2));
-		allPowers.add(new Power(15, "Juggernaut", "Pure strength", 4));
-		allPowers.add(new Power(16, "Shell", "Form a shell around yourself or others", 2));
-		allPowers.add(new Power(17, "GateBuilder", "Construct slipgates", 2));
-		allPowers.add(new Power(18, "Chargebow", "Shoot flaming arrows", 2));
-		allPowers.add(new Power(19, "Letta", "Stop arrows in their path", 2));
-		allPowers.add(new Power(20, "Lumberjack", "Chop down full trees", 1));
-		allPowers.add(new Power(21, "Waterstrider", "Sprint in water", 1));
-		allPowers.add(new Power(22, "Volley", "Fire a swarm of arrows", 2));
-		allPowers.add(new Power(23, "FlameAlchemy", "Incenerate everything", 3));
-		allPowers.add(new Power(24, "OnePunch", "Power! Get the Power!", 4));
-		allPowers.add(new Power(25, "Fissure", "Create a sudden gap in the earth", 2));
-		allPowers.add(new Power(26, "Smelt", "Melt down used armor and weapons", 2));
-		allPowers.add(new Power(27, "ThickSkin", "Little things don't bother you", 1));
-		allPowers.add(new Power(28, "UnlimitedBladeworks", "Always have a blade", 2));
-		allPowers.add(new Power(29, "Sinkhole", "Down they go", 1));
-		allPowers.add(new Power(30, "GrowthAlchemy", "Green thumb!", 1));
+		allPowers.add(new Power(1, "BestialTransmutation", "Transmute meat into animals", 2, "Alchemy"));
+		allPowers.add(new Power(2, "WolfPack", "Summon friendly wolves", 3, "Human"));
+		allPowers.add(new Power(3, "Ensnare", "Spin a web, any size!", 2, "Alchemy"));
+		allPowers.add(new Power(4, "Siphon", "Drain life into a Soulgem", 2, "Magic"));
+		allPowers.add(new Power(5, "Wall", "Quickly constuct a wall", 2, "Alchemy"));
+		allPowers.add(new Power(6, "Leap", "Leap small buildings in a single bound!", 1, "Human"));
+		allPowers.add(new Power(7, "Push", "Push and pull your enemies", 2, "Magic"));
+		allPowers.add(new Power(8, "Levitate", "Lift yourself into the air", 1, "Magic"));
+		allPowers.add(new Power(9, "Fireball", "Launch a blazing missile", 2, "Magic"));
+		allPowers.add(new Power(10, "Leviosa", "Lift your friends", 1, "Magic"));
+		allPowers.add(new Power(11, "Translocation", "Swap places with another", 2, "Magic"));
+		allPowers.add(new Power(12, "Possess", "Reside within your prey", 999, "Magic"));
+		allPowers.add(new Power(13, "Cloak", "Hide from all", 3, "Magic"));
+		allPowers.add(new Power(14, "SoulShatter", "Detonate a SoulGem", 2, "Alchemy"));
+		allPowers.add(new Power(15, "Juggernaut", "Pure strength", 4, "Human"));
+		allPowers.add(new Power(16, "Shell", "Form a shell around yourself or others", 2, "Alchemy"));
+		allPowers.add(new Power(17, "GateBuilder", "Construct slipgates", 2, "Magic"));
+		allPowers.add(new Power(18, "Chargebow", "Shoot flaming arrows", 2, "Human"));
+		allPowers.add(new Power(19, "Letta", "Stop arrows in their path", 2, "Magic"));
+		allPowers.add(new Power(20, "Lumberjack", "Chop down full trees", 1, "Human"));
+		allPowers.add(new Power(21, "Waterstrider", "Sprint in water", 1, "Human"));
+		allPowers.add(new Power(22, "Volley", "Fire a swarm of arrows", 2, "Human"));
+		allPowers.add(new Power(23, "FlameAlchemy", "Incenerate everything", 3, "Alchemy"));
+		allPowers.add(new Power(24, "OnePunch", "Power! Get the Power!", 4, "Human"));
+		allPowers.add(new Power(25, "Fissure", "Create a sudden gap in the earth", 2, "Alchemy"));
+		allPowers.add(new Power(26, "Smelt", "Melt down used armor and weapons", 2, "Alchemy"));
+		allPowers.add(new Power(27, "ThickSkin", "Little things don't bother you", 1, "Human"));
+		allPowers.add(new Power(28, "UnlimitedBladeworks", "Always have a blade", 2, "Magic"));
+		allPowers.add(new Power(29, "Sinkhole", "Down they go", 1, "Alchemy"));
+		allPowers.add(new Power(30, "GrowthAlchemy", "Green thumb!", 1, "Alchemy"));
+		allPowers.add(new Power(31, "Lockpick", "Click click", 3, "Human"));
+		allPowers.add(new Power(32, "Blink", "Quickly teleport short range", 2, "Magic"));
+		allPowers.add(new Power(33, "Mount", "Ride like the wind", 1, "Human"));
+		allPowers.add(new Power(34, "Peltast", "Toss arrows", 1, "Human"));
+		allPowers.add(new Power(35, "Pickpocket", "Reach into their pockets", 2, "Human"));
 		
 	}
 	
@@ -632,6 +690,16 @@ public class S87Powers extends JavaPlugin
 		finally {
 			if(stmt != null) {	//Any exceptions here are thrown
 				stmt.close();
+			}
+		}
+	}
+	
+	public static void alertFactionBlock(Location loc, String message)
+	{
+		for(MPlayer mp : BoardColl.get().getFactionAt(PS.valueOf(loc)).getMPlayers())
+		{
+			{
+				mp.msg(message);
 			}
 		}
 	}
