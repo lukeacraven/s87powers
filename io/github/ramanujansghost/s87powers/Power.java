@@ -6,6 +6,7 @@ public class Power
 	private String name;
 	private String desc;
 	private int cost;
+	private String type;
 	
 	public Power(int id, String name, String desc, int cost)
 	{
@@ -13,6 +14,15 @@ public class Power
 		this.name = name;
 		this.desc = desc;
 		this.cost = cost;
+	}
+	
+	public Power(int id, String name, String desc, int cost, String type)
+	{
+		this.setId(id);
+		this.name = name;
+		this.desc = desc;
+		this.cost = cost;
+		this.setType(type);
 	}
 
 	public String getName() {
@@ -45,6 +55,14 @@ public class Power
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }
