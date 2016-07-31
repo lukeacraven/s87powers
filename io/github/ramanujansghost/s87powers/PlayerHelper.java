@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
@@ -90,7 +89,10 @@ public class PlayerHelper
 			Location testLoc = new Location(startLoc.getWorld(), startLoc.getX() + (vec.getX() * i), startLoc.getY() + (vec.getY() * i), startLoc.getZ() + (vec.getZ() * i));
 			if (Math.abs(startLoc.distance(testLoc)) <= maxRange) {
 				Block block = testLoc.getBlock();
-				if (block.getType().isOccluding()) break;
+				if (block.getType().isOccluding()) 
+					{
+						break;
+					}
 				for (Entity entity : block.getChunk().getEntities()) {
 					if (entity instanceof LivingEntity && (entity.getLocation().distanceSquared(testLoc) < 1.0D || ((LivingEntity) entity).getEyeLocation().distanceSquared(testLoc) < 1.0D) && entity != user) {
 						return (LivingEntity) entity;
@@ -135,4 +137,6 @@ public class PlayerHelper
 		}
 		return count;		
 	}
+	
+
 }
