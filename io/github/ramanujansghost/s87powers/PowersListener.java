@@ -7,11 +7,15 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+
 import java.sql.SQLException;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -190,6 +194,31 @@ public class PowersListener implements Listener
 												grw.onRightClick(p);
 												event.setCancelled(true);	
 												break;
+											case 31:
+												Lockpick lock = new Lockpick();
+												lock.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 32:
+												Blink blk = new Blink();
+												blk.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 33:
+												Mount mnt = new Mount();
+												mnt.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 34:
+												Peltast pel = new Peltast();
+												pel.onRightClick(p);
+												event.setCancelled(true);	
+												break;
+											case 35:
+												PickPocket pp = new PickPocket();
+												pp.onRightClick(p);
+												event.setCancelled(true);	
+												break;
 											default:
 												break;
 											}
@@ -353,13 +382,16 @@ public class PowersListener implements Listener
 					op.onAttack(event);
 				}
 				ItemMeta meta = ((Player)damager).getInventory().getItemInMainHand().getItemMeta();
-				if((meta.hasDisplayName() && meta.getDisplayName().equals("\u221E")))
+				if(meta != null)
 				{
-					if(!S87Powers.allPlayers.get(((Player) damager).getUniqueId()).getPowers().contains(S87Powers.allPowers.get(27)))
+					if((meta.hasDisplayName() && meta.getDisplayName().equals("\u221E")))
 					{
-						((Player)damager).getInventory().setItemInMainHand(null);
-						((Player)damager).updateInventory();
-						((Player)damager).sendMessage("Your sword become dust");
+						if(!S87Powers.allPlayers.get(((Player) damager).getUniqueId()).getPowers().contains(S87Powers.allPowers.get(27)))
+						{
+							((Player)damager).getInventory().setItemInMainHand(null);
+							((Player)damager).updateInventory();
+							((Player)damager).sendMessage("Your sword become dust");
+						}
 					}
 				}
 			}
@@ -394,6 +426,17 @@ public class PowersListener implements Listener
 			e.getPlayer().sendMessage(ChatColor.GOLD + "Please use the command '/powers list' to see avalialbe powers.");
 			e.getPlayer().sendMessage(ChatColor.GOLD + "Use '/powers select <power>' to choose a power.");
 		}
+		for(Player p : Bukkit.getOnlinePlayers())
+		{
+			if(S87Powers.allPlayers.get(p.getUniqueId()).getStati().contains("Cloaked"))
+			{
+				e.getPlayer().hidePlayer(p);
+			}
+		}
+		if(S87Powers.allPlayers.get(e.getPlayer().getUniqueId()).getStati().contains("Cloaked"))
+		{
+			S87Powers.allPlayers.get(e.getPlayer().getUniqueId()).getStati().remove("Cloaked");
+		}
 
 	
 	}
@@ -401,13 +444,20 @@ public class PowersListener implements Listener
 	@EventHandler
 	public void playerMove(PlayerMoveEvent e)
 	{
+		Location from = e.getFrom();
+		Location to = e.getTo();
 		//Only checking movement from block to block to be efficient
-		if(e.getTo() != e.getFrom())
+		if(to.getBlockX() != from.getBlockX() || to.getBlockY() != from.getBlockY() || to.getBlockZ() != from.getBlockZ())
 		{
 			GateBuilder gb = new GateBuilder();
 			if(!gb.PlayerMove(e))
 			{
 
+			}
+			if(S87Powers.allPlayers.get(e.getPlayer().getUniqueId()).getStati().contains("Cloaked"))
+			{
+				GemHelper gh = new GemHelper();
+				gh.cast(e.getPlayer().getInventory(), 2);
 			}
 		}
 	}
@@ -449,5 +499,17 @@ public class PowersListener implements Listener
 			Cloak c = new Cloak();
 			c.reveal(p);
 		}
+	}
+	
+	@EventHandler
+	public void playerDie(PlayerDeathEvent e)
+	{
+		Player p = e.getEntity();
+		if(S87Powers.allPlayers.get(p.getUniqueId()).getStati().contains("Cloaked"))
+		{
+			Cloak c = new Cloak();
+			c.reveal(p);
+		}
+		p.setMaxHealth(20);
 	}
 }
