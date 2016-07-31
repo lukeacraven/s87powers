@@ -48,7 +48,7 @@ public class Sinkhole
 				
 			}
 			else
-		    	p.sendMessage("You do not have the necessary reagents generate web!  Requires 8 redstone.");
+		    	p.sendMessage("You do not have the necessary reagents to make a hole!  Requires 8 redstone.");
 		}
 			
 	}
