@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 public class Mount
 {
 	//As it seems, places the player on top of entity. Entity on top of player acts weird
-	public static void onRightClick(Player p) 
+	public void onRightClick(Player p) 
 	{
 		LivingEntity target = PlayerHelper.getTarget(p, 4);
 		if(target != null && target.getType() != EntityType.PLAYER)
