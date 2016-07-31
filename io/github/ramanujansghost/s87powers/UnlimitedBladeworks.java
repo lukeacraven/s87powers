@@ -21,7 +21,8 @@ public class UnlimitedBladeworks
 			{
 				w.dropItem(p.getLocation(), inHand);
 				p.getInventory().setItemInMainHand(new ItemStack(Material.GOLD_SWORD,1));
-				meta = inHand.getItemMeta();
+				meta = p.getInventory().getItemInMainHand().getItemMeta();
+				inHand = p.getInventory().getItemInMainHand();
 				meta.setDisplayName("\u221E");
 				inHand.setItemMeta(meta);
 				inHand.addEnchantment(Enchantment.DAMAGE_ALL, 3);
