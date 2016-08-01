@@ -32,7 +32,7 @@ public class Blink //182
 				}
 			}
 			//Check for free target location
-			else if(close.getLocation().add(0,1,0).getBlock().getType() == Material.AIR)
+			else if(close != null && close.getLocation().add(0,1,0).getBlock().getType() == Material.AIR)
 			{
 				//Extract power/do the thing
 				if(gh.cast(p.getInventory(),(int) target.getLocation().distance(p.getLocation())/2))
