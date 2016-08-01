@@ -406,7 +406,7 @@ public class S87Powers extends JavaPlugin
 					sender.sendMessage(ChatColor.GOLD
 							+ "/powers me - Displays your power list");
 					sender.sendMessage(ChatColor.GOLD
-							+ "/powers add <power> <playername> - Gives <power> to <playername>");
+							+ "/powers select <power> - Select this power as your own!");
 					sender.sendMessage(ChatColor.GOLD
 							+ "/powers remove <power> <playername> - Removes <power> from <playername>");
 					sender.sendMessage(ChatColor.GOLD
